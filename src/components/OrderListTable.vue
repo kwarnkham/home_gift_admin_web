@@ -1,6 +1,18 @@
 <template>
   <div class="q-pa-md">
-    <q-table title="Orders" :data="orders" :columns="columns" row-key="id" separator="vertical">
+    <q-table
+      title="Orders"
+      :data="tableOrders"
+      :columns="columns"
+      row-key="id"
+      separator="vertical"
+    >
+      <template v-slot:top>
+        <q-space />
+        <q-btn outline color="primary" label="Update" @click="getOrders()">
+          <q-badge color="orange" floating>1</q-badge>
+        </q-btn>
+      </template>
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="id" :props="props">{{ props.row.id }}</q-td>
@@ -23,7 +35,48 @@
             <q-badge color="accent">{{ props.row.status }}</q-badge>
           </q-td>
           <q-td key="action" :props="props">
-            <q-badge color="secondary">Action</q-badge>
+            <q-btn-dropdown color="primary" label="Action" :disable="disableActionBtn">
+              <q-list>
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="actOnOrder(props.row.id,'confirmed')"
+                  v-if="filter == 'pending'"
+                >
+                  <q-item-section>
+                    <q-item-label>Confirm</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="actOnOrder(props.row.id,'on the way')"
+                  v-if="filter == 'confirmed'"
+                >
+                  <q-item-section>
+                    <q-item-label>Dispatch</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="actOnOrder(props.row.id,'delivered')"
+                  v-if="filter == 'on the way'"
+                >
+                  <q-item-section>
+                    <q-item-label>Finish</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="actOnOrder(props.row.id, 'canceled')">
+                  <q-item-section>
+                    <q-item-label>Cancel</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
           </q-td>
         </q-tr>
       </template>
@@ -32,13 +85,19 @@
 </template>
 
 <script>
-import axios from "axios";
+import { orderRelatedApi } from "../mixins/orderRelatedApi";
 export default {
   name: "OrderListTable",
+  props: {
+    filter: {
+      type: String,
+      required: true
+    }
+  },
+  mixins: [orderRelatedApi],
   data() {
     return {
       separator: "vertical",
-
       columns: [
         {
           name: "id",
@@ -88,8 +147,8 @@ export default {
         },
         {
           name: "action",
-          label: "Action",
-        },
+          label: "Action"
+        }
       ],
       data: [
         {
@@ -102,35 +161,46 @@ export default {
           calcium: "14%",
           iron: "1%"
         }
-      ],
-      orders: [
-        {
-          id: 1,
-          name: "",
-          mobile: "",
-          address: "",
-          amount: "",
-          created_at: "",
-          status: ""
-        }
       ]
     };
   },
-  methods: {
-    getOrders() {
-      axios({
-        method: "get",
-        url: "http://localhost:8000/api/orders"
-      })
-        .then(response => {
-          this.orders = response.data.result;
-          console.log(response.data.result);
-        })
-        .catch(error => console.log(error));
+  computed: {
+    orders() {
+      return this.$store.state.orders;
+    },
+    tableOrders() {
+      if (this.filter == "pending") {
+        let orders = this.$store.state.orders;
+        return orders.filter(order => order.status == "pending");
+      }
+      if (this.filter == "confirmed") {
+        let orders = this.$store.state.orders;
+        return orders.filter(order => order.status == "confirmed");
+      }
+      if (this.filter == "on the way") {
+        let orders = this.$store.state.orders;
+        return orders.filter(order => order.status == "on the way");
+      }
+      if (this.filter == "canceled") {
+        let orders = this.$store.state.orders;
+        return orders.filter(order => order.status == "canceled");
+      }
+      if (this.filter == "delivered") {
+        let orders = this.$store.state.orders;
+        return orders.filter(order => order.status == "delivered");
+      }
+    },
+    disableActionBtn() {
+      if (this.filter == "delivered" || this.filter == "canceled") {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
+  methods: {},
   mounted() {
-    this.getOrders();
+    // console.log(this.filter);
   }
 };
 </script>

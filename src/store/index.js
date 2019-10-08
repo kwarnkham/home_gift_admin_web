@@ -10,16 +10,31 @@ Vue.use(Vuex)
  * directly export the Store instantiation
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      // example
-    },
+export default new Vuex.Store({
+  state: {
+    apiUrl: 'http://localhost:8000/api',
+    orders: [],
+  },
+  mutations: {
+    setOrders(state, payload) {
+      // mutate state
+      state.orders = payload
+    }
+  },
+  actions: {
+    setOrders(context, payload) {
+      context.commit('setOrders', payload)
+    }
+  },
+  modules: {
+    // example
+  },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  })
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: process.env.DEV
+})
 
-  return Store
-}
+
+
+

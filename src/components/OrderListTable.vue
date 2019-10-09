@@ -10,7 +10,7 @@
       <template v-slot:top>
         <q-space />
         <q-btn outline color="primary" label="Update" @click="getOrders()">
-          <q-badge color="orange" floating>1</q-badge>
+          <q-badge color="orange" floating v-if="newOrderCount> 0">{{newOrderCount}}</q-badge>
         </q-btn>
       </template>
       <template v-slot:body="props">
@@ -150,18 +150,7 @@ export default {
           label: "Action"
         }
       ],
-      data: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: "14%",
-          iron: "1%"
-        }
-      ]
+      channel: null
     };
   },
   computed: {
@@ -196,11 +185,17 @@ export default {
       } else {
         return false;
       }
+    },
+    newOrderCount() {
+      return this.$store.state.newOrderCount;
     }
   },
   methods: {},
-  mounted() {
-    // console.log(this.filter);
+  created() {
+    this.channel = Echo.channel("orders");
+    this.channel.listen("OrderCreated", e =>
+      this.$store.dispatch("newOrderCountIncrement")
+    );
   }
 };
 </script>

@@ -14,6 +14,7 @@ export const orderRelatedApi = {
                 .then(response => {
                     this.$q.loading.hide();
                     store.dispatch("setOrders", response.data.result);
+                    store.dispatch('resetNewOrderCount')
                 })
                 .catch(error => console.log(error));
         },

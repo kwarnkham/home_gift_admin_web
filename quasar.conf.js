@@ -73,7 +73,8 @@ module.exports = function (ctx) {
         'QCard',
         'QSeparator',
         'QInput',
-        'QSpace'
+        'QSpace',
+        'QForm'
       ],
 
       directives: [
@@ -85,7 +86,8 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Loading',
-        'Notify'
+        'Notify',
+        'Dialog'
       ]
     },
 

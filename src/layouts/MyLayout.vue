@@ -11,38 +11,37 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title>
-          Home Gift Admin
-        </q-toolbar-title>
+        <q-toolbar-title>Home Gift Admin</q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-2"
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-2">
       <q-list>
-        <q-item-label header>Essential Links</q-item-label>
-        <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
+        <q-item-label header>Admin Actions</q-item-label>
+        <q-item clickable @click="route('orders')">
           <q-item-section avatar>
-            <q-icon name="school" />
+            <q-icon name="assignment" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Docs</q-item-label>
-            <q-item-label caption>quasar.dev</q-item-label>
+            <q-item-label>Orders</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.quasar.dev">
+        <q-item clickable @click="route('addItem')">
           <q-item-section avatar>
-            <q-icon name="code" />
+            <q-icon name="add_box" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Github</q-item-label>
-            <q-item-label caption>github.com/quasarframework</q-item-label>
+            <q-item-label>Add Item</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable @click="route('location')">
+          <q-item-section avatar>
+            <q-icon name="location_city" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Location</q-item-label>
           </q-item-section>
         </q-item>
         <q-item clickable tag="a" target="_blank" href="https://chat.quasar.dev">
@@ -92,12 +91,22 @@
 
 <script>
 export default {
-  name: 'MyLayout',
+  name: "MyLayout",
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false
+    };
+  },
+  methods: {
+    route(name) {
+      if (this.$route.name == name) {
+        this.leftDrawerOpen = false;
+      }
+      if (this.$route.name != name) {
+        this.$router.push({ name: name });
+      }
     }
   }
-}
+};
 </script>

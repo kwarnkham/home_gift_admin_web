@@ -15,7 +15,8 @@ export default new Vuex.Store({
     apiUrl: 'http://localhost:8000/api',
     orders: [],
     newOrderCount: 0,
-    locations: []
+    locations: [],
+    merchants: []
   },
   mutations: {
     setOrders(state, payload) {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     },
     setLocations(state, payload) {
       state.locations = payload;
+    },
+    setMerchants(state, payload) {
+      state.merchants = payload
     }
   },
   actions: {
@@ -44,6 +48,9 @@ export default new Vuex.Store({
     },
     setLocations(context, payload) {
       context.commit('setLocations', payload)
+    },
+    setMerchants(context, payload) {
+      context.commit('setMerchants', payload)
     }
   },
   modules: {

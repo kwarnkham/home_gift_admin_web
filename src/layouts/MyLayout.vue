@@ -52,13 +52,12 @@
             <q-item-label>Merchant</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
+        <q-item clickable @click="route('category')">
           <q-item-section avatar>
-            <q-icon name="record_voice_over" />
+            <q-icon name="category" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar.dev</q-item-label>
+            <q-item-label>Category</q-item-label>
           </q-item-section>
         </q-item>
         <q-item clickable tag="a" target="_blank" href="https://twitter.quasar.dev">

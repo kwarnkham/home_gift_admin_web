@@ -16,7 +16,8 @@ export default new Vuex.Store({
     orders: [],
     newOrderCount: 0,
     locations: [],
-    merchants: []
+    merchants: [],
+    categories: []
   },
   mutations: {
     setOrders(state, payload) {
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     setMerchants(state, payload) {
       state.merchants = payload
+    },
+    setCategories(state, payload) {
+      state.categories = payload
     }
   },
   actions: {
@@ -51,6 +55,9 @@ export default new Vuex.Store({
     },
     setMerchants(context, payload) {
       context.commit('setMerchants', payload)
+    },
+    setCategories(context, payload) {
+      context.commit('setCategories', payload)
     }
   },
   modules: {

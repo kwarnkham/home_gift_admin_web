@@ -1,6 +1,6 @@
 <template>
   <q-page class="row">
-    <q-form class="col-12 q-pa-md">
+    <q-form class="col-12 q-pa-md" @submit="onSubmit" ref="addItemForm">
       <q-input
         filled
         v-model="name"
@@ -39,6 +39,8 @@
         label="Location"
         option-label="name"
         option-value="id"
+        lazy-rules
+        :rules="[ val => val && val != null || 'Please choose something']"
       />
       <q-select
         v-model="selectedMerchant"
@@ -46,6 +48,8 @@
         label="Merchant"
         option-label="name"
         option-value="id"
+        lazy-rules
+        :rules="[ val => val && val != null || 'Please choose something']"
       />
 
       <q-select
@@ -55,6 +59,8 @@
         label="Categories"
         option-label="name"
         option-value="id"
+        lazy-rules
+        :rules="[ val => val && val != null || 'Please choose something']"
       />
       <input
         class="hidden"
@@ -88,7 +94,13 @@
         style="width:100%"
       />
       <div class="text-right q-mt-sm">
-        <q-btn label="Add" class="q-mt-sm bg-info text-white" rounded icon-right="add"/>
+        <q-btn
+          label="Add"
+          class="q-mt-sm bg-info text-white"
+          rounded
+          icon-right="add"
+          type="submit"
+        />
       </div>
     </q-form>
   </q-page>
@@ -98,17 +110,23 @@
 import { locationRelatedApi } from "../mixins/locationRelatedApi";
 import { merchantRelatedApi } from "../mixins/merchantRelatedApi";
 import { categoryRelatedApi } from "../mixins/categoryRelatedApi";
+import { itemRelatedApi } from "../mixins/itemRelatedApi";
 
 export default {
   name: "AddItem",
-  mixins: [locationRelatedApi, merchantRelatedApi, categoryRelatedApi],
+  mixins: [
+    locationRelatedApi,
+    merchantRelatedApi,
+    categoryRelatedApi,
+    itemRelatedApi
+  ],
   components: {},
 
   data: () => ({
     name: "",
     price: "",
     description: "",
-    notice: "",
+    notice: null,
     weight: "",
     selectedLocation: null,
     selectedMerchant: null,
@@ -154,6 +172,29 @@ export default {
     },
     setImage(e) {
       this.images = Array.from(e.target.files);
+    },
+    onSubmit() {
+      if (this.images == null || this.images.length < 1) {
+        this.$q.dialog({
+          title: "Add Picture",
+          message: "Please choose at least one picture for the item"
+        });
+      }
+      if (this.images != null) {
+        if (this.images.length > 0) {
+          this.addItem(
+            this.name,
+            this.price,
+            this.description,
+            this.notice,
+            this.weight,
+            this.selectedLocation,
+            this.selectedMerchant,
+            this.selectedCategories,
+            this.images
+          );
+        }
+      }
     }
   },
   mounted() {

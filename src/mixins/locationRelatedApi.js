@@ -16,7 +16,7 @@ export const locationRelatedApi = {
             })
                 .then(response => {
                     this.$q.loading.hide();
-                    console.log(response.data)
+                    // console.log(response.data)
                     if (response.data.code == '0') {
                         this.getLocations()
                     }

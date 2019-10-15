@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../store/index";
 export const locationRelatedApi = {
     created() {
-        // console.log(store.state.apiUrl);
+        // console.log('mixing location api')
     },
     methods: {
         async addLocation(name) {

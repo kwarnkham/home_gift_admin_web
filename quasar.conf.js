@@ -74,7 +74,10 @@ module.exports = function (ctx) {
         'QSeparator',
         'QInput',
         'QSpace',
-        'QForm'
+        'QForm',
+        'QSelect',
+        'QUploader',
+        'QImg'
       ],
 
       directives: [

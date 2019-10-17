@@ -13,11 +13,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     apiUrl: 'http://localhost:8000/api',
+    imageHost: 'http://localhost:8000/storage',
     orders: [],
     newOrderCount: 0,
     locations: [],
     merchants: [],
-    categories: []
+    categories: [],
+    items: []
   },
   mutations: {
     setOrders(state, payload) {
@@ -38,7 +40,10 @@ export default new Vuex.Store({
     },
     setCategories(state, payload) {
       state.categories = payload
-    }
+    },
+    setItems(state, payload) {
+      state.items = payload
+    },
   },
   actions: {
     setOrders(context, payload) {
@@ -58,7 +63,10 @@ export default new Vuex.Store({
     },
     setCategories(context, payload) {
       context.commit('setCategories', payload)
-    }
+    },
+    setItems(context, payload) {
+      context.commit('setItems', payload)
+    },
   },
   modules: {
     // example

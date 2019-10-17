@@ -77,7 +77,10 @@ module.exports = function (ctx) {
         'QForm',
         'QSelect',
         'QUploader',
-        'QImg'
+        'QImg',
+        'QCard',
+        'QCardActions',
+        'QCardSection'
       ],
 
       directives: [

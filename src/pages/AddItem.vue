@@ -69,7 +69,7 @@
         name="files"
         accept="image/*"
         multiple
-        @change="setImage($event)"
+        @input="setImage($event)"
       />
       <div class="row" v-if="thumbnails.length>0">
         <div v-for="(thumbnail, key) in thumbnails" :key="key" class="col-6 q-pa-sm">
@@ -144,20 +144,25 @@ export default {
     categories() {
       return this.$store.state.categories;
     }
+    // test(){
+    //   return this.$refs.fileInput
+    // }
   },
   watch: {
     images(value) {
-      this.thumbnails = [];
       // console.log(value[0].name);
-      if (value.length > 0) {
-        for (let i = 0; i < value.length; i++) {
-          let reader = new FileReader();
-          reader.readAsDataURL(value[i]);
-          reader.onload = reader =>
-            this.thumbnails.push({
-              name: value[i].name,
-              content: reader.target.result
-            });
+      if (value != null) {
+        if (value.length > 0) {
+          this.thumbnails = [];
+          for (let i = 0; i < value.length; i++) {
+            let reader = new FileReader();
+            reader.readAsDataURL(value[i]);
+            reader.onload = reader =>
+              this.thumbnails.push({
+                name: value[i].name,
+                content: reader.target.result
+              });
+          }
         }
       }
     }
@@ -169,9 +174,13 @@ export default {
           this.images.splice(i, 1);
         }
       }
+      if (this.images.length < 1) {
+        this.thumbnails = [];
+      }
     },
     setImage(e) {
       this.images = Array.from(e.target.files);
+      this.$refs.fileInput.value = "";
     },
     onSubmit() {
       if (this.images == null || this.images.length < 1) {
@@ -192,7 +201,19 @@ export default {
             this.selectedMerchant,
             this.selectedCategories,
             this.images
-          );
+          ).then(() => {
+            this.name = "";
+            this.price = "";
+            this.description = "";
+            this.notice = null;
+            this.weight = "";
+            this.selectedLocation = null;
+            this.selectedMerchant = null;
+            this.selectedCategories = null;
+            this.images = null;
+            this.thumbnails = [];
+            this.$refs.addItemForm.resetValidation();
+          });
         }
       }
     }

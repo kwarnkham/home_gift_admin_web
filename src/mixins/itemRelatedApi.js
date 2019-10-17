@@ -21,12 +21,12 @@ export const itemRelatedApi = {
                     notice: notice
                 }
             })
-                .then(response => {
+                .then(async response => {
                     this.$q.loading.hide();
                     // console.log(response.data)
                     if (response.data.code == '0') {
-                        this.addCategoriesToItem(response.data.result.id, categories)
-                        this.addImagesToItem(response.data.result.id, images)
+                        await this.addCategoriesToItem(response.data.result.id, categories)
+                        await this.addImagesToItem(response.data.result.id, images)
                     }
                     if (response.data.code == '1') {
                         this.$q.notify({
@@ -72,7 +72,20 @@ export const itemRelatedApi = {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 data: formData
             }).then(response => {
-                console.log(response.data)
+                this.$q.loading.hide();
+                // console.log(response.data)
+            }).catch(error => console.log(error))
+        },
+
+        async getItems(itemId, files) {
+            this.$q.loading.show();
+            await axios({
+                method: "get",
+                url: `${store.state.apiUrl}/items`,
+            }).then(response => {
+                this.$q.loading.hide();
+                store.dispatch('setItems', response.data.result)
+                // console.log(response.data)
             }).catch(error => console.log(error))
         },
     }

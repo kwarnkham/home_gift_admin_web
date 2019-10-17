@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpr fFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -60,22 +60,12 @@
             <q-item-label>Category</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://twitter.quasar.dev">
+        <q-item clickable @click="route('item')">
           <q-item-section avatar>
-            <q-icon name="rss_feed" />
+            <q-icon name="fastfood" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-            <q-item-label caption>@quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://facebook.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="public" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Facebook</q-item-label>
-            <q-item-label caption>@QuasarFramework</q-item-label>
+            <q-item-label>Items</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

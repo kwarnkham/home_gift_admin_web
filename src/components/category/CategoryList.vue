@@ -7,10 +7,8 @@
 </template>
 
 <script>
-import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
   name: "CategoryList",
-  mixins: [categoryRelatedApi],
   data() {
     return {};
   },
@@ -38,7 +36,6 @@ export default {
     }
   },
   created() {
-    this.getCategories();
   }
 };
 </script>

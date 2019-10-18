@@ -88,5 +88,28 @@ export const itemRelatedApi = {
                 // console.log(response.data)
             }).catch(error => console.log(error))
         },
+
+        async updateItem(item) {
+            var result = {}
+            this.$q.loading.show();
+            await axios({
+                method: "put",
+                url: `${store.state.apiUrl}/item/${item.id}`,
+                data: {
+                    name: item.name,
+                    price: item.price,
+                    description: item.description,
+                    notice: item.notice,
+                    weight: item.weight,
+                    merchant_id: item.merchant.id,
+                    location_id: item.location.id
+                }
+            }).then(response => {
+                this.$q.loading.hide();
+                result = response
+                // console.log(response.data)
+            }).catch(error => console.log(error))
+            return result
+        },
     }
 }

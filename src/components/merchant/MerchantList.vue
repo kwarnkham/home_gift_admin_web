@@ -7,10 +7,8 @@
 </template>
 
 <script>
-import { merchantRelatedApi } from "../../mixins/merchantRelatedApi";
 export default {
   name: "MerchantList",
-  mixins: [merchantRelatedApi],
   data() {
     return {};
   },
@@ -38,7 +36,7 @@ export default {
     }
   },
   created() {
-    this.getMerchants();
+    
   }
 };
 </script>

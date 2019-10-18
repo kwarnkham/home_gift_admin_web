@@ -10,8 +10,7 @@ const routes = [
       { path: '/merchant', component: () => import('pages/Merchant.vue'), name: 'merchant' },
       { path: '/category', component: () => import('pages/Category.vue'), name: 'category' },
       { path: '/item', component: () => import('pages/Item.vue'), name: 'item' },
-
-
+      { path: '/item-details/:itemId', component: () => import('pages/ItemDetails.vue'), name: 'itemDetails' },
     ]
   }
 ]

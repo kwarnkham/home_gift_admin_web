@@ -7,10 +7,8 @@
 </template>
 
 <script>
-import { locationRelatedApi } from "../../mixins/locationRelatedApi";
 export default {
   name: "LocationList",
-  mixins: [locationRelatedApi],
   data() {
     return {};
   },
@@ -38,7 +36,6 @@ export default {
     }
   },
   created() {
-    this.getLocations();
   }
 };
 </script>

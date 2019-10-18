@@ -107,19 +107,11 @@
 </template>
 
 <script>
-import { locationRelatedApi } from "../mixins/locationRelatedApi";
-import { merchantRelatedApi } from "../mixins/merchantRelatedApi";
-import { categoryRelatedApi } from "../mixins/categoryRelatedApi";
 import { itemRelatedApi } from "../mixins/itemRelatedApi";
 
 export default {
   name: "AddItem",
-  mixins: [
-    locationRelatedApi,
-    merchantRelatedApi,
-    categoryRelatedApi,
-    itemRelatedApi
-  ],
+  mixins: [itemRelatedApi],
   components: {},
 
   data: () => ({
@@ -217,11 +209,6 @@ export default {
         }
       }
     }
-  },
-  mounted() {
-    this.getLocations();
-    this.getMerchants();
-    this.getCategories();
   }
 };
 </script>

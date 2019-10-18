@@ -1,28 +1,34 @@
 <template>
   <q-page class="row q-pa-sm q-gutter-md justify-evenly">
-    <q-card class="col-3" v-for="item in items" :key="item.id">
-      <img :src="`${$store.state.imageHost}/item_images/item_placeholder.png`" />
+    <div class="col-3" v-for="item in items" :key="item.id">
+      <q-card>
+        <img :src="`${$store.state.imageHost}/item_images/item_placeholder.png`" />
 
-      <q-card-section>
-        <div class="text-h6">{{item.name}}</div>
-        <div class="text-subtitle2">{{item.price}}</div>
-      </q-card-section>
+        <q-card-section>
+          <div class="text-h6">{{item.name}}</div>
+          <div class="text-subtitle2">{{item.price}}</div>
+        </q-card-section>
 
-      <q-card-section>{{item.description}}</q-card-section>
-      <q-card-actions align="around">
-        <!-- <q-btn flat round color="red" icon="favorite" /> -->
-        <q-btn flat round color="teal" icon="launch" />
-        <q-btn flat round color="primary" icon="delete" />
-      </q-card-actions>
-    </q-card>
+        <q-card-section>{{item.description}}</q-card-section>
+        <q-card-actions align="around">
+          <!-- <q-btn flat round color="red" icon="favorite" /> -->
+          <q-btn
+            flat
+            round
+            color="teal"
+            icon="launch"
+            @click="$router.push({name:'itemDetails', params:{itemId:item.id}})"
+          />
+          <q-btn flat round color="primary" icon="delete" />
+        </q-card-actions>
+      </q-card>
+    </div>
   </q-page>
 </template>
 <script>
-import { itemRelatedApi } from "../mixins/itemRelatedApi";
 export default {
   name: "Item",
   components: {},
-  mixins: [itemRelatedApi],
   data() {
     return {};
   },
@@ -33,7 +39,6 @@ export default {
   },
   methods: {},
   created() {
-    this.getItems();
   }
 };
 </script>

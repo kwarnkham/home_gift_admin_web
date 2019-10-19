@@ -27,6 +27,7 @@ export const itemRelatedApi = {
                     if (response.data.code == '0') {
                         await this.addCategoriesToItem(response.data.result.id, categories)
                         await this.addImagesToItem(response.data.result.id, images)
+                        await this.getItems()
                     }
                     if (response.data.code == '1') {
                         this.$q.notify({
@@ -111,5 +112,25 @@ export const itemRelatedApi = {
             }).catch(error => console.log(error))
             return result
         },
+
+        async updateCategory(item) {
+            var result = {}
+            let categories = []
+            item.categories.forEach(category => {
+                categories.push(category.id)
+            })
+            this.$q.loading.show();
+            await axios({
+                method: 'put',
+                url: `${store.state.apiUrl}/item/${item.id}/categories`,
+                data: {
+                    categories: categories
+                }
+            }).then(response => {
+                this.$q.loading.hide();
+                result = response
+            }).catch(error => console.log(error))
+            return result
+        }
     }
 }

@@ -1,14 +1,16 @@
 <template>
   <div class="col-12 row">
     <div v-for="category in categories" :key="category.id" class="col-3 flex flex-center">
-      <q-btn :label="category.name" @dblclick="showEditForm(category)"  no-caps/>
+      <q-btn :label="category.name" @dblclick="showEditForm(category)" no-caps />
     </div>
   </div>
 </template>
 
 <script>
+import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
   name: "CategoryList",
+  mixins: [categoryRelatedApi],
   data() {
     return {};
   },
@@ -35,7 +37,6 @@ export default {
         });
     }
   },
-  created() {
-  }
+  created() {}
 };
 </script>

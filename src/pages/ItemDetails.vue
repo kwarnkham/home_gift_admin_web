@@ -1,11 +1,13 @@
 <template>
   <q-page class="row">
     <div class="col-12" v-if="item != undefined">
-      <q-carousel animated v-model="slide" arrows navigation infinite>
-        <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-        <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-        <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-        <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+      <q-carousel animated v-model="slide" arrows navigation infinite autoplay style="width:600px" height="300px">
+        <q-carousel-slide
+          v-for="(image, key) in item.images"
+          :key="image.id"
+          :name="key+1"
+          :img-src="`${$store.state.imageHost}/item_images/${image.name}`"
+        />
       </q-carousel>
       <div>
         <q-btn label="Name" flat no-caps @dblclick="showEditNameForm()" />
@@ -218,9 +220,9 @@ export default {
         .onOk(categories => {
           // console.log(categories)
           this.formItem.categories = [...categories];
-          // this.updateItem(this.formItem).then(() => {
-          //   this.getItems();
-          // });
+          this.updateCategory(this.formItem).then(() => {
+            this.getItems();
+          });
         });
     },
     cloneObj(object) {

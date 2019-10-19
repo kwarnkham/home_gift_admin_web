@@ -1,14 +1,16 @@
 <template>
   <div class="col-12 row">
     <div v-for="location in locations" :key="location.id" class="col-3 flex flex-center">
-      <q-btn :label="location.name" @dblclick="showEditForm(location)"  no-caps/>
+      <q-btn :label="location.name" @dblclick="showEditForm(location)" no-caps />
     </div>
   </div>
 </template>
 
 <script>
+import { locationRelatedApi } from "../../mixins/locationRelatedApi";
 export default {
   name: "LocationList",
+  mixins: [locationRelatedApi],
   data() {
     return {};
   },
@@ -35,7 +37,6 @@ export default {
         });
     }
   },
-  created() {
-  }
+  created() {}
 };
 </script>

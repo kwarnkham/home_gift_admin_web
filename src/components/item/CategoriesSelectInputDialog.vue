@@ -9,11 +9,17 @@
           label="Categories"
           option-label="name"
           option-value="id"
+          :rules="[ val => val && val.length>0 || 'Please choose something']"
         />
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn color="primary" label="OK" @click="onOKClick" />
+        <q-btn
+          color="primary"
+          label="OK"
+          @click="onOKClick"
+          :disable="selectedCategories.length < 1"
+        />
         <q-btn color="primary" label="Cancel" @click="onCancelClick" />
       </q-card-actions>
     </q-card>
@@ -30,7 +36,7 @@ export default {
   },
   data() {
     return {
-      selectedCategories: null
+      selectedCategories: []
     };
   },
   computed: {
@@ -58,10 +64,9 @@ export default {
     },
 
     onOKClick() {
-      // on OK, it is REQUIRED to
-      // emit "ok" event (with optional payload)
-      // before hiding the QDialog
-      this.$emit("ok", this.selectedCategories);
+      if (this.selectedCategories.length > 0) {
+        this.$emit("ok", this.selectedCategories);
+      }
       // or with payload: this.$emit('ok', { ... })
 
       // then hiding dialog

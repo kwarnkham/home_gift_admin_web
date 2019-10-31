@@ -1,7 +1,16 @@
 <template>
   <q-page class="row">
     <div class="col-12" v-if="item != undefined">
-      <q-carousel animated v-model="slide" arrows navigation infinite autoplay style="width:600px" height="300px">
+      <q-carousel
+        animated
+        v-model="slide"
+        arrows
+        navigation
+        infinite
+        autoplay
+        style="width:600px"
+        height="300px"
+      >
         <q-carousel-slide
           v-for="(image, key) in item.images"
           :key="image.id"
@@ -94,8 +103,10 @@ export default {
         })
         .onOk(data => {
           this.formItem.name = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
+          this.updateItem(this.formItem).then(response => {
+            if (response != null) {
+              this.getItems();
+            }
           });
           // console.log(data);
         });

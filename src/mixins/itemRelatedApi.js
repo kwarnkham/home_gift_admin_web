@@ -91,7 +91,7 @@ export const itemRelatedApi = {
         },
 
         async updateItem(item) {
-            var result = {}
+            var result = null
             this.$q.loading.show();
             await axios({
                 method: "put",
@@ -107,7 +107,15 @@ export const itemRelatedApi = {
                 }
             }).then(response => {
                 this.$q.loading.hide();
-                result = response
+                if (response.data.code == '0') {
+                    result = response
+                }
+                if (response.data.code == '1') {
+                    this.$q.notify({
+                        message: response.data.msg,
+                        closeBtn: 'Close'
+                    })
+                }
                 // console.log(response.data)
             }).catch(error => console.log(error))
             return result

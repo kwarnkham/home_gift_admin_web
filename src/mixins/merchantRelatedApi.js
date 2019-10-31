@@ -39,7 +39,7 @@ export const merchantRelatedApi = {
                     this.$q.loading.hide();
                     // console.log(response.data)
                     if (response.data.code == '0') {
-                        store.dispatch("setMerchants", response.data.result);
+                        store.dispatch("setMerchants", response.data.result.merchants);
                     }
                     if (response.data.code == '1') {
                         this.$q.notify({

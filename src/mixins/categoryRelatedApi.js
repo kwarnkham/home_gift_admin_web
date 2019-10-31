@@ -39,7 +39,7 @@ export const categoryRelatedApi = {
                     this.$q.loading.hide();
                     // console.log(response.data)
                     if (response.data.code == '0') {
-                        store.dispatch("setCategories", response.data.result);
+                        store.dispatch("setCategories", response.data.result.categories);
                     }
                     if (response.data.code == '1') {
                         this.$q.notify({

@@ -1,7 +1,7 @@
 <template>
   <q-page class="row q-pa-sm q-gutter-md justify-evenly">
     <div class="col-3" v-for="item in items" :key="item.id">
-      <q-card>
+      <q-card v-if="item.images[0] != undefined">
         <img :src="`${$store.state.imageHost}/item_images/${item.images[0].name}`" />
 
         <q-card-section>

@@ -25,8 +25,8 @@ export const itemRelatedApi = {
                     this.$q.loading.hide();
                     // console.log(response.data)
                     if (response.data.code == '0') {
-                        await this.addCategoriesToItem(response.data.result.id, categories)
-                        await this.addImagesToItem(response.data.result.id, images)
+                        await this.addCategoriesToItem(response.data.result.item.id, categories)
+                        await this.addImagesToItem(response.data.result.item.id, images)
                         await this.getItems()
                     }
                     if (response.data.code == '1') {
@@ -85,7 +85,7 @@ export const itemRelatedApi = {
                 url: `${store.state.apiUrl}/items`,
             }).then(response => {
                 this.$q.loading.hide();
-                store.dispatch('setItems', response.data.result)
+                store.dispatch('setItems', response.data.result.items)
                 // console.log(response.data)
             }).catch(error => console.log(error))
         },

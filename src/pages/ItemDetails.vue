@@ -43,8 +43,7 @@
         arrows
         navigation
         infinite
-        style="width:600px"
-        height="300px"
+        height="400px"
       >
         <q-carousel-slide
           v-for="image in item.images"

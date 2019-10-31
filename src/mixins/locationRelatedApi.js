@@ -39,7 +39,7 @@ export const locationRelatedApi = {
                     this.$q.loading.hide();
                     // console.log(response.data)
                     if (response.data.code == '0') {
-                        store.dispatch("setLocations", response.data.result);
+                        store.dispatch("setLocations", response.data.result.locations);
                     }
                     if (response.data.code == '1') {
                         this.$q.notify({

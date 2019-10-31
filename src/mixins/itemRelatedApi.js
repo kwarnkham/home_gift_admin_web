@@ -139,6 +139,21 @@ export const itemRelatedApi = {
                 result = response
             }).catch(error => console.log(error))
             return result
+        },
+
+        async deleteImage(imageId) {
+            var result = null
+            this.$q.loading.show()
+            await axios({
+                method: 'delete',
+                url: `${store.state.apiUrl}/image/${imageId}`,
+            }).then(response => {
+                this.$q.loading.hide()
+                if (response.data.code == '0') {
+                    result = response
+                }
+            })
+            return result;
         }
     }
 }

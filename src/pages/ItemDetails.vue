@@ -1,23 +1,6 @@
 <template>
-  <q-page class="row">
-    <div class="col-12" v-if="item != undefined">
-      <q-carousel
-        animated
-        v-model="slide"
-        arrows
-        navigation
-        infinite
-        autoplay
-        style="width:600px"
-        height="300px"
-      >
-        <q-carousel-slide
-          v-for="(image, key) in item.images"
-          :key="image.id"
-          :name="key+1"
-          :img-src="`${$store.state.imageHost}/item_images/${image.name}`"
-        />
-      </q-carousel>
+  <q-page class="row" v-if="item != undefined">
+    <div class="col-4 bg-grey-5">
       <div>
         <q-btn label="Name" flat no-caps @dblclick="showEditNameForm()" />
         : {{item.name}}
@@ -51,6 +34,42 @@
         : {{categories.join(', ')}}
       </div>
     </div>
+
+    <div class="col-6">
+      <q-carousel
+        ref="imageSlides"
+        animated
+        v-model="slide"
+        arrows
+        navigation
+        infinite
+        style="width:600px"
+        height="300px"
+      >
+        <q-carousel-slide
+          v-for="image in item.images"
+          v-model="slide"
+          :key="image.id"
+          :name="image.id"
+          :img-src="`${$store.state.imageHost}/item_images/${image.name}`"
+        />
+        <template v-slot:control>
+          <q-carousel-control position="top-right" :offset="[18, 18]">
+            <q-btn
+              icon="close"
+              round
+              color="red"
+              @click="deleteItemPic"
+              :disable="item.images.length < 2"
+            />
+          </q-carousel-control>
+
+          <q-carousel-control position="bottom-right" :offset="[18, 18]" class="q-gutter-xs">
+            <q-btn icon="add" round color="primary" @click="addItemPic" />
+          </q-carousel-control>
+        </template>
+      </q-carousel>
+    </div>
   </q-page>
 </template>
 <script>
@@ -69,7 +88,7 @@ export default {
   },
   data() {
     return {
-      slide: 1,
+      slide: null,
       formItem: {}
     };
   },
@@ -88,7 +107,30 @@ export default {
       return temp;
     }
   },
+  watch: {
+    item(value) {
+      this.slide = value.images[0].id;
+    }
+  },
   methods: {
+    deleteItemPic() {
+      this.deleteImage(this.slide).then(response => {
+        if (response != null) {
+          this.getItems();
+        }
+      });
+    },
+    addItemPic() {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".png, .jpg";
+      let file;
+      input.onchange = _ => {
+        const files = Array.from(input.files);
+        this.addImagesToItem(this.item.id, files).then(() => this.getItems());
+      };
+      input.click();
+    },
     showEditNameForm() {
       this.$q
         .dialog({
@@ -252,6 +294,6 @@ export default {
       return { ...temp };
     }
   },
-  created() {}
+  mounted() {}
 };
 </script>

@@ -8,11 +8,11 @@
         indicator-color="primary"
         align="justify"
       >
-        <q-tab name="pending" label="Pending" />
-        <q-tab name="confirmed" label="Confirmed" />
-        <q-tab name="onTheWay" label="On The Way" />
-        <q-tab name="Canceled" label="Canceled" />
-        <q-tab name="Delivered" label="Delivered" />
+        <q-tab name="pending" :label="$t('pending')" />
+        <q-tab name="confirmed" :label="$t('confirmed')" />
+        <q-tab name="onTheWay" :label="$t('onTheWay')" />
+        <q-tab name="Canceled" :label="$tc('cancel',2)" />
+        <q-tab name="Delivered" :label="$t('delivered')" />
       </q-tabs>
 
       <q-separator />

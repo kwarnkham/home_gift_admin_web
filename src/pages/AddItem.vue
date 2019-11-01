@@ -4,63 +4,69 @@
       <q-input
         filled
         v-model="name"
-        label="Item Name"
+        :label="$t('itemName')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please type something']"
+        :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
       />
       <q-input
         filled
         type="number"
         v-model="price"
-        label="Price"
+        :label="$t('price')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please type something', val => val && val > 0 || 'Price cannot be negative value']"
+        :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething'), val => val && val > 0 || $t('priceCannotBeNegativeValue')]"
       />
       <q-input
         filled
         type="number"
         v-model="weight"
-        label="Weight in kg"
+        :label="$t('weight')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please type something', val => val && val > 0 || 'Price cannot be negative value']"
+        :rules="[ val => val && val.length > 0 ||  $t('pleaseTypeSomething'), val => val && val > 0 || $t('weightCannotBeNegativeValue')]"
       />
       <q-input
         filled
         type="textarea"
         v-model="description"
-        label="Description"
+        :label="$t('description')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please type something']"
+        :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
       />
-      <q-input filled type="textarea" v-model="notice" label="Notice" hint="Optional" />
+      <q-input
+        filled
+        type="textarea"
+        v-model="notice"
+        :label=" $t('notice')"
+        :hint="$t('optional')"
+      />
       <q-select
         v-model="selectedLocation"
         :options="locations"
-        label="Location"
+        :label="$t('location')"
         option-label="name"
         option-value="id"
         lazy-rules
-        :rules="[ val => val && val != null || 'Please choose something']"
+        :rules="[ val => val && val != null || $t('pleaseChooseSomething')]"
       />
       <q-select
         v-model="selectedMerchant"
         :options="merchants"
-        label="Merchant"
+        :label="$t('merchant')"
         option-label="name"
         option-value="id"
         lazy-rules
-        :rules="[ val => val && val != null || 'Please choose something']"
+        :rules="[ val => val && val != null ||  $t('pleaseChooseSomething')]"
       />
 
       <q-select
         multiple
         v-model="selectedCategories"
         :options="categories"
-        label="Categories"
+        :label="$tc('category',2)"
         option-label="name"
         option-value="id"
         lazy-rules
-        :rules="[ val => val && val != null || 'Please choose something']"
+        :rules="[ val => val && val != null ||  $t('pleaseChooseSomething')]"
       />
       <input
         class="hidden"
@@ -88,14 +94,14 @@
         </div>
       </div>
       <q-btn
-        label="Choose Image"
+        :label="$t('chooseImage')"
         @click="$refs.fileInput.click()"
         class="q-mt-sm bg-secondary text-white"
         style="width:100%"
       />
       <div class="text-right q-mt-sm">
         <q-btn
-          label="Add"
+          :label="$t('add')"
           class="q-mt-sm bg-info text-white"
           rounded
           icon-right="add"

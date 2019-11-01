@@ -5,15 +5,15 @@
         <q-select
           v-model="selectedLocation"
           :options="locations"
-          label="Location"
+          :label="$t('location')"
           option-label="name"
           option-value="id"
         />
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn color="primary" label="OK" @click="onOKClick" />
-        <q-btn color="primary" label="Cancel" @click="onCancelClick" />
+        <q-btn color="primary" :label="$t('ok')" @click="onOKClick" />
+        <q-btn color="primary" :label="$tc('cancel',1)" @click="onCancelClick" />
       </q-card-actions>
     </q-card>
   </q-dialog>

@@ -2,35 +2,35 @@
   <q-page class="row" v-if="item != undefined">
     <div class="col-4 bg-grey-5">
       <div>
-        <q-btn label="Name" flat no-caps @dblclick="showEditNameForm()" />
+        <q-btn :label="$t('name')" flat no-caps @dblclick="showEditNameForm()" />
         : {{item.name}}
       </div>
       <div>
-        <q-btn label="Price" flat no-caps @dblclick="showEditPriceForm()" />
+        <q-btn :label="$t('price')" flat no-caps @dblclick="showEditPriceForm()" />
         : {{item.price}}
       </div>
       <div>
-        <q-btn label="Description" flat no-caps @dblclick="showEditDescriptionForm()" />
+        <q-btn :label="$t('description')" flat no-caps @dblclick="showEditDescriptionForm()" />
         : {{item.description}}
       </div>
       <div>
-        <q-btn label="Notice" flat no-caps @dblclick="showEditNoticeForm()" />
+        <q-btn :label="$t('notice')" flat no-caps @dblclick="showEditNoticeForm()" />
         : {{item.notice}}
       </div>
       <div>
-        <q-btn label="Weight" flat no-caps @dblclick="showEditWeightForm()" />
-        : {{item.weight}}
+        <q-btn :label="$tc('weight',1)" flat no-caps @dblclick="showEditWeightForm()" />
+        : {{item.weight}} kg
       </div>
       <div>
-        <q-btn label="Merchant" flat no-caps @dblclick="showEditMerchantForm()" />
+        <q-btn :label="$t('merchant')" flat no-caps @dblclick="showEditMerchantForm()" />
         : {{item.merchant.name}}
       </div>
       <div>
-        <q-btn label="Location" flat no-caps @dblclick="showEditLocationForm()" />
+        <q-btn :label="$t('location')" flat no-caps @dblclick="showEditLocationForm()" />
         : {{item.location.name}}
       </div>
       <div>
-        <q-btn label="Categories" flat no-caps @dblclick="showEditCategoriesForm()" />
+        <q-btn :label="$tc('category',1)" flat no-caps @dblclick="showEditCategoriesForm()" />
         : {{categories.join(', ')}}
       </div>
     </div>
@@ -92,11 +92,10 @@ export default {
     };
   },
   computed: {
-    items() {
-      return this.$store.state.items;
-    },
     item() {
-      var temp = this.items.filter(el => el.id == this.$route.params.itemId);
+      var temp = this.$store.state.items.filter(
+        el => el.id == this.$route.params.itemId
+      );
       this.formItem = this.cloneObj(temp[0]);
       return temp[0];
     },
@@ -133,8 +132,8 @@ export default {
     showEditNameForm() {
       this.$q
         .dialog({
-          title: "Edit Name",
-          message: "New Name",
+          title: this.$t("editName"),
+          message: this.$t("newName"),
           prompt: {
             model: this.formItem.name,
             type: "text"
@@ -155,8 +154,8 @@ export default {
     showEditPriceForm() {
       this.$q
         .dialog({
-          title: "Edit Price",
-          message: "New Price",
+          title: this.$t("editPrice"),
+          message: this.$t("newPrice"),
           prompt: {
             model: this.formItem.price,
             type: "number"
@@ -175,8 +174,8 @@ export default {
     showEditDescriptionForm() {
       this.$q
         .dialog({
-          title: "Edit Description",
-          message: "New Description",
+          title: this.$t("editDescription"),
+          message: this.$t("newDescription"),
           prompt: {
             model: this.formItem.description,
             type: "textarea"
@@ -195,8 +194,8 @@ export default {
     showEditNoticeForm() {
       this.$q
         .dialog({
-          title: "Edit Notice",
-          message: "New Notice",
+          title: this.$t("editNotice"),
+          message: this.$t("newNotice"),
           prompt: {
             model: this.formItem.notice,
             type: "textarea"
@@ -215,8 +214,8 @@ export default {
     showEditWeightForm() {
       this.$q
         .dialog({
-          title: "Edit Weight",
-          message: "New Weight",
+          title: this.$t('editWeight'),
+          message: this.$t('newWeight'),
           prompt: {
             model: this.formItem.weight,
             type: "number"
@@ -291,8 +290,18 @@ export default {
         }
       }
       return { ...temp };
+    },
+    initSlide() {
+      let temp = this.$store.state.items.filter(
+        el => el.id == this.$route.params.itemId
+      );
+      if (temp[0] != undefined) {
+        this.slide = temp[0].images[0].id;
+      }
     }
   },
-  mounted() {}
+  created() {
+    this.initSlide();
+  }
 };
 </script>

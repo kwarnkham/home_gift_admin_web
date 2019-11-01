@@ -9,7 +9,7 @@
     >
       <template v-slot:top>
         <q-space />
-        <q-btn outline color="primary" label="Update" @click="getOrders()">
+        <q-btn outline color="primary" :label="$t('update')" @click="getOrders()">
           <q-badge color="orange" floating v-if="newOrderCount> 0">{{newOrderCount}}</q-badge>
         </q-btn>
       </template>
@@ -35,7 +35,7 @@
             <q-badge color="accent">{{ props.row.status }}</q-badge>
           </q-td>
           <q-td key="action" :props="props">
-            <q-btn-dropdown color="primary" label="Action" :disable="disableActionBtn">
+            <q-btn-dropdown color="primary" :label="$t('action')" :disable="disableActionBtn">
               <q-list>
                 <q-item
                   clickable
@@ -44,7 +44,7 @@
                   v-if="filter == 'pending'"
                 >
                   <q-item-section>
-                    <q-item-label>Confirm</q-item-label>
+                    <q-item-label>{{$t('confirm')}}</q-item-label>
                   </q-item-section>
                 </q-item>
 
@@ -55,7 +55,7 @@
                   v-if="filter == 'confirmed'"
                 >
                   <q-item-section>
-                    <q-item-label>Dispatch</q-item-label>
+                    <q-item-label>{{$t('dispatch')}}</q-item-label>
                   </q-item-section>
                 </q-item>
 
@@ -66,13 +66,13 @@
                   v-if="filter == 'on the way'"
                 >
                   <q-item-section>
-                    <q-item-label>Finish</q-item-label>
+                    <q-item-label>{{$t('finish')}}</q-item-label>
                   </q-item-section>
                 </q-item>
 
                 <q-item clickable v-close-popup @click="actOnOrder(props.row.id, 'canceled')">
                   <q-item-section>
-                    <q-item-label>Cancel</q-item-label>
+                    <q-item-label>{{$tc('cancel', 1)}}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -102,7 +102,7 @@ export default {
         {
           name: "id",
           required: true,
-          label: "Order Id",
+          label: this.$t("orderId"),
           align: "left",
           field: row => row.id,
           //   format: val => `${val}`,
@@ -111,43 +111,43 @@ export default {
         {
           name: "name",
           align: "center",
-          label: "Customer Name",
+          label: this.$t("customerName"),
           field: row => row.name,
           sortable: true
         },
         {
           name: "mobile",
-          label: "Phone",
+          label: this.$t("phone"),
           field: row => row.mobile,
           sortable: true
         },
         {
           name: "address",
-          label: "Address",
+          label: this.$t("address"),
           field: row => row.address,
           sortable: true
         },
         {
           name: "amount",
-          label: "Amount",
+          label: this.$t("amount"),
           field: row => row.amount,
           sortable: true
         },
         {
           name: "createdAt",
-          label: "Order Time",
+          label: this.$t("orderTime"),
           field: row => row.created_at,
           sortable: true
         },
         {
           name: "status",
-          label: "Status",
+          label: this.$t("status"),
           field: row => row.status,
           sortable: true
         },
         {
           name: "action",
-          label: "Action"
+          label: this.$t("action")
         }
       ],
       channel: null

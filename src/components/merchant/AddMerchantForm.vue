@@ -3,12 +3,12 @@
     <q-input
       filled
       v-model="merchant"
-      label="Merchant"
+      :label="$t('merchant')"
       lazy-rules
-      :rules="[ val => val && val.length > 0 || 'Please type something']"
+      :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
     />
     <div class="row justify-end">
-      <q-btn label="Add" type="submit" color="primary" />
+      <q-btn :label="$t('add')" type="submit" color="primary" />
     </div>
   </q-form>
 </template>

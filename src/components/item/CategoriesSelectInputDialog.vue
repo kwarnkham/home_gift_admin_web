@@ -6,21 +6,21 @@
           multiple
           v-model="selectedCategories"
           :options="categories"
-          label="Categories"
+          :label="$tc('category', 2)"
           option-label="name"
           option-value="id"
-          :rules="[ val => val && val.length>0 || 'Please choose something']"
+          :rules="[ val => val && val.length>0 || $t('pleaseChooseSomething')]"
         />
       </q-card-section>
 
       <q-card-actions align="right">
         <q-btn
           color="primary"
-          label="OK"
+          :label="$t('ok')"
           @click="onOKClick"
           :disable="selectedCategories.length < 1"
         />
-        <q-btn color="primary" label="Cancel" @click="onCancelClick" />
+        <q-btn color="primary" :label="$tc('cancel',1)" @click="onCancelClick" />
       </q-card-actions>
     </q-card>
   </q-dialog>

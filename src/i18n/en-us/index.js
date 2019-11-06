@@ -43,7 +43,7 @@ export default {
   editName: 'Edit Name',
   newName: 'New Name',
   editPrice: 'Edit Price',
-  newPirce: 'New Price',
+  newPrice: 'New Price',
   editDescription: 'Edit Description',
   newDescription: 'New Description',
   editNotice: 'Edit Notice',

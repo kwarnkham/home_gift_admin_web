@@ -7,6 +7,16 @@
       lazy-rules
       :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
     />
+    <q-select
+      filled
+      v-model="selectedProvince"
+      :options="provinces"
+      :label="$t('province')"
+      option-label="name"
+      option-value="id"
+      lazy-rules
+      :rules="[ val => val && val != null || $t('pleaseChooseSomething')]"
+    />
     <div class="row justify-end">
       <q-btn :label="$t('add')" type="submit" color="primary" />
     </div>
@@ -19,14 +29,24 @@ import { locationRelatedApi } from "../../mixins/locationRelatedApi";
 export default {
   name: "AddLocationForm",
   mixins: [locationRelatedApi],
-  data(){
-      return{
-      location: null
-      }
+  data() {
+    return {
+      location: null,
+      selectedProvince: null
+    };
+  },
+  computed: {
+    provinces() {
+      return this.$store.state.provinces;
+    }
   },
   methods: {
     onSubmit() {
-      this.addLocation(this.location).then(data => {
+      let location = {
+        name: this.location,
+        province_id: this.selectedProvince.id
+      };
+      this.addLocation(location).then(data => {
         this.location = null;
         this.$refs.addLocationForm.resetValidation();
       });
@@ -46,6 +66,9 @@ export default {
       //     });
       //   }
     }
+  },
+  created() {
+    this.getProvinces();
   }
 };
 </script>

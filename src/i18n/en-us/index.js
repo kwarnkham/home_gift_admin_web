@@ -50,4 +50,5 @@ export default {
   newNotice: 'New Notice',
   editWeight: 'Edit Weight',
   newWeight: 'New Weight',
+  province: 'Province'
 }

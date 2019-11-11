@@ -5,13 +5,14 @@ export const locationRelatedApi = {
         // console.log('mixing location api')
     },
     methods: {
-        async addLocation(name) {
+        async addLocation(location) {
             this.$q.loading.show();
             await axios({
                 method: "post",
                 url: `${store.state.apiUrl}/location`,
                 data: {
-                    name: name
+                    name: location.name,
+                    province_id: location.province_id
                 }
             })
                 .then(response => {
@@ -52,14 +53,39 @@ export const locationRelatedApi = {
                     console.log(error.data);
                 });
         },
-        updateLocation(id, name) {
+        getProvinces() {
+            this.$q.loading.show();
+            axios({
+                method: "get",
+                url: `${store.state.apiUrl}/provinces`,
+            })
+                .then(response => {
+                    this.$q.loading.hide();
+                    // console.log(response.data)
+                    if (response.data.code == '0') {
+                        store.dispatch("setProvinces", response.data.result.provinces);
+                    }
+                    if (response.data.code == '1') {
+                        this.$q.notify({
+                            message: response.data.msg,
+                            closeBtn: 'Close'
+                        })
+                    }
+                })
+                .catch(error => {
+                    console.log(error.data);
+                });
+        },
+        updateLocation(location) {
+            // console.log(location)
             this.$q.loading.show();
             axios({
                 method: "put",
                 url: `${store.state.apiUrl}/location`,
                 data: {
-                    id: id,
-                    name: name
+                    id: location.id,
+                    name: location.name,
+                    province_id: location.province.id
                 }
             })
                 .then(response => {

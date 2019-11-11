@@ -49,5 +49,6 @@ export default {
   editNotice: '编辑通知',
   newNotice: '新通知',
   editWeight: '编辑权重',
-  newWeight: '新重量'
+  newWeight: '新重量',
+  province: '省'
 }

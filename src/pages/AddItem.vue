@@ -6,7 +6,7 @@
         v-model="name"
         :label="$t('itemName')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
       />
       <q-input
         filled
@@ -14,7 +14,10 @@
         v-model="price"
         :label="$t('price')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething'), val => val && val > 0 || $t('priceCannotBeNegativeValue')]"
+        :rules="[
+          val => (val && val.length > 0) || $t('pleaseTypeSomething'),
+          val => (val && val > 0) || $t('priceCannotBeNegativeValue')
+        ]"
       />
       <q-input
         filled
@@ -22,7 +25,10 @@
         v-model="weight"
         :label="$t('weight')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 ||  $t('pleaseTypeSomething'), val => val && val > 0 || $t('weightCannotBeNegativeValue')]"
+        :rules="[
+          val => (val && val.length > 0) || $t('pleaseTypeSomething'),
+          val => (val && val > 0) || $t('weightCannotBeNegativeValue')
+        ]"
       />
       <q-input
         filled
@@ -30,13 +36,13 @@
         v-model="description"
         :label="$t('description')"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
       />
       <q-input
         filled
         type="textarea"
         v-model="notice"
-        :label=" $t('notice')"
+        :label="$t('notice')"
         :hint="$t('optional')"
       />
       <q-select
@@ -46,8 +52,12 @@
         option-label="name"
         option-value="id"
         lazy-rules
-        :rules="[ val => val && val != null || $t('pleaseChooseSomething')]"
-      />
+        :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
+      >
+        <template v-slot:after>
+          <q-btn icon="add" color="green" round @click="showLoginForm" />
+        </template>
+      </q-select>
       <q-select
         v-model="selectedMerchant"
         :options="merchants"
@@ -55,18 +65,17 @@
         option-label="name"
         option-value="id"
         lazy-rules
-        :rules="[ val => val && val != null ||  $t('pleaseChooseSomething')]"
+        :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
       />
-
       <q-select
         multiple
         v-model="selectedCategories"
         :options="categories"
-        :label="$tc('category',2)"
+        :label="$tc('category', 2)"
         option-label="name"
         option-value="id"
         lazy-rules
-        :rules="[ val => val && val != null ||  $t('pleaseChooseSomething')]"
+        :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
       />
       <input
         class="hidden"
@@ -77,8 +86,12 @@
         multiple
         @input="setImage($event)"
       />
-      <div class="row" v-if="thumbnails.length>0">
-        <div v-for="(thumbnail, key) in thumbnails" :key="key" class="col-6 q-pa-sm">
+      <div class="row" v-if="thumbnails.length > 0">
+        <div
+          v-for="(thumbnail, key) in thumbnails"
+          :key="key"
+          class="col-6 q-pa-sm"
+        >
           <q-img :src="thumbnail.content">
             <div class="absolute-top text-right" style="padding:0px;">
               <q-btn
@@ -114,6 +127,7 @@
 
 <script>
 import { itemRelatedApi } from "../mixins/itemRelatedApi";
+import AddLocationFormDialog from "../components/location/AddLocationFormDialog";
 
 export default {
   name: "AddItem",
@@ -179,6 +193,12 @@ export default {
     setImage(e) {
       this.images = Array.from(e.target.files);
       this.$refs.fileInput.value = "";
+    },
+    showLoginForm() {
+      this.$q.dialog({
+        component: AddLocationFormDialog,
+        parent: this
+      });
     },
     onSubmit() {
       if (this.images == null || this.images.length < 1) {

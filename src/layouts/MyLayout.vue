@@ -11,13 +11,18 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title>Home Gift {{$t('admin')}}</q-toolbar-title>
+        <q-toolbar-title>Home Gift {{ $t("admin") }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-2">
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-2"
+    >
       <q-list>
-        <q-item-label header>{{$t('adminAction')}}</q-item-label>
+        <q-item-label header>{{ $t("adminAction") }}</q-item-label>
         <q-item>
           <q-btn-toggle
             no-caps
@@ -26,49 +31,69 @@
             v-model="lang"
             toggle-color="primary"
             :options="[
-        {label: '简体中文', value: 'zh-hans'},
-        {label: 'English', value: 'en-us'},
-      ]"
+              { label: '简体中文', value: 'zh-hans' },
+              { label: 'English', value: 'en-us' }
+            ]"
           />
         </q-item>
-        <q-item clickable @click="route('orders')" :active="$route.name == 'orders'">
+        <q-item
+          clickable
+          @click="route('orders')"
+          :active="$route.name == 'orders'"
+        >
           <q-item-section avatar>
             <q-icon name="assignment" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{$tc('order', 2)}}</q-item-label>
+            <q-item-label>{{ $tc("order", 2) }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable @click="route('addItem')" :active="$route.name == 'addItem'">
+        <q-item
+          clickable
+          @click="route('addItem')"
+          :active="$route.name == 'addItem'"
+        >
           <q-item-section avatar>
             <q-icon name="add_box" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{$t('addItem')}}</q-item-label>
+            <q-item-label>{{ $t("addItem") }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable @click="route('location')" :active="$route.name == 'location'">
+        <q-item
+          clickable
+          @click="route('location')"
+          :active="$route.name == 'location'"
+        >
           <q-item-section avatar>
             <q-icon name="location_city" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{$t('location')}}</q-item-label>
+            <q-item-label>{{ $t("location") }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable @click="route('merchant')" :active="$route.name == 'merchant'">
+        <q-item
+          clickable
+          @click="route('merchant')"
+          :active="$route.name == 'merchant'"
+        >
           <q-item-section avatar>
             <q-icon name="business_center" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{$t('merchant')}}</q-item-label>
+            <q-item-label>{{ $t("merchant") }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable @click="route('category')" :active="$route.name == 'category'">
+        <q-item
+          clickable
+          @click="route('category')"
+          :active="$route.name == 'category'"
+        >
           <q-item-section avatar>
             <q-icon name="category" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{$tc('category',1)}}</q-item-label>
+            <q-item-label>{{ $tc("category", 1) }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item
@@ -80,7 +105,7 @@
             <q-icon name="fastfood" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{$tc('item',2)}}</q-item-label>
+            <q-item-label>{{ $tc("item", 2) }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -109,6 +134,8 @@ export default {
       import(`quasar/lang/${lang}`).then(language => {
         this.$q.lang.set(language.default);
       });
+      localStorage.setItem("lang", lang);
+
     }
   },
   methods: {
@@ -117,6 +144,9 @@ export default {
         this.$router.push({ name: name });
       }
     }
+  },
+  created() {
+    this.lang = this.$store.state.lang;
   }
 };
 </script>

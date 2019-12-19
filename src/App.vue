@@ -18,11 +18,20 @@ export default {
     locationRelatedApi,
     categoryRelatedApi
   ],
+  methods: {
+    setLanguage() {
+      let lang = localStorage.getItem("lang");
+      if (lang) {
+        this.$store.dispatch("setLanguage", lang);
+      }
+    }
+  },
   created() {
     this.getItems();
     this.getLocations();
     this.getMerchants();
     this.getCategories();
+    this.setLanguage()
   }
 };
 </script>

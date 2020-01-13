@@ -15,3 +15,5 @@ options for gram and kilogram, lb
 hide items
 show hidden items
 search all items with input box
+
+logo

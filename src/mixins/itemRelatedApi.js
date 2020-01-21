@@ -177,6 +177,19 @@ export const itemRelatedApi = {
         }
       });
       return result;
+    },
+
+    async checkExistedName(name) {
+      let result = null;
+      if (name) {
+        await axios({
+          method: "get",
+          url: `${store.state.apiUrl}/item/name/${name}`
+        })
+          .then(response => (result = response))
+          .catch(error => console.log(error));
+      }
+      return result;
     }
   }
 };

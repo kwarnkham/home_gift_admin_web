@@ -2,11 +2,16 @@
   <q-page class="row">
     <q-form class="col-12 q-pa-md" @submit="onSubmit" ref="addItemForm">
       <q-input
+        ref="nameInput"
         filled
         v-model="name"
         :label="$t('itemName')"
         lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+        :rules="[
+          val => (val && val.length > 0) || $t('pleaseTypeSomething'),
+          val => (val && !nameIsExisted) || $t('nameAlreadyExisted')
+        ]"
+        @blur="validateName(name)"
       />
       <q-input
         filled
@@ -144,7 +149,8 @@ export default {
     selectedMerchant: null,
     selectedCategories: null,
     images: null,
-    thumbnails: []
+    thumbnails: [],
+    nameIsExisted: false
   }),
   computed: {
     locations() {
@@ -161,6 +167,12 @@ export default {
     // }
   },
   watch: {
+    name(value) {
+      this.nameIsExisted = false;
+    },
+    nameIsExisted() {
+      this.$refs.nameInput.validate();
+    },
     images(value) {
       // console.log(value[0].name);
       if (value != null) {
@@ -180,6 +192,15 @@ export default {
     }
   },
   methods: {
+    validateName(name) {
+      this.checkExistedName(name).then(response => {
+        if (response && response.data.code == "1") {
+          this.nameIsExisted = true;
+        } else {
+          this.nameIsExisted = false;
+        }
+      });
+    },
     removeFile(file) {
       for (let i = 0; i < this.images.length; i++) {
         if (this.images[i].name == file.name) {

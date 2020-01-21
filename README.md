@@ -14,5 +14,3 @@ show hidden items
 search all items with input box
 
 logo
-
-existed name checked b4 submit

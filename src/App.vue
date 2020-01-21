@@ -31,7 +31,7 @@ export default {
     this.getLocations();
     this.getMerchants();
     this.getCategories();
-    this.setLanguage()
+    this.setLanguage();
   }
 };
 </script>

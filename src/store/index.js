@@ -12,10 +12,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // apiUrl: "http://127.0.0.1:8000/api",
-    // imageHost: "http://127.0.0.1:8000/storage",
-    apiUrl: 'https://api.homegift.tk/api',
-    imageHost: 'https://api.homegift.tk/storage',
+    apiUrl: "http://127.0.0.1:8000/api",
+    imageHost: "http://127.0.0.1:8000/storage",
+    // apiUrl: "https://api.homegift.tk/api",
+    // imageHost: "https://api.homegift.tk/storage",
     orders: [],
     newOrderCount: 0,
     locations: [],

@@ -8,9 +8,12 @@ export const itemRelatedApi = {
   methods: {
     async addItem(
       name,
+      chName,
       price,
       description,
+      chDescription,
       notice,
+      chNotice,
       weight,
       location,
       merchant,
@@ -23,12 +26,15 @@ export const itemRelatedApi = {
         url: `${store.state.apiUrl}/item`,
         data: {
           name: name,
+          ch_name: chName,
           price: price,
           description: description,
+          ch_description: chDescription,
           location_id: location.id,
           merchant_id: merchant.id,
           weight: weight,
-          notice: notice
+          notice: notice,
+          ch_notice: chNotice
         }
       })
         .then(async response => {
@@ -117,9 +123,12 @@ export const itemRelatedApi = {
         url: `${store.state.apiUrl}/item/${item.id}`,
         data: {
           name: item.name,
+          ch_name: item.ch_name,
           price: item.price,
           description: item.description,
+          ch_description: item.ch_description,
           notice: item.notice,
+          ch_notice: item.ch_notice,
           weight: item.weight,
           merchant_id: item.merchant.id,
           location_id: item.location.id

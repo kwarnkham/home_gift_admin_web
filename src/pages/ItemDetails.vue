@@ -2,36 +2,103 @@
   <q-page class="row" v-if="item != undefined">
     <div class="col-4 bg-grey-5">
       <div>
-        <q-btn :label="$t('name')" flat no-caps @dblclick="showEditNameForm()" />
-        : {{item.name}}
+        <q-btn
+          :label="$t('itemName')"
+          flat
+          no-caps
+          @dblclick="showEditNameForm()"
+        />
+        : {{ item.name }}
       </div>
       <div>
-        <q-btn :label="$t('price')" flat no-caps @dblclick="showEditPriceForm()" />
-        : {{item.price}}
+        <q-btn
+          :label="$t('chineseItemName')"
+          flat
+          no-caps
+          @dblclick="showEditChineseNameForm()"
+        />
+        : {{ item.ch_name }}
       </div>
       <div>
-        <q-btn :label="$t('description')" flat no-caps @dblclick="showEditDescriptionForm()" />
-        : {{item.description}}
+        <q-btn
+          :label="$t('price')"
+          flat
+          no-caps
+          @dblclick="showEditPriceForm()"
+        />
+        : {{ item.price }} MMK
       </div>
       <div>
-        <q-btn :label="$t('notice')" flat no-caps @dblclick="showEditNoticeForm()" />
-        : {{item.notice}}
+        <q-btn
+          :label="$t('description')"
+          flat
+          no-caps
+          @dblclick="showEditDescriptionForm()"
+        />
+        : {{ item.description }}
       </div>
       <div>
-        <q-btn :label="$tc('weight',1)" flat no-caps @dblclick="showEditWeightForm()" />
-        : {{item.weight}} kg
+        <q-btn
+          :label="$t('chineseDescription')"
+          flat
+          no-caps
+          @dblclick="showEditChineseDescriptionForm()"
+        />
+        : {{ item.ch_description }}
       </div>
       <div>
-        <q-btn :label="$t('merchant')" flat no-caps @dblclick="showEditMerchantForm()" />
-        : {{item.merchant.name}}
+        <q-btn
+          :label="$t('notice')"
+          flat
+          no-caps
+          @dblclick="showEditNoticeForm()"
+        />
+        : {{ item.notice }}
       </div>
       <div>
-        <q-btn :label="$t('location')" flat no-caps @dblclick="showEditLocationForm()" />
-        : {{item.location.name}}
+        <q-btn
+          :label="$t('chineseNotice')"
+          flat
+          no-caps
+          @dblclick="showEditChineseNoticeForm()"
+        />
+        : {{ item.ch_notice }}
       </div>
       <div>
-        <q-btn :label="$tc('category',1)" flat no-caps @dblclick="showEditCategoriesForm()" />
-        : {{categories.join(', ')}}
+        <q-btn
+          :label="$t('weight')"
+          flat
+          no-caps
+          @dblclick="showEditWeightForm()"
+        />
+        : {{ item.weight }}
+      </div>
+      <div>
+        <q-btn
+          :label="$t('merchant')"
+          flat
+          no-caps
+          @dblclick="showEditMerchantForm()"
+        />
+        : {{ item.merchant.name }}
+      </div>
+      <div>
+        <q-btn
+          :label="$t('location')"
+          flat
+          no-caps
+          @dblclick="showEditLocationForm()"
+        />
+        : {{ item.location.name }}
+      </div>
+      <div>
+        <q-btn
+          :label="$tc('category', 1)"
+          flat
+          no-caps
+          @dblclick="showEditCategoriesForm()"
+        />
+        : {{ categories.join(", ") }}
       </div>
     </div>
 
@@ -63,7 +130,11 @@
             />
           </q-carousel-control>
 
-          <q-carousel-control position="bottom-right" :offset="[18, 18]" class="q-gutter-xs">
+          <q-carousel-control
+            position="bottom-right"
+            :offset="[18, 18]"
+            class="q-gutter-xs"
+          >
             <q-btn icon="add" round color="primary" @click="addItemPic" />
           </q-carousel-control>
         </template>
@@ -151,6 +222,28 @@ export default {
           // console.log(data);
         });
     },
+    showEditChineseNameForm() {
+      this.$q
+        .dialog({
+          title: this.$t("editName"),
+          message: this.$t("newName"),
+          prompt: {
+            model: this.formItem.ch_name,
+            type: "text"
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          this.formItem.ch_name = data;
+          this.updateItem(this.formItem).then(response => {
+            if (response != null) {
+              this.getItems();
+            }
+          });
+          // console.log(data);
+        });
+    },
     showEditPriceForm() {
       this.$q
         .dialog({
@@ -191,6 +284,26 @@ export default {
           // console.log(data);
         });
     },
+    showEditChineseDescriptionForm() {
+      this.$q
+        .dialog({
+          title: this.$t("editDescription"),
+          message: this.$t("newDescription"),
+          prompt: {
+            model: this.formItem.ch_description,
+            type: "textarea"
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          this.formItem.ch_description = data;
+          this.updateItem(this.formItem).then(() => {
+            this.getItems();
+          });
+          // console.log(data);
+        });
+    },
     showEditNoticeForm() {
       this.$q
         .dialog({
@@ -211,14 +324,34 @@ export default {
           // console.log(data);
         });
     },
+    showEditChineseNoticeForm() {
+      this.$q
+        .dialog({
+          title: this.$t("editNotice"),
+          message: this.$t("newNotice"),
+          prompt: {
+            model: this.formItem.ch_notice,
+            type: "textarea"
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          this.formItem.ch_notice = data;
+          this.updateItem(this.formItem).then(() => {
+            this.getItems();
+          });
+          // console.log(data);
+        });
+    },
     showEditWeightForm() {
       this.$q
         .dialog({
-          title: this.$t('editWeight'),
-          message: this.$t('newWeight'),
+          title: this.$t("editWeight"),
+          message: this.$t("newWeight"),
           prompt: {
             model: this.formItem.weight,
-            type: "number"
+            type: "string"
           },
           cancel: true,
           persistent: true

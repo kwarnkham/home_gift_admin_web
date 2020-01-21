@@ -9,15 +9,27 @@
         lazy-rules
         :rules="[
           val => (val && val.length > 0) || $t('pleaseTypeSomething'),
-          val => (val && !nameIsExisted) || $t('nameAlreadyExisted')
+          val => (val && !nameIsExisted) || $t('nameAlreadyExists')
         ]"
         @blur="validateName(name)"
+      />
+      <q-input
+        ref="chNameInput"
+        filled
+        v-model="chName"
+        :label="$t('chineseItemName')"
+        lazy-rules
+        :rules="[
+          val => (val && val.length > 0) || $t('pleaseTypeSomething'),
+          val => (val && !chNameIsExisted) || $t('nameAlreadyExists')
+        ]"
+        @blur="validateName(chName, false)"
       />
       <q-input
         filled
         type="number"
         v-model="price"
-        :label="$t('price')"
+        :label="$t('price') + ' MMK'"
         lazy-rules
         :rules="[
           val => (val && val.length > 0) || $t('pleaseTypeSomething'),
@@ -34,7 +46,16 @@
           val => (val && val.length > 0) || $t('pleaseTypeSomething'),
           val => (val && val > 0) || $t('weightCannotBeNegativeValue')
         ]"
-      />
+      >
+        <q-select
+          v-slot:after
+          v-model="selectedWeightUnit"
+          :label="$t('weightUnit')"
+          :options="weightUnits"
+          filled=""
+          style="width:18%"
+        />
+      </q-input>
       <q-input
         filled
         type="textarea"
@@ -46,8 +67,23 @@
       <q-input
         filled
         type="textarea"
+        v-model="chDescription"
+        :label="$t('chineseDescription')"
+        lazy-rules
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+      />
+      <q-input
+        filled
+        type="textarea"
         v-model="notice"
         :label="$t('notice')"
+        :hint="$t('optional')"
+      />
+      <q-input
+        filled
+        type="textarea"
+        v-model="chNotice"
+        :label="$t('chineseNotice')"
         :hint="$t('optional')"
       />
       <q-select
@@ -141,16 +177,22 @@ export default {
 
   data: () => ({
     name: "",
+    chName: "",
     price: "",
     description: "",
+    chDescription: "",
     notice: null,
+    chNotice: null,
     weight: "",
+    weightUnits: ["kg", "g", "lb"],
+    selectedWeightUnit: "kg",
     selectedLocation: null,
     selectedMerchant: null,
     selectedCategories: null,
     images: null,
     thumbnails: [],
-    nameIsExisted: false
+    nameIsExisted: false,
+    chNameIsExisted: false
   }),
   computed: {
     locations() {
@@ -170,8 +212,14 @@ export default {
     name(value) {
       this.nameIsExisted = false;
     },
+    chName(value) {
+      this.chNameIsExisted = false;
+    },
     nameIsExisted() {
       this.$refs.nameInput.validate();
+    },
+    chNameIsExisted() {
+      this.$refs.chNameInput.validate();
     },
     images(value) {
       // console.log(value[0].name);
@@ -192,12 +240,20 @@ export default {
     }
   },
   methods: {
-    validateName(name) {
+    validateName(name, isEnglish = true) {
       this.checkExistedName(name).then(response => {
         if (response && response.data.code == "1") {
-          this.nameIsExisted = true;
+          if (isEnglish) {
+            this.nameIsExisted = true;
+          } else {
+            this.chNameIsExisted = true;
+          }
         } else {
-          this.nameIsExisted = false;
+          if (isEnglish) {
+            this.nameIsExisted = false;
+          } else {
+            this.chNameIsExisted = false;
+          }
         }
       });
     },
@@ -232,19 +288,25 @@ export default {
         if (this.images.length > 0) {
           this.addItem(
             this.name,
+            this.chName,
             this.price,
             this.description,
+            this.chDescription,
             this.notice,
-            this.weight,
+            this.chNotice,
+            this.weight + this.selectedWeightUnit,
             this.selectedLocation,
             this.selectedMerchant,
             this.selectedCategories,
             this.images
           ).then(() => {
             this.name = "";
+            this.chName = "";
             this.price = "";
             this.description = "";
+            this.chDescription = "";
             this.notice = null;
+            this.chNotice = null;
             this.weight = "";
             this.selectedLocation = null;
             this.selectedMerchant = null;

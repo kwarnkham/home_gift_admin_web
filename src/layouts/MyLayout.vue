@@ -12,6 +12,13 @@
         />
 
         <q-toolbar-title>Home Gift {{ $t("admin") }}</q-toolbar-title>
+        <q-btn
+          v-if="$route.name == 'item'"
+          icon="delete"
+          :color="showTrash ? 'lime' : 'white'"
+          :class="[showTrash ? 'text-black' : 'text-brown']"
+          @click="showTrash = !showTrash"
+        />
       </q-toolbar>
     </q-header>
 
@@ -125,7 +132,8 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
-      lang: this.$i18n.locale
+      lang: this.$i18n.locale,
+      showTrash: false
     };
   },
   watch: {
@@ -135,7 +143,9 @@ export default {
         this.$q.lang.set(language.default);
       });
       localStorage.setItem("lang", lang);
-
+    },
+    showTrash(value) {
+      this.$root.$emit("showTrash", value);
     }
   },
   methods: {
@@ -147,6 +157,9 @@ export default {
   },
   created() {
     this.lang = this.$store.state.lang;
+  },
+  mounted() {
+    this.$root.$emit("showTrash", this.showTrash);
   }
 };
 </script>

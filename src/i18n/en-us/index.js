@@ -55,5 +55,6 @@ export default {
   newWeight: "New Weight",
   province: "Province",
   nameAlreadyExists: "Name already exists",
-  weightUnit: "Weight unit"
+  weightUnit: "Weight unit",
+  trash: "Trash"
 };

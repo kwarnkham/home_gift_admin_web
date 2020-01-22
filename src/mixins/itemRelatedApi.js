@@ -101,7 +101,7 @@ export const itemRelatedApi = {
         .catch(error => console.log(error));
     },
 
-    async getItems(itemId, files) {
+    async getItems() {
       this.$q.loading.show();
       await axios({
         method: "get",
@@ -110,6 +110,20 @@ export const itemRelatedApi = {
         .then(response => {
           this.$q.loading.hide();
           store.dispatch("setItems", response.data.result.items);
+          // console.log(response.data)
+        })
+        .catch(error => console.log(error));
+    },
+
+    async getTrashedItems() {
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/items/trashed`
+      })
+        .then(response => {
+          this.$q.loading.hide();
+          store.dispatch("setTrashedItems", response.data.result.items);
           // console.log(response.data)
         })
         .catch(error => console.log(error));
@@ -213,6 +227,19 @@ export const itemRelatedApi = {
       }
 
       return result;
+    },
+
+    async unDeleteItem(id) {
+      let result = null;
+      if (id) {
+        await axios({
+          method: "patch",
+          url: `${store.state.apiUrl}/item/${id}`
+        })
+          .then(response => (result = response))
+          .catch(error => console.log(error));
+        return result;
+      }
     }
   }
 };

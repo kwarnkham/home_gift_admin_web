@@ -34,11 +34,20 @@
             "
           />
           <q-btn
+            v-if="!showTrash"
             flat
             round
-            color="primary"
+            color="danger"
             icon="delete"
             @click="removeItem(item.id)"
+          />
+          <q-btn
+            v-if="showTrash"
+            flat
+            round
+            color="positive"
+            icon="restore_from_trash"
+            @click="restoreItem(item.id)"
           />
         </q-card-actions>
       </q-card>
@@ -52,11 +61,15 @@ export default {
   components: {},
   mixins: [itemRelatedApi],
   data() {
-    return {};
+    return {
+      showTrash: false
+    };
   },
   computed: {
     items() {
-      let items = this.$store.state.items;
+      let items;
+      if (!this.showTrash) items = this.$store.state.items;
+      if (this.showTrash) items = this.$store.state.trashedItems;
       items = items.filter(el => el.images[0] != undefined);
       return items;
     }
@@ -64,11 +77,27 @@ export default {
   methods: {
     removeItem(id) {
       this.deleteItem(id).then(response => {
-        if (response.data.code == "0") this.getItems();
+        if (response.data.code == "0")
+          this.getItems().then(() => this.getTrashedItems());
       });
+    },
+    restoreItem(id) {
+      this.unDeleteItem(id).then(response => {
+        if (response.data.code == "0")
+          this.getTrashedItems().then(() => this.getItems());
+      });
+    },
+    setShowTrash(value) {
+      this.showTrash = value;
     }
   },
-  created() {}
+  created() {},
+  mounted() {
+    this.$root.$on("showTrash", this.setShowTrash);
+  },
+  beforeDestroy() {
+    this.$root.$off("showTrash", this.setShowTrash);
+  }
 };
 </script>
 <style scoped>

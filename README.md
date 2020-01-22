@@ -9,7 +9,6 @@ order details in orders
 
 options for gram and kilogram, lb
 
-show hidden items
 search all items with input box
 
 logo

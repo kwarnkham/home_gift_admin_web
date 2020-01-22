@@ -22,6 +22,7 @@ export default new Vuex.Store({
     merchants: [],
     categories: [],
     items: [],
+    trashedItems: [],
     provinces: [],
     lang: "zh-hans"
   },
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     setItems(state, payload) {
       state.items = payload;
+    },
+    setTrashedItems(state, payload) {
+      state.trashedItems = payload;
     },
     setProvinces(state, payload) {
       state.provinces = payload;
@@ -76,6 +80,9 @@ export default new Vuex.Store({
     },
     setItems(context, payload) {
       context.commit("setItems", payload);
+    },
+    setTrashedItems(context, payload) {
+      context.commit("setTrashedItems", payload);
     },
     setProvinces(context, payload) {
       context.commit("setProvinces", payload);

@@ -199,6 +199,20 @@ export const itemRelatedApi = {
           .catch(error => console.log(error));
       }
       return result;
+    },
+
+    async deleteItem(id) {
+      let result = null;
+      if (id) {
+        await axios({
+          method: "delete",
+          url: `${store.state.apiUrl}/item/${id}`
+        })
+          .then(response => (result = response))
+          .catch(error => console.log(error));
+      }
+
+      return result;
     }
   }
 };

@@ -33,16 +33,24 @@
               $router.push({ name: 'itemDetails', params: { itemId: item.id } })
             "
           />
-          <q-btn flat round color="primary" icon="delete" />
+          <q-btn
+            flat
+            round
+            color="primary"
+            icon="delete"
+            @click="removeItem(item.id)"
+          />
         </q-card-actions>
       </q-card>
     </div>
   </q-page>
 </template>
 <script>
+import { itemRelatedApi } from "../mixins/itemRelatedApi";
 export default {
   name: "Item",
   components: {},
+  mixins: [itemRelatedApi],
   data() {
     return {};
   },
@@ -53,7 +61,13 @@ export default {
       return items;
     }
   },
-  methods: {},
+  methods: {
+    removeItem(id) {
+      this.deleteItem(id).then(response => {
+        if (response.data.code == "0") this.getItems();
+      });
+    }
+  },
   created() {}
 };
 </script>

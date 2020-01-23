@@ -56,5 +56,6 @@ export default {
   province: "省",
   nameAlreadyExists: "名称已经存在",
   weightUnit: "重量单位",
-  trash: "垃圾箱"
+  trash: "垃圾箱",
+  search: "搜索"
 };

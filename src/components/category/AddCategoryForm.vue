@@ -3,9 +3,9 @@
     <q-input
       filled
       v-model="category"
-      :label="$tc('category',1)"
+      :label="$tc('category', 1)"
       lazy-rules
-      :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
+      :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
     />
     <div class="row justify-end">
       <q-btn :label="$t('add')" type="submit" color="primary" />
@@ -19,10 +19,10 @@ import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
   name: "AddCategoryForm",
   mixins: [categoryRelatedApi],
-  data(){
-      return{
+  data() {
+    return {
       category: null
-      }
+    };
   },
   methods: {
     onSubmit() {

@@ -22,11 +22,15 @@ export default new Vuex.Store({
     merchants: [],
     categories: [],
     items: [],
+    searchedItems: [],
     trashedItems: [],
     provinces: [],
     lang: "zh-hans"
   },
   mutations: {
+    setSearchItems(state, payload) {
+      state.searchedItems = payload;
+    },
     setOrders(state, payload) {
       // mutate state
       state.orders = payload;
@@ -60,6 +64,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setSearchItems(context, payload) {
+      context.commit("setSearchItems", payload);
+    },
     setOrders(context, payload) {
       context.commit("setOrders", payload);
     },

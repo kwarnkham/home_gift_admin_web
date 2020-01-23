@@ -56,5 +56,6 @@ export default {
   province: "Province",
   nameAlreadyExists: "Name already exists",
   weightUnit: "Weight unit",
-  trash: "Trash"
+  trash: "Trash",
+  search: "Search"
 };

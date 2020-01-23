@@ -240,6 +240,38 @@ export const itemRelatedApi = {
           .catch(error => console.log(error));
         return result;
       }
+    },
+
+    async findItem(name) {
+      let result = null;
+      if (name) {
+        await axios({
+          method: "get",
+          url: `${store.state.apiUrl}/item/find`,
+          params: {
+            name: name
+          }
+        })
+          .then(response => {
+            if (response.data.code == "0") {
+              this.$store.dispatch(
+                "setSearchItems",
+                response.data.result.items
+              );
+            } else {
+              this.$q.notify({
+                message: response.data.msg,
+                closeBtn: "Close"
+              });
+              this.$store.dispatch("setSearchItems", []);
+            }
+            result = response;
+          })
+          .catch(error => console.log(error));
+      } else {
+        this.$store.dispatch("setSearchItems", []);
+      }
+      return result;
     }
   }
 };

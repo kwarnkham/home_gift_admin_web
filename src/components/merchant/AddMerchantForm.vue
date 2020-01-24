@@ -5,7 +5,7 @@
       v-model="merchant"
       :label="$t('merchant')"
       lazy-rules
-      :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
+      :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
     />
     <div class="row justify-end">
       <q-btn :label="$t('add')" type="submit" color="primary" />

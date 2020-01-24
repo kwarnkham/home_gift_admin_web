@@ -5,7 +5,7 @@
       v-model="location"
       :label="$t('location')"
       lazy-rules
-      :rules="[ val => val && val.length > 0 || $t('pleaseTypeSomething')]"
+      :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
     />
     <q-select
       filled
@@ -15,7 +15,7 @@
       option-label="name"
       option-value="id"
       lazy-rules
-      :rules="[ val => val && val != null || $t('pleaseChooseSomething')]"
+      :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
     />
     <div class="row justify-end">
       <q-btn :label="$t('add')" type="submit" color="primary" />

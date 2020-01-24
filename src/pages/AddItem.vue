@@ -96,7 +96,7 @@
         :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
       >
         <template v-slot:after>
-          <q-btn icon="add" color="green" round @click="showLoginForm" />
+          <q-btn icon="add" color="green" round @click="showAddLocationForm" />
         </template>
       </q-select>
       <q-select
@@ -107,7 +107,11 @@
         option-value="id"
         lazy-rules
         :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
-      />
+      >
+        <template v-slot:after>
+          <q-btn icon="add" color="green" round @click="showAddMerchantForm" />
+        </template>
+      </q-select>
       <q-select
         multiple
         v-model="selectedCategories"
@@ -117,7 +121,11 @@
         option-value="id"
         lazy-rules
         :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
-      />
+      >
+        <template v-slot:after>
+          <q-btn icon="add" color="green" round @click="showAddCategoryForm" />
+        </template>
+      </q-select>
       <input
         class="hidden"
         ref="fileInput"
@@ -169,6 +177,8 @@
 <script>
 import { itemRelatedApi } from "../mixins/itemRelatedApi";
 import AddLocationFormDialog from "../components/location/AddLocationFormDialog";
+import AddMerchantFormDialog from "../components/merchant/AddMerchantFormDialog";
+import AddCategoryFormDialog from "../components/category/AddCategoryFormDialog";
 
 export default {
   name: "AddItem",
@@ -271,9 +281,21 @@ export default {
       this.images = Array.from(e.target.files);
       this.$refs.fileInput.value = "";
     },
-    showLoginForm() {
+    showAddLocationForm() {
       this.$q.dialog({
         component: AddLocationFormDialog,
+        parent: this
+      });
+    },
+    showAddMerchantForm() {
+      this.$q.dialog({
+        component: AddMerchantFormDialog,
+        parent: this
+      });
+    },
+    showAddCategoryForm() {
+      this.$q.dialog({
+        component: AddCategoryFormDialog,
         parent: this
       });
     },

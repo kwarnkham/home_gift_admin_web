@@ -1,21 +1,15 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function (ctx) {
+module.exports = function(ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: [
-      'i18n',
-      'axios',
-      'laravel-echo',
-    ],
+    boot: ["i18n", "axios", "laravel-echo"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-    css: [
-      'app.css'
-    ],
+    css: ["app.css"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -26,14 +20,14 @@ module.exports = function (ctx) {
       // 'themify',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
-      'material-icons' // optional, you are not bound to it
+      "roboto-font", // optional, you are not bound to it
+      "material-icons" // optional, you are not bound to it
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       // iconSet: 'ionicons-v4', // Quasar icon set
-      lang: 'zh-hans', // Quasar language pack
+      lang: "zh-hans", // Quasar language pack
 
       // Possible values for "all":
       // * 'auto' - Auto-import needed Quasar components & directives
@@ -45,61 +39,54 @@ module.exports = function (ctx) {
       all: false,
 
       components: [
-        'QLayout',
-        'QHeader',
-        'QDrawer',
-        'QPageContainer',
-        'QPage',
-        'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
-        'QIcon',
-        'QList',
-        'QItem',
-        'QItemSection',
-        'QItemLabel',
-        'QTable',
-        'QTh',
-        'QTr',
-        'QTd',
-        'QBadge',
-        'QBtnDropdown',
-        'QBtn',
-        'QTabs',
-        'QTab',
-        'QRouteTab',
-        'QTabPanels',
-        'QTabPanel',
-        'QCard',
-        'QSeparator',
-        'QInput',
-        'QSpace',
-        'QForm',
-        'QSelect',
-        'QUploader',
-        'QImg',
-        'QCard',
-        'QCardActions',
-        'QCardSection',
-        'QCarousel',
-        'QCarouselControl',
-        'QCarouselSlide',
-        'QDialog',
-        'QBtnToggle'
+        "QLayout",
+        "QHeader",
+        "QDrawer",
+        "QPageContainer",
+        "QPage",
+        "QToolbar",
+        "QToolbarTitle",
+        "QBtn",
+        "QIcon",
+        "QList",
+        "QItem",
+        "QItemSection",
+        "QItemLabel",
+        "QTable",
+        "QTh",
+        "QTr",
+        "QTd",
+        "QBadge",
+        "QBtnDropdown",
+        "QBtn",
+        "QTabs",
+        "QTab",
+        "QRouteTab",
+        "QTabPanels",
+        "QTabPanel",
+        "QCard",
+        "QSeparator",
+        "QInput",
+        "QSpace",
+        "QForm",
+        "QSelect",
+        "QUploader",
+        "QImg",
+        "QCard",
+        "QCardActions",
+        "QCardSection",
+        "QCarousel",
+        "QCarouselControl",
+        "QCarouselSlide",
+        "QDialog",
+        "QBtnToggle",
+        "QPagination"
       ],
 
-      directives: [
-        'Ripple',
-        'ClosePopup'
-
-      ],
+      directives: ["Ripple", "ClosePopup"],
 
       // Quasar plugins
-      plugins: [
-        'Loading',
-        'Notify',
-        'Dialog'
-      ]
+      plugins: ["Loading", "Notify", "Dialog"]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -116,8 +103,7 @@ module.exports = function (ctx) {
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
-      extendWebpack(cfg) {
-      }
+      extendWebpack(cfg) {}
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -144,35 +130,35 @@ module.exports = function (ctx) {
         // name: 'Quasar App',
         // short_name: 'Quasar App',
         // description: 'A Quasar Framework app',
-        display: 'standalone',
-        orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#ffffff",
+        theme_color: "#027be3",
         icons: [
           {
-            'src': 'statics/icons/icon-128x128.png',
-            'sizes': '128x128',
-            'type': 'image/png'
+            src: "statics/icons/icon-128x128.png",
+            sizes: "128x128",
+            type: "image/png"
           },
           {
-            'src': 'statics/icons/icon-192x192.png',
-            'sizes': '192x192',
-            'type': 'image/png'
+            src: "statics/icons/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png"
           },
           {
-            'src': 'statics/icons/icon-256x256.png',
-            'sizes': '256x256',
-            'type': 'image/png'
+            src: "statics/icons/icon-256x256.png",
+            sizes: "256x256",
+            type: "image/png"
           },
           {
-            'src': 'statics/icons/icon-384x384.png',
-            'sizes': '384x384',
-            'type': 'image/png'
+            src: "statics/icons/icon-384x384.png",
+            sizes: "384x384",
+            type: "image/png"
           },
           {
-            'src': 'statics/icons/icon-512x512.png',
-            'sizes': '512x512',
-            'type': 'image/png'
+            src: "statics/icons/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png"
           }
         ]
       }
@@ -195,22 +181,19 @@ module.exports = function (ctx) {
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
         // OS X / Mac App Store
         // appBundleId: '',
         // appCategoryType: '',
         // osxSign: '',
         // protocol: 'myapp://path',
-
         // Windows only
         // win32metadata: { ... }
       },
 
       builder: {
         // https://www.electron.build/configuration/configuration
-
         // appId: 'home_gift_admin_web'
       }
     }
-  }
-}
+  };
+};

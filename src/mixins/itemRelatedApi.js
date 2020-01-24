@@ -100,30 +100,37 @@ export const itemRelatedApi = {
         })
         .catch(error => console.log(error));
     },
-
-    async getItems() {
+    async getTrashedItems(page = 1, perPage = this.$store.state.itemPerPage) {
       this.$q.loading.show();
       await axios({
         method: "get",
-        url: `${store.state.apiUrl}/items`
+        url: `${store.state.apiUrl}/items/trashed`,
+        params: {
+          page: page,
+          per_page: perPage
+        }
       })
         .then(response => {
           this.$q.loading.hide();
-          store.dispatch("setItems", response.data.result.items);
+          store.dispatch("setTrashedItems", response.data.result.items);
           // console.log(response.data)
         })
         .catch(error => console.log(error));
     },
 
-    async getTrashedItems() {
+    async getItems(page = 1, perPage = this.$store.state.itemPerPage) {
       this.$q.loading.show();
       await axios({
         method: "get",
-        url: `${store.state.apiUrl}/items/trashed`
+        url: `${store.state.apiUrl}/items`,
+        params: {
+          page: page,
+          per_page: perPage
+        }
       })
         .then(response => {
           this.$q.loading.hide();
-          store.dispatch("setTrashedItems", response.data.result.items);
+          store.dispatch("setItems", response.data.result.items);
           // console.log(response.data)
         })
         .catch(error => console.log(error));
@@ -255,7 +262,7 @@ export const itemRelatedApi = {
           .then(response => {
             if (response.data.code == "0") {
               this.$store.dispatch(
-                "setSearchItems",
+                "setSearchedItems",
                 response.data.result.items
               );
             } else {
@@ -263,13 +270,13 @@ export const itemRelatedApi = {
                 message: response.data.msg,
                 closeBtn: "Close"
               });
-              this.$store.dispatch("setSearchItems", []);
+              this.$store.dispatch("setSearchedItems", []);
             }
             result = response;
           })
           .catch(error => console.log(error));
       } else {
-        this.$store.dispatch("setSearchItems", []);
+        this.$store.dispatch("setSearchedItems", []);
       }
       return result;
     }

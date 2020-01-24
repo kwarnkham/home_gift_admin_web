@@ -12,6 +12,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    itemPerPage: 10,
     apiUrl: "http://127.0.0.1:8000/api",
     imageHost: "http://127.0.0.1:8000/storage",
     // apiUrl: "https://api.homegift.tk/api",
@@ -28,7 +29,7 @@ export default new Vuex.Store({
     lang: "zh-hans"
   },
   mutations: {
-    setSearchItems(state, payload) {
+    setSearchedItems(state, payload) {
       state.searchedItems = payload;
     },
     setOrders(state, payload) {
@@ -64,8 +65,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setSearchItems(context, payload) {
-      context.commit("setSearchItems", payload);
+    setSearchedItems(context, payload) {
+      context.commit("setSearchedItems", payload);
     },
     setOrders(context, payload) {
       context.commit("setOrders", payload);

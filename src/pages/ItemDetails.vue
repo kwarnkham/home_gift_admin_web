@@ -164,7 +164,7 @@ export default {
   },
   computed: {
     item() {
-      var temp = this.$store.state.items.filter(
+      var temp = this.$store.state.items.data.filter(
         el => el.id == this.$route.params.itemId
       );
       this.formItem = this.cloneObj(temp[0]);
@@ -348,7 +348,7 @@ export default {
       this.$q
         .dialog({
           title: this.$t("editWeight"),
-          message: this.$t("newWeight"),
+          message: this.$t("newWeight") + ' ("kg", "g", "lb")',
           prompt: {
             model: this.formItem.weight,
             type: "string"
@@ -425,7 +425,7 @@ export default {
       return { ...temp };
     },
     initSlide() {
-      let temp = this.$store.state.items.filter(
+      let temp = this.$store.state.items.data.filter(
         el => el.id == this.$route.params.itemId
       );
       if (temp[0] != undefined) {

@@ -79,6 +79,31 @@ export const itemRelatedApi = {
       });
     },
 
+    async getSingleItem(itemId) {
+      let result = null;
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/item/${itemId}`
+      })
+        .then(response => {
+          this.$q.loading.hide();
+          // console.log(response.data.result)
+          if (response.data.code == "0") {
+            result = response;
+          }
+          if (response.data.code == "1") {
+            this.$q.notify({
+              message: response.data.msg,
+              closeBtn: "Close"
+            });
+          }
+        })
+        .catch(error => console.log(error));
+
+      return result;
+    },
+
     async addImagesToItem(itemId, files) {
       this.$q.loading.show();
       let formData = new FormData();
@@ -249,14 +274,15 @@ export const itemRelatedApi = {
       }
     },
 
-    async findItem(name) {
+    async findItemByName(name, withTrash = false) {
       let result = null;
       if (name) {
         await axios({
           method: "get",
-          url: `${store.state.apiUrl}/item/find`,
+          url: `${store.state.apiUrl}/item/find/name`,
           params: {
-            name: name
+            name: name,
+            withTrash: withTrash
           }
         })
           .then(response => {

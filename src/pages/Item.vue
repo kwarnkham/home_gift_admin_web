@@ -13,15 +13,15 @@
         outlined
         clearable=""
       >
-        <template v-slot:after
-          ><q-btn
+        <template v-slot:after>
+          <q-btn
             icon="search"
             rounded
             glossy
             color="indigo"
             @click="searchItem(serachedWord)"
-          ></q-btn
-        ></template>
+          ></q-btn>
+        </template>
       </q-input>
     </div>
     <div class="col-12 row min-items-container-height">
@@ -30,11 +30,13 @@
         v-for="item in items"
         :key="item.id"
       >
-        <q-card v-if="item.images[0] != undefined" class="q-pa-xs">
+        <q-card class="q-pa-xs">
           <div class="text-center item-img-height">
             <img
               :src="
-                `${$store.state.imageHost}/item_images/${item.images[0].name}`
+                item.images.length > 0
+                  ? `${$store.state.imageHost}/item_images/${item.images[0].name}`
+                  : $store.state.placeholderImage
               "
               class="img-full-h"
             />
@@ -128,7 +130,6 @@ export default {
       } else {
         items = this.searchedItems;
       }
-      if (items) items = items.filter(el => el.images[0] != undefined);
       return items;
     },
     searchedItems() {
@@ -189,7 +190,7 @@ export default {
       });
     },
     searchItem(name) {
-      this.findItem(name);
+      this.findItemByName(name, this.showTrash);
     },
     restoreItem(id) {
       this.unDeleteItem(id).then(response => {

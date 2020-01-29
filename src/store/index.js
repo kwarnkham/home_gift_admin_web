@@ -12,11 +12,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    itemPerPage: 10,
-    // apiUrl: "http://127.0.0.1:8000/api",
-    // imageHost: "http://127.0.0.1:8000/storage",
-    apiUrl: "https://api.homegift.tk/api",
-    imageHost: "https://api.homegift.tk/storage",
+    itemPerPage: 6,
+    placeholderImage:
+      "https://cdn.pixabay.com/photo/2018/10/05/10/56/landscape-3725657__480.jpg",
+    apiUrl: "http://127.0.0.1:8000/api",
+    imageHost: "http://127.0.0.1:8000/storage",
+    // apiUrl: "https://api.homegift.tk/api",
+    // imageHost: "https://api.homegift.tk/storage",
     orders: [],
     newOrderCount: 0,
     locations: [],

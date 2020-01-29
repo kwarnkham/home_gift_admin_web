@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row" v-if="item != undefined">
+  <q-page class="row" v-if="item">
     <div class="col-4 bg-grey-5">
       <div>
         <q-btn
@@ -159,17 +159,18 @@ export default {
   data() {
     return {
       slide: null,
-      formItem: {}
+      formItem: {},
+      item: null
     };
   },
   computed: {
-    item() {
-      var temp = this.$store.state.items.data.filter(
-        el => el.id == this.$route.params.itemId
-      );
-      this.formItem = this.cloneObj(temp[0]);
-      return temp[0];
-    },
+    // item() {
+    //   var temp = this.$store.state.items.data.filter(
+    //     el => el.id == this.$route.params.itemId
+    //   );
+    //   this.formItem = this.cloneObj(temp[0]);
+    //   return temp[0];
+    // },
     categories() {
       var temp = [];
       this.item.categories.forEach(el => temp.push(el.name));
@@ -425,16 +426,14 @@ export default {
       return { ...temp };
     },
     initSlide() {
-      let temp = this.$store.state.items.data.filter(
-        el => el.id == this.$route.params.itemId
-      );
-      if (temp[0] != undefined) {
-        this.slide = temp[0].images[0].id;
-      }
+      this.slide = this.item.images[0].id;
     }
   },
   created() {
-    this.initSlide();
+    this.getSingleItem(this.$route.params.itemId).then(response => {
+      this.item = response.data.result.item;
+      this.slide = this.item.images[0].id;
+    });
   }
 };
 </script>

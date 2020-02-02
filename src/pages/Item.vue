@@ -134,11 +134,6 @@ export default {
     },
     searchedItems() {
       let items = this.$store.state.searchedItems;
-      if (!this.showTrash) {
-        items = items.filter(el => el.deleted_at == null);
-      } else if (this.showTrash) {
-        items = items.filter(el => el.deleted_at != null);
-      }
       return items;
     },
     totalPages() {

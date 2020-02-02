@@ -279,9 +279,8 @@ export const itemRelatedApi = {
       if (name) {
         await axios({
           method: "get",
-          url: `${store.state.apiUrl}/item/find/name`,
+          url: `${store.state.apiUrl}/item/find/name/${name}`,
           params: {
-            name: name,
             withTrash: withTrash
           }
         })

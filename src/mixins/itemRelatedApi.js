@@ -6,36 +6,12 @@ export const itemRelatedApi = {
     // console.log(store.state.apiUrl);
   },
   methods: {
-    async addItem(
-      name,
-      chName,
-      price,
-      description,
-      chDescription,
-      notice,
-      chNotice,
-      weight,
-      location,
-      merchant,
-      categories,
-      images
-    ) {
+    async addItem(itemInfo) {
       this.$q.loading.show();
       await axios({
         method: "post",
         url: `${store.state.apiUrl}/item`,
-        data: {
-          name: name,
-          ch_name: chName,
-          price: price,
-          description: description,
-          ch_description: chDescription,
-          location_id: location.id,
-          merchant_id: merchant.id,
-          weight: weight,
-          notice: notice,
-          ch_notice: chNotice
-        }
+        data: itemInfo
       })
         .then(async response => {
           this.$q.loading.hide();
@@ -43,9 +19,12 @@ export const itemRelatedApi = {
           if (response.data.code == "0") {
             await this.addCategoriesToItem(
               response.data.result.item.id,
-              categories
+              itemInfo.categories
             );
-            await this.addImagesToItem(response.data.result.item.id, images);
+            await this.addImagesToItem(
+              response.data.result.item.id,
+              itemInfo.images
+            );
             await this.getItems();
           }
           if (response.data.code == "1") {
@@ -170,11 +149,14 @@ export const itemRelatedApi = {
         data: {
           name: item.name,
           ch_name: item.ch_name,
+          mm_name: item.mm_name,
           price: item.price,
           description: item.description,
           ch_description: item.ch_description,
+          mm_description: item.mm_description,
           notice: item.notice,
           ch_notice: item.ch_notice,
+          mm_notice: item.mm_notice,
           weight: item.weight,
           merchant_id: item.merchant.id,
           location_id: item.location.id
@@ -231,19 +213,6 @@ export const itemRelatedApi = {
           result = response;
         }
       });
-      return result;
-    },
-
-    async checkExistedName(name) {
-      let result = null;
-      if (name) {
-        await axios({
-          method: "get",
-          url: `${store.state.apiUrl}/item/name/${name}`
-        })
-          .then(response => (result = response))
-          .catch(error => console.log(error));
-      }
       return result;
     },
 

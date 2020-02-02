@@ -6,7 +6,7 @@
           :label="$t('itemName')"
           flat
           no-caps
-          @dblclick="showEditNameForm()"
+          @dblclick="showEditForm($t('editName'), $t('newName'), 'name')"
         />
         : {{ item.name }}
       </div>
@@ -15,16 +15,27 @@
           :label="$t('chineseItemName')"
           flat
           no-caps
-          @dblclick="showEditChineseNameForm()"
+          @dblclick="showEditForm($t('editName'), $t('newName'), 'ch_name')"
         />
         : {{ item.ch_name }}
+      </div>
+      <div>
+        <q-btn
+          :label="$t('myanmarItemName')"
+          flat
+          no-caps
+          @dblclick="showEditForm($t('editName'), $t('newName'), 'mm_name')"
+        />
+        : {{ item.mm_name }}
       </div>
       <div>
         <q-btn
           :label="$t('price')"
           flat
           no-caps
-          @dblclick="showEditPriceForm()"
+          @dblclick="
+            showEditForm($t('editPrice'), $t('newPrice'), 'price', 'number')
+          "
         />
         : {{ item.price }} MMK
       </div>
@@ -33,7 +44,14 @@
           :label="$t('description')"
           flat
           no-caps
-          @dblclick="showEditDescriptionForm()"
+          @dblclick="
+            showEditForm(
+              $t('editDescription'),
+              $t('newDescription'),
+              'description',
+              'textarea'
+            )
+          "
         />
         : {{ item.description }}
       </div>
@@ -42,16 +60,46 @@
           :label="$t('chineseDescription')"
           flat
           no-caps
-          @dblclick="showEditChineseDescriptionForm()"
+          @dblclick="
+            showEditForm(
+              $t('editDescription'),
+              $t('newDescription'),
+              'ch_description',
+              'textarea'
+            )
+          "
         />
         : {{ item.ch_description }}
+      </div>
+      <div>
+        <q-btn
+          :label="$t('myanmarDescription')"
+          flat
+          no-caps
+          @dblclick="
+            showEditForm(
+              $t('editDescription'),
+              $t('newDescription'),
+              'mm_description',
+              'textarea'
+            )
+          "
+        />
+        : {{ item.mm_description }}
       </div>
       <div>
         <q-btn
           :label="$t('notice')"
           flat
           no-caps
-          @dblclick="showEditNoticeForm()"
+          @dblclick="
+            showEditForm(
+              $t('editNotice'),
+              $t('newNotice'),
+              'notice',
+              'textarea'
+            )
+          "
         />
         : {{ item.notice }}
       </div>
@@ -60,16 +108,39 @@
           :label="$t('chineseNotice')"
           flat
           no-caps
-          @dblclick="showEditChineseNoticeForm()"
+          @dblclick="
+            showEditForm(
+              $t('editNotice'),
+              $t('newNotice'),
+              'ch_notice',
+              'textarea'
+            )
+          "
         />
         : {{ item.ch_notice }}
+      </div>
+      <div>
+        <q-btn
+          :label="$t('myanmarNotice')"
+          flat
+          no-caps
+          @dblclick="
+            showEditForm(
+              $t('editNotice'),
+              $t('newNotice'),
+              'mm_notice',
+              'textarea'
+            )
+          "
+        />
+        : {{ item.mm_notice }}
       </div>
       <div>
         <q-btn
           :label="$t('weight')"
           flat
           no-caps
-          @dblclick="showEditWeightForm()"
+          @dblclick="showEditForm($t('editWeight'), $t('newWeight'), 'weight')"
         />
         : {{ item.weight }}
       </div>
@@ -143,6 +214,7 @@
   </q-page>
 </template>
 <script>
+import { extend } from "quasar";
 import { itemRelatedApi } from "../mixins/itemRelatedApi";
 import MerchantSelectInputDialog from "../components/item/MerchantSelectInputDialog";
 import LocationSelectInputDialog from "../components/item/LocationSelectInputDialog";
@@ -164,13 +236,6 @@ export default {
     };
   },
   computed: {
-    // item() {
-    //   var temp = this.$store.state.items.data.filter(
-    //     el => el.id == this.$route.params.itemId
-    //   );
-    //   this.formItem = this.cloneObj(temp[0]);
-    //   return temp[0];
-    // },
     categories() {
       var temp = [];
       this.item.categories.forEach(el => temp.push(el.name));
@@ -178,8 +243,10 @@ export default {
     }
   },
   watch: {
-    item(value) {
-      this.slide = value.images[0].id;
+    item(value, old) {
+      if (old == null) {
+        this.slide = value.images[0].id;
+      }
     }
   },
   methods: {
@@ -201,167 +268,26 @@ export default {
       };
       input.click();
     },
-    showEditNameForm() {
+    showEditForm(title, message, field, fieldType = "text") {
       this.$q
         .dialog({
-          title: this.$t("editName"),
-          message: this.$t("newName"),
+          title: title,
+          message: message,
           prompt: {
-            model: this.formItem.name,
-            type: "text"
+            model: this.formItem[field],
+            type: fieldType
           },
           cancel: true,
           persistent: true
         })
         .onOk(data => {
-          this.formItem.name = data;
-          this.updateItem(this.formItem).then(response => {
-            if (response != null) {
-              this.getItems();
-            }
-          });
-          // console.log(data);
-        });
-    },
-    showEditChineseNameForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editName"),
-          message: this.$t("newName"),
-          prompt: {
-            model: this.formItem.ch_name,
-            type: "text"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.ch_name = data;
-          this.updateItem(this.formItem).then(response => {
-            if (response != null) {
-              this.getItems();
-            }
-          });
-          // console.log(data);
-        });
-    },
-    showEditPriceForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editPrice"),
-          message: this.$t("newPrice"),
-          prompt: {
-            model: this.formItem.price,
-            type: "number"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.price = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
-          });
-          // console.log(data);
-        });
-    },
-    showEditDescriptionForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editDescription"),
-          message: this.$t("newDescription"),
-          prompt: {
-            model: this.formItem.description,
-            type: "textarea"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.description = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
-          });
-          // console.log(data);
-        });
-    },
-    showEditChineseDescriptionForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editDescription"),
-          message: this.$t("newDescription"),
-          prompt: {
-            model: this.formItem.ch_description,
-            type: "textarea"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.ch_description = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
-          });
-          // console.log(data);
-        });
-    },
-    showEditNoticeForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editNotice"),
-          message: this.$t("newNotice"),
-          prompt: {
-            model: this.formItem.notice,
-            type: "textarea"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.notice = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
-          });
-          // console.log(data);
-        });
-    },
-    showEditChineseNoticeForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editNotice"),
-          message: this.$t("newNotice"),
-          prompt: {
-            model: this.formItem.ch_notice,
-            type: "textarea"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.ch_notice = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
-          });
-          // console.log(data);
-        });
-    },
-    showEditWeightForm() {
-      this.$q
-        .dialog({
-          title: this.$t("editWeight"),
-          message: this.$t("newWeight") + ' ("kg", "g", "lb")',
-          prompt: {
-            model: this.formItem.weight,
-            type: "string"
-          },
-          cancel: true,
-          persistent: true
-        })
-        .onOk(data => {
-          this.formItem.weight = data;
-          this.updateItem(this.formItem).then(() => {
-            this.getItems();
-          });
+          this.formItem[field] = data;
+          if (data != this.item[field])
+            this.updateItem(this.formItem).then(response => {
+              if (response != null) {
+                this.initItemDetails();
+              }
+            });
           // console.log(data);
         });
     },
@@ -375,7 +301,7 @@ export default {
         .onOk(merchant => {
           this.formItem.merchant = { ...merchant };
           this.updateItem(this.formItem).then(() => {
-            this.getItems();
+            this.initItemDetails();
           });
         });
     },
@@ -389,7 +315,7 @@ export default {
         .onOk(location => {
           this.formItem.location = { ...location };
           this.updateItem(this.formItem).then(() => {
-            this.getItems();
+            this.initItemDetails();
           });
         });
     },
@@ -406,34 +332,19 @@ export default {
           // console.log(categories)
           this.formItem.categories = [...categories];
           this.updateCategory(this.formItem).then(() => {
-            this.getItems();
+            this.initItemDetails();
           });
         });
     },
-    cloneObj(object) {
-      let temp = {};
-      for (let key in object) {
-        if (typeof object[key] === "object") {
-          if (object[key] instanceof Array) {
-            temp[key] = [...object[key]];
-          } else {
-            temp[key] = { ...object[key] };
-          }
-        } else {
-          temp[key] = object[key];
-        }
-      }
-      return { ...temp };
-    },
-    initSlide() {
-      this.slide = this.item.images[0].id;
+    initItemDetails() {
+      this.getSingleItem(this.$route.params.itemId).then(response => {
+        this.item = response.data.result.item;
+        extend(this.formItem, this.item);
+      });
     }
   },
   created() {
-    this.getSingleItem(this.$route.params.itemId).then(response => {
-      this.item = response.data.result.item;
-      this.slide = this.item.images[0].id;
-    });
+    this.initItemDetails();
   }
 };
 </script>

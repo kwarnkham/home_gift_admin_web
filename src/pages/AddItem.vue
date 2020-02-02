@@ -2,29 +2,27 @@
   <q-page class="row">
     <q-form class="col-12 q-pa-md" @submit="onSubmit" ref="addItemForm">
       <q-input
-        ref="nameInput"
         filled
         v-model="name"
         :label="$t('itemName')"
         lazy-rules
-        :rules="[
-          val => (val && val.length > 0) || $t('pleaseTypeSomething'),
-          val => (val && !nameIsExisted) || $t('nameAlreadyExists')
-        ]"
-        @blur="validateName(name)"
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
       />
       <q-input
-        ref="chNameInput"
         filled
         v-model="chName"
         :label="$t('chineseItemName')"
         lazy-rules
-        :rules="[
-          val => (val && val.length > 0) || $t('pleaseTypeSomething'),
-          val => (val && !chNameIsExisted) || $t('nameAlreadyExists')
-        ]"
-        @blur="validateName(chName, false)"
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
       />
+      <q-input
+        filled
+        v-model="mmName"
+        :label="$t('myanmarItemName')"
+        lazy-rules
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+      />
+
       <q-input
         filled
         type="number"
@@ -75,6 +73,15 @@
       <q-input
         filled
         type="textarea"
+        v-model="mmDescription"
+        :label="$t('myanmarDescription')"
+        lazy-rules
+        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+      />
+
+      <q-input
+        filled
+        type="textarea"
         v-model="notice"
         :label="$t('notice')"
         :hint="$t('optional')"
@@ -84,6 +91,13 @@
         type="textarea"
         v-model="chNotice"
         :label="$t('chineseNotice')"
+        :hint="$t('optional')"
+      />
+      <q-input
+        filled
+        type="textarea"
+        v-model="mmNotice"
+        :label="$t('myanmarNotice')"
         :hint="$t('optional')"
       />
       <q-select
@@ -188,11 +202,14 @@ export default {
   data: () => ({
     name: "",
     chName: "",
+    mmName: "",
     price: "",
     description: "",
     chDescription: "",
+    mmDescription: "",
     notice: null,
     chNotice: null,
+    mmNotice: null,
     weight: "",
     weightUnits: ["kg", "g", "lb"],
     selectedWeightUnit: "kg",
@@ -200,9 +217,7 @@ export default {
     selectedMerchant: null,
     selectedCategories: null,
     images: null,
-    thumbnails: [],
-    nameIsExisted: false,
-    chNameIsExisted: false
+    thumbnails: []
   }),
   computed: {
     locations() {
@@ -219,18 +234,6 @@ export default {
     // }
   },
   watch: {
-    name(value) {
-      this.nameIsExisted = false;
-    },
-    chName(value) {
-      this.chNameIsExisted = false;
-    },
-    nameIsExisted() {
-      this.$refs.nameInput.validate();
-    },
-    chNameIsExisted() {
-      this.$refs.chNameInput.validate();
-    },
     images(value) {
       // console.log(value[0].name);
       if (value != null) {
@@ -250,23 +253,6 @@ export default {
     }
   },
   methods: {
-    validateName(name, isEnglish = true) {
-      this.checkExistedName(name).then(response => {
-        if (response && response.data.code == "1") {
-          if (isEnglish) {
-            this.nameIsExisted = true;
-          } else {
-            this.chNameIsExisted = true;
-          }
-        } else {
-          if (isEnglish) {
-            this.nameIsExisted = false;
-          } else {
-            this.chNameIsExisted = false;
-          }
-        }
-      });
-    },
     removeFile(file) {
       for (let i = 0; i < this.images.length; i++) {
         if (this.images[i].name == file.name) {
@@ -299,6 +285,28 @@ export default {
         parent: this
       });
     },
+    resetForm() {
+      this.name = "";
+      this.chName = "";
+      this.mmName = "";
+
+      this.price = "";
+
+      this.description = "";
+      this.chDescription = "";
+      this.mmDescription = "";
+
+      this.notice = null;
+      this.chNotice = null;
+      this.mmNotice = null;
+      this.weight = "";
+      this.selectedLocation = null;
+      this.selectedMerchant = null;
+      this.selectedCategories = null;
+      this.images = null;
+      this.thumbnails = [];
+      this.$refs.addItemForm.resetValidation();
+    },
     onSubmit() {
       if (this.images == null || this.images.length < 1) {
         this.$q.dialog({
@@ -308,34 +316,25 @@ export default {
       }
       if (this.images != null) {
         if (this.images.length > 0) {
-          this.addItem(
-            this.name,
-            this.chName,
-            this.price,
-            this.description,
-            this.chDescription,
-            this.notice,
-            this.chNotice,
-            this.weight + this.selectedWeightUnit,
-            this.selectedLocation,
-            this.selectedMerchant,
-            this.selectedCategories,
-            this.images
-          ).then(() => {
-            this.name = "";
-            this.chName = "";
-            this.price = "";
-            this.description = "";
-            this.chDescription = "";
-            this.notice = null;
-            this.chNotice = null;
-            this.weight = "";
-            this.selectedLocation = null;
-            this.selectedMerchant = null;
-            this.selectedCategories = null;
-            this.images = null;
-            this.thumbnails = [];
-            this.$refs.addItemForm.resetValidation();
+          let itemInfo = {
+            name: this.name,
+            chName: this.chName,
+            mmName: this.mmName,
+            price: this.price,
+            description: this.description,
+            chDescription: this.chDescription,
+            mmDescription: this.mmDescription,
+            notice: this.notice,
+            chNotice: this.chNotice,
+            mmNotice: this.mmNotice,
+            weight: this.weight + this.selectedWeightUnit,
+            locationId: this.selectedLocation.id,
+            merchantId: this.selectedMerchant.id,
+            categories: this.selectedCategories,
+            images: this.images
+          };
+          this.addItem(itemInfo).then(() => {
+            this.resetForm();
           });
         }
       }

@@ -15,10 +15,8 @@ export default new Vuex.Store({
     itemPerPage: 6,
     placeholderImage:
       "https://cdn.pixabay.com/photo/2018/10/05/10/56/landscape-3725657__480.jpg",
-    apiUrl: "http://127.0.0.1:8000/api",
-    imageHost: "http://127.0.0.1:8000/storage",
-    // apiUrl: "https://api.homegift.tk/api",
-    // imageHost: "https://api.homegift.tk/storage",
+    apiUrl: process.env.API_URL,
+    imageHost: process.env.IMAGE_HOST,
     orders: [],
     newOrderCount: 0,
     locations: [],

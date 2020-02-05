@@ -17,7 +17,7 @@ export default {
   addItem: "Add Item",
   location: "Location",
   merchant: "Merchant",
-  category: "Category| Categories",
+  category: "Contribution| Contributions",
   item: "Item| Items",
   admin: "Admin",
   adminAction: "Admin Action",

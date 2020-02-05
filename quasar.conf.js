@@ -94,6 +94,19 @@ module.exports = function(ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      env: ctx.dev
+        ? {
+            // so on dev we'll have
+            API_URL: JSON.stringify("https://api.homegift.tk/api"),
+            IMAGE_HOST: JSON.stringify("https://api.homegift.tk/storage")
+            // API_URL: JSON.stringify("http://127.0.0.1:8000/api"),
+            // IMAGE_HOST: JSON.stringify("http://127.0.0.1:8000/storage")
+          }
+        : {
+            // and on build (production):
+            API_URL: JSON.stringify("https://api.homegift.tk/api"),
+            IMAGE_HOST: JSON.stringify("https://api.homegift.tk/storage")
+          },
       scopeHoisting: true,
       // vueRouterMode: 'history',
       // showProgress: false,

@@ -27,8 +27,6 @@ export default {
     }
   },
   created() {
-    this.getItems();
-    this.getTrashedItems();
     this.getLocations();
     this.getMerchants();
     this.getCategories();

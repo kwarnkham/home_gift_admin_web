@@ -13,11 +13,11 @@
 
         <q-toolbar-title>Home Gift {{ $t("admin") }}</q-toolbar-title>
         <q-btn
-          v-if="$route.name == 'item'"
+          v-if="$route.name == 'items'"
           icon="delete"
           :color="showTrash ? 'lime' : 'white'"
           :class="[showTrash ? 'text-black' : 'text-brown']"
-          @click="showTrash = !showTrash"
+          @click="$store.dispatch('setShowTrash', !showTrash)"
         />
       </q-toolbar>
     </q-header>
@@ -105,8 +105,8 @@
         </q-item>
         <q-item
           clickable
-          @click="route('item')"
-          :active="$route.name == 'item' || $route.name == 'itemDetails'"
+          @click="route('items')"
+          :active="$route.name == 'items' || $route.name == 'itemDetails'"
         >
           <q-item-section avatar>
             <q-icon name="fastfood" />
@@ -132,9 +132,13 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
-      lang: this.$i18n.locale,
-      showTrash: false
+      lang: this.$i18n.locale
     };
+  },
+  computed: {
+    showTrash() {
+      return this.$store.state.showTrash;
+    }
   },
   watch: {
     lang(lang) {
@@ -143,9 +147,6 @@ export default {
         this.$q.lang.set(language.default);
       });
       localStorage.setItem("lang", lang);
-    },
-    showTrash(value) {
-      this.$root.$emit("showTrash", value);
     }
   },
   methods: {

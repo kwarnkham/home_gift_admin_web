@@ -242,18 +242,11 @@ export default {
       return temp;
     }
   },
-  watch: {
-    item(value, old) {
-      if (old == null) {
-        this.slide = value.images[0].id;
-      }
-    }
-  },
   methods: {
     deleteItemPic() {
       this.deleteImage(this.slide).then(response => {
         if (response != null) {
-          this.getItems();
+          this.initItemDetails();
         }
       });
     },
@@ -264,7 +257,9 @@ export default {
       let file;
       input.onchange = _ => {
         const files = Array.from(input.files);
-        this.addImagesToItem(this.item.id, files).then(() => this.getItems());
+        this.addImagesToItem(this.item.id, files).then(() =>
+          this.initItemDetails()
+        );
       };
       input.click();
     },
@@ -339,6 +334,7 @@ export default {
     initItemDetails() {
       this.getSingleItem(this.$route.params.itemId).then(response => {
         this.item = response.data.result.item;
+        this.slide = this.item.images[0].id;
         extend(this.formItem, this.item);
       });
     }

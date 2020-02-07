@@ -22,13 +22,16 @@ export default new Vuex.Store({
     locations: [],
     merchants: [],
     categories: [],
-    items: [],
-    searchedItems: [],
-    trashedItems: [],
+    searchedItems: null,
+    trashedItems: null,
     provinces: [],
-    lang: "zh-hans"
+    lang: "zh-hans",
+    showTrash: false
   },
   mutations: {
+    setShowTrash(state, payload) {
+      state.showTrash = payload;
+    },
     setSearchedItems(state, payload) {
       state.searchedItems = payload;
     },
@@ -51,9 +54,6 @@ export default new Vuex.Store({
     setCategories(state, payload) {
       state.categories = payload;
     },
-    setItems(state, payload) {
-      state.items = payload;
-    },
     setTrashedItems(state, payload) {
       state.trashedItems = payload;
     },
@@ -65,6 +65,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setShowTrash(context, payload) {
+      context.commit("setShowTrash", payload);
+    },
     setSearchedItems(context, payload) {
       context.commit("setSearchedItems", payload);
     },
@@ -85,9 +88,6 @@ export default new Vuex.Store({
     },
     setCategories(context, payload) {
       context.commit("setCategories", payload);
-    },
-    setItems(context, payload) {
-      context.commit("setItems", payload);
     },
     setTrashedItems(context, payload) {
       context.commit("setTrashedItems", payload);

@@ -105,6 +105,7 @@ export const itemRelatedApi = {
         .catch(error => console.log(error));
     },
     async getTrashedItems(page = 1, perPage = this.$store.state.itemPerPage) {
+      let result;
       this.$q.loading.show();
       await axios({
         method: "get",
@@ -116,13 +117,47 @@ export const itemRelatedApi = {
       })
         .then(response => {
           this.$q.loading.hide();
-          store.dispatch("setTrashedItems", response.data.result.items);
+          result = response;
           // console.log(response.data)
         })
         .catch(error => console.log(error));
+      return result;
+    },
+
+    async findItemByName(
+      name,
+      withTrash = false,
+      page = 1,
+      perPage = this.$store.state.itemPerPage
+    ) {
+      let result = null;
+      if (name) {
+        await axios({
+          method: "get",
+          url: `${store.state.apiUrl}/items/find/name/${name}`,
+          params: {
+            withTrash: withTrash,
+            page: page,
+            per_page: perPage
+          }
+        })
+          .then(response => {
+            if (response.data.code == "0") {
+              result = response;
+            } else {
+              this.$q.notify({
+                message: response.data.msg,
+                closeBtn: "Close"
+              });
+            }
+          })
+          .catch(error => console.log(error));
+      }
+      return result;
     },
 
     async getItems(page = 1, perPage = this.$store.state.itemPerPage) {
+      let result;
       this.$q.loading.show();
       await axios({
         method: "get",
@@ -134,10 +169,12 @@ export const itemRelatedApi = {
       })
         .then(response => {
           this.$q.loading.hide();
-          store.dispatch("setItems", response.data.result.items);
-          // console.log(response.data)
+
+          // console.log(response.data);
+          result = response;
         })
         .catch(error => console.log(error));
+      return result;
     },
 
     async updateItem(item) {
@@ -241,38 +278,6 @@ export const itemRelatedApi = {
           .catch(error => console.log(error));
         return result;
       }
-    },
-
-    async findItemByName(name, withTrash = false) {
-      let result = null;
-      if (name) {
-        await axios({
-          method: "get",
-          url: `${store.state.apiUrl}/item/find/name/${name}`,
-          params: {
-            withTrash: withTrash
-          }
-        })
-          .then(response => {
-            if (response.data.code == "0") {
-              this.$store.dispatch(
-                "setSearchedItems",
-                response.data.result.items
-              );
-            } else {
-              this.$q.notify({
-                message: response.data.msg,
-                closeBtn: "Close"
-              });
-              this.$store.dispatch("setSearchedItems", []);
-            }
-            result = response;
-          })
-          .catch(error => console.log(error));
-      } else {
-        this.$store.dispatch("setSearchedItems", []);
-      }
-      return result;
     }
   }
 };

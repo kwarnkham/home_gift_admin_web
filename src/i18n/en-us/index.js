@@ -1,7 +1,7 @@
 export default {
   pending: "Pending",
   confirmed: "Confirmed",
-  onTheWay: "oOn The Way",
+  onTheWay: "On The Way",
   cancel: "Cancel| Canceled",
   delivered: "Deliveried",
   update: "Update",

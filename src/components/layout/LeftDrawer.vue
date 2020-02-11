@@ -10,7 +10,7 @@
       <q-item>
         <LanguageButton />
       </q-item>
-      <q-item
+      <!-- <q-item
         clickable
         @click="route('orders')"
         :active="$route.name == 'orders'"
@@ -21,19 +21,19 @@
         <q-item-section>
           <q-item-label>{{ $tc("order", 2) }}</q-item-label>
         </q-item-section>
-      </q-item>
-      <q-item
-        clickable
-        @click="route('addItem')"
-        :active="$route.name == 'addItem'"
-      >
-        <q-item-section avatar>
-          <q-icon name="add_box" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $t("addItem") }}</q-item-label>
-        </q-item-section>
-      </q-item>
+      </q-item> -->
+      <DrawerListNavItem
+        routeName="orders"
+        :label="$tc('order', 2)"
+        icon="assignment"
+        @click.native="route('orders')"
+      />
+      <DrawerListNavItem
+        routeName="addItem"
+        :label="$t('addItem')"
+        icon="add_box"
+        @click.native="route('addItem')"
+      />
       <q-item
         clickable
         @click="route('location')"
@@ -88,14 +88,16 @@
 
 <script>
 import LanguageButton from "./LanguageButton";
+import DrawerListNavItem from "./DrawerListNavItem";
 export default {
   name: "LayoutHeader",
   components: {
-    LanguageButton
+    LanguageButton,
+    DrawerListNavItem
   },
   data() {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
     };
   },
   methods: {

@@ -5,13 +5,15 @@ export const categoryRelatedApi = {
     // console.log(store.state.apiUrl);
   },
   methods: {
-    async addCategory(name) {
+    async addCategory(category) {
       this.$q.loading.show();
       await axios({
         method: "post",
         url: `${store.state.apiUrl}/category`,
         data: {
-          name: name
+          name: category.name,
+          chName: category.chName,
+          mmName: category.mmName
         }
       })
         .then(response => {
@@ -52,14 +54,16 @@ export const categoryRelatedApi = {
           console.log(error.data);
         });
     },
-    updateCategory(id, name) {
+    updateCategory(id, category) {
       this.$q.loading.show();
       axios({
         method: "put",
         url: `${store.state.apiUrl}/category`,
         data: {
           id: id,
-          name: name
+          name: category.name,
+          chName: category.chName,
+          mmName: category.mmName
         }
       })
         .then(response => {

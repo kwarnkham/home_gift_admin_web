@@ -1,5 +1,5 @@
 <template>
-  <q-dialog ref="dialog" @hide="onDialogHide">
+  <q-dialog ref="dialog" @hide="onDialogHide" full-width="">
     <q-card class="q-dialog-plugin">
       <q-card-section><AddCategoryForm /></q-card-section>
       <!-- <q-card-actions align="right">

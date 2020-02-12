@@ -1,7 +1,7 @@
 <template>
   <q-page class="row">
     <AddMerchantForm class="col-12 q-pa-md" />
-    <MerchantList/>
+    <MerchantList />
     <div class="col-12" v-for="(i, key) in 10" :key="key"></div>
   </q-page>
 </template>

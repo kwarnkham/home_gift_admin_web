@@ -1,5 +1,8 @@
 <template>
-  <div class="row justify-between items-center border q-mb-md">
+  <div
+    class="row justify-between items-center"
+    :class="{ border: border, 'q-mb-md': border }"
+  >
     <slot name="english"></slot>
     <slot name="chinese"></slot>
     <slot name="myanmar"></slot>
@@ -9,14 +12,11 @@
 <script>
 export default {
   name: "FieldGroup",
-  props: {}
+  props: {
+    border: {
+      default: false,
+      type: Boolean
+    }
+  }
 };
 </script>
-
-<style scoped>
-.border {
-  border: 1px solid #62a7b5;
-  border-radius: 10px;
-  padding-top: 20px;
-}
-</style>

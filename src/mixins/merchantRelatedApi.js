@@ -5,13 +5,15 @@ export const merchantRelatedApi = {
     // console.log(store.state.apiUrl);
   },
   methods: {
-    async addMerchant(name) {
+    async addMerchant(merchant) {
       this.$q.loading.show();
       await axios({
         method: "post",
         url: `${store.state.apiUrl}/merchant`,
         data: {
-          name: name
+          name: merchant.name,
+          chName: merchant.chName,
+          mmName: merchant.mmName
         }
       })
         .then(response => {
@@ -52,14 +54,16 @@ export const merchantRelatedApi = {
           console.log(error.data);
         });
     },
-    updateMerchant(id, name) {
+    updateMerchant(id, merchant) {
       this.$q.loading.show();
       axios({
         method: "put",
         url: `${store.state.apiUrl}/merchant`,
         data: {
           id: id,
-          name: name
+          name: merchant.name,
+          chName: merchant.chName,
+          mmName: merchant.mmName
         }
       })
         .then(response => {

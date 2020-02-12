@@ -64,5 +64,9 @@ export default {
   chineseLocation: "Chinese Location",
   myanmarLocation: "Myanamr Location",
   chineseProvince: "Chinese Province",
-  myanmarProvince: "Myanmar Province"
+  myanmarProvince: "Myanmar Province",
+  myanmarMerchant: "Myanmar Merchant",
+  chineseMerchant: "Chinese Merchant",
+  chineseCategory: "Chinese Category",
+  myanmarCategory: "Myanamr Category"
 };

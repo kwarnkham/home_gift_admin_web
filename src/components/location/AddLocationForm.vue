@@ -1,6 +1,6 @@
 <template>
   <q-form @submit="onSubmit" ref="addLocationForm">
-    <FieldGroup>
+    <FieldGroup border>
       <template #english>
         <q-input
           filled

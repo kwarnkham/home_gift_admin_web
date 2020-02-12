@@ -1,27 +1,44 @@
 <template>
   <q-page class="row">
     <q-form class="col-12 q-pa-md" @submit="onSubmit" ref="addItemForm">
-      <q-input
-        filled
-        v-model="name"
-        :label="$t('itemName')"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
-      />
-      <q-input
-        filled
-        v-model="chName"
-        :label="$t('chineseItemName')"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
-      />
-      <q-input
-        filled
-        v-model="mmName"
-        :label="$t('myanmarItemName')"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
-      />
+      <FieldGroup border>
+        <template #english>
+          <q-input
+            filled
+            v-model="name"
+            :label="$t('itemName')"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || $t('pleaseTypeSomething')
+            ]"
+            class="col-sm-12 col-md-4 q-px-xs"
+          />
+        </template>
+        <template #chinese>
+          <q-input
+            filled
+            v-model="chName"
+            :label="$t('chineseItemName')"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || $t('pleaseTypeSomething')
+            ]"
+            class="col-sm-12 col-md-4 q-px-xs"
+          />
+        </template>
+        <template #myanmar>
+          <q-input
+            filled
+            v-model="mmName"
+            :label="$t('myanmarItemName')"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || $t('pleaseTypeSomething')
+            ]"
+            class="col-sm-12 col-md-4 q-px-xs"
+          />
+        </template>
+      </FieldGroup>
 
       <q-input
         filled
@@ -54,52 +71,64 @@
           style="width:18%"
         />
       </q-input>
-      <q-input
-        filled
-        type="textarea"
-        v-model="description"
-        :label="$t('description')"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+      <div class="border q-px-xs">
+        <q-input
+          filled
+          type="textarea"
+          v-model="description"
+          :label="$t('description')"
+          lazy-rules
+          :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+        />
+        <q-input
+          filled
+          type="textarea"
+          v-model="chDescription"
+          :label="$t('chineseDescription')"
+          lazy-rules
+          :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+        />
+        <q-input
+          filled
+          type="textarea"
+          v-model="mmDescription"
+          :label="$t('myanmarDescription')"
+          lazy-rules
+          :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
+        />
+      </div>
+      <q-btn
+        label="Add Notice"
+        no-caps
+        color="accent"
+        class="q-mt-xs"
+        @click="showNoticeField = true"
+        v-if="!showNoticeField"
       />
-      <q-input
-        filled
-        type="textarea"
-        v-model="chDescription"
-        :label="$t('chineseDescription')"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
-      />
-      <q-input
-        filled
-        type="textarea"
-        v-model="mmDescription"
-        :label="$t('myanmarDescription')"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || $t('pleaseTypeSomething')]"
-      />
+      <div class="border q-px-xs q-mt-xs" v-if="showNoticeField">
+        <q-input
+          filled
+          type="textarea"
+          v-model="notice"
+          :label="$t('notice')"
+          :hint="$t('optional')"
+        />
+        <q-input
+          filled
+          type="textarea"
+          v-model="chNotice"
+          :label="$t('chineseNotice')"
+          :hint="$t('optional')"
+        />
+        <q-input
+          filled
+          type="textarea"
+          v-model="mmNotice"
+          :label="$t('myanmarNotice')"
+          :hint="$t('optional')"
+        />
+      </div>
 
-      <q-input
-        filled
-        type="textarea"
-        v-model="notice"
-        :label="$t('notice')"
-        :hint="$t('optional')"
-      />
-      <q-input
-        filled
-        type="textarea"
-        v-model="chNotice"
-        :label="$t('chineseNotice')"
-        :hint="$t('optional')"
-      />
-      <q-input
-        filled
-        type="textarea"
-        v-model="mmNotice"
-        :label="$t('myanmarNotice')"
-        :hint="$t('optional')"
-      />
       <q-select
         v-model="selectedLocation"
         :options="locations"
@@ -193,32 +222,37 @@ import { itemRelatedApi } from "../mixins/itemRelatedApi";
 import AddLocationFormDialog from "../components/location/AddLocationFormDialog";
 import AddMerchantFormDialog from "../components/merchant/AddMerchantFormDialog";
 import AddCategoryFormDialog from "../components/category/AddCategoryFormDialog";
+import FieldGroup from "../components/FieldGroup";
 
 export default {
   name: "AddItem",
   mixins: [itemRelatedApi],
-  components: {},
-
-  data: () => ({
-    name: "",
-    chName: "",
-    mmName: "",
-    price: "",
-    description: "",
-    chDescription: "",
-    mmDescription: "",
-    notice: null,
-    chNotice: null,
-    mmNotice: null,
-    weight: "",
-    weightUnits: ["kg", "g", "lb"],
-    selectedWeightUnit: "kg",
-    selectedLocation: null,
-    selectedMerchant: null,
-    selectedCategories: null,
-    images: null,
-    thumbnails: []
-  }),
+  components: {
+    FieldGroup
+  },
+  data() {
+    return {
+      name: "",
+      chName: "",
+      mmName: "",
+      price: "",
+      description: "",
+      chDescription: "",
+      mmDescription: "",
+      notice: null,
+      chNotice: null,
+      mmNotice: null,
+      weight: "",
+      weightUnits: ["kg", "g", "lb"],
+      selectedWeightUnit: "kg",
+      selectedLocation: null,
+      selectedMerchant: null,
+      selectedCategories: null,
+      images: null,
+      thumbnails: [],
+      showNoticeField: false
+    };
+  },
   computed: {
     locations() {
       return this.$store.state.locations;

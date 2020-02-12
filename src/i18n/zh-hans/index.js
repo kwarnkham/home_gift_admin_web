@@ -60,5 +60,9 @@ export default {
   nameAlreadyExists: "名称已经存在",
   weightUnit: "重量单位",
   trash: "垃圾箱",
-  search: "搜索"
+  search: "搜索",
+  chineseLocation: "中文位置",
+  myanmarLocation: "缅甸语位置",
+  chineseProvince: "中文普罗旺斯",
+  myanmarProvince: "缅甸语的普罗旺斯"
 };

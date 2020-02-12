@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpr fFf">
     <LayoutHeader />
-    <LeftDrawer />
+    <LeftDrawer :key="$q.lang.isoName" />
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -21,11 +21,7 @@ export default {
     return {};
   },
   methods: {},
-  created() {
-    
-  },
-  mounted() {
-    
-  }
+  created() {},
+  mounted() {}
 };
 </script>

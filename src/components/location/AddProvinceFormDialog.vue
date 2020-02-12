@@ -1,20 +1,18 @@
 <template>
   <q-dialog ref="dialog" @hide="onDialogHide" full-width>
-    <q-card class="h-300">
-      <q-card-section><AddLocationForm /></q-card-section>
-      <!-- <q-card-actions align="right">
-        <q-btn color="primary" label="OK" @click="onOKClick" />
-        <q-btn color="primary" label="Cancel" @click="onCancelClick" />
-      </q-card-actions> -->
+    <q-card class="h-200">
+      <q-card-section>
+        <AddProvinceForm />
+      </q-card-section>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import AddLocationForm from "../location/AddLocationForm";
+import AddProvinceForm from "../location/AddProvinceForm";
 export default {
-  name: "AddLocationFormDialog",
-  components: { AddLocationForm },
+  name: "AddProvinceFormDialog",
+  components: { AddProvinceForm },
   props: {
     // ...your custom props
   },

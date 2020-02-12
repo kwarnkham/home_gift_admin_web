@@ -60,5 +60,9 @@ export default {
   nameAlreadyExists: "Name already exists",
   weightUnit: "Weight unit",
   trash: "Trash",
-  search: "Search"
+  search: "Search",
+  chineseLocation: "Chinese Location",
+  myanmarLocation: "Myanamr Location",
+  chineseProvince: "Chinese Province",
+  myanmarProvince: "Myanmar Province"
 };

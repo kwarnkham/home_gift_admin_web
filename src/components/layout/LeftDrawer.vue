@@ -10,78 +10,15 @@
       <q-item>
         <LanguageButton />
       </q-item>
-      <!-- <q-item
-        clickable
-        @click="route('orders')"
-        :active="$route.name == 'orders'"
-      >
-        <q-item-section avatar>
-          <q-icon name="assignment" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $tc("order", 2) }}</q-item-label>
-        </q-item-section>
-      </q-item> -->
+
       <DrawerListNavItem
-        routeName="orders"
-        :label="$tc('order', 2)"
-        icon="assignment"
-        @click.native="route('orders')"
+        v-for="navItem in navItems"
+        :key="navItem.routeName"
+        :routeName="navItem.routeName"
+        :label="navItem.label"
+        :icon="navItem.icon"
+        @click.native="route(navItem.routeName)"
       />
-      <DrawerListNavItem
-        routeName="addItem"
-        :label="$t('addItem')"
-        icon="add_box"
-        @click.native="route('addItem')"
-      />
-      <q-item
-        clickable
-        @click="route('location')"
-        :active="$route.name == 'location'"
-      >
-        <q-item-section avatar>
-          <q-icon name="location_city" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $t("location") }}</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item
-        clickable
-        @click="route('merchant')"
-        :active="$route.name == 'merchant'"
-      >
-        <q-item-section avatar>
-          <q-icon name="business_center" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $t("merchant") }}</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item
-        clickable
-        @click="route('category')"
-        :active="$route.name == 'category'"
-      >
-        <q-item-section avatar>
-          <q-icon name="category" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $tc("category", 1) }}</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item
-        clickable
-        @click="route('items')"
-        :active="$route.name == 'items' || $route.name == 'itemDetails'"
-      >
-        <q-item-section avatar>
-          <q-icon name="fastfood" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ $tc("item", 2) }}</q-item-label>
-        </q-item-section>
-      </q-item>
     </q-list>
   </q-drawer>
 </template>
@@ -90,7 +27,7 @@
 import LanguageButton from "./LanguageButton";
 import DrawerListNavItem from "./DrawerListNavItem";
 export default {
-  name: "LayoutHeader",
+  name: "LeftDrawer",
   components: {
     LanguageButton,
     DrawerListNavItem
@@ -98,6 +35,30 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
+      navItems: [
+        {
+          routeName: "orders",
+          label: this.$tc("order", 2),
+          icon: "assignment"
+        },
+        { routeName: "addItem", label: this.$t("addItem"), icon: "add_box" },
+        {
+          routeName: "location",
+          label: this.$t("location"),
+          icon: "location_city"
+        },
+        {
+          routeName: "merchant",
+          label: this.$t("merchant"),
+          icon: "business_center"
+        },
+        {
+          routeName: "category",
+          label: this.$tc("category", 1),
+          icon: "category"
+        },
+        { routeName: "items", label: this.$tc("item", 2), icon: "fastfood" }
+      ]
     };
   },
   methods: {

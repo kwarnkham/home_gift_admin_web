@@ -229,6 +229,7 @@ export default {
     },
     currentPage(value) {
       if (value) {
+        sessionStorage.setItem("itemCurrentPage", value);
         if (
           this.paginatedSearched &&
           value != this.paginatedSearched.current_page
@@ -249,13 +250,19 @@ export default {
     },
     showTrash(value) {
       this.searchWord = "";
-      if (value) this.getAndSetTrashed();
-      else this.getAndSetItems();
+      if (this.currentPage == 1) {
+        if (value) this.getAndSetTrashed();
+        else this.getAndSetItems();
+      } else {
+        this.currentPage = 1;
+      }
     }
   },
   created() {
-    if (!this.showTrash) this.getAndSetItems();
-    else this.getAndSetTrashed();
+    console.log("created");
+    if (!this.showTrash)
+      this.getAndSetItems(sessionStorage.getItem("itemCurrentPage") || 1);
+    else this.getAndSetTrashed(sessionStorage.getItem("itemCurrentPage") || 1);
   }
 };
 </script>

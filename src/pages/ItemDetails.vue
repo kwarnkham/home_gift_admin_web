@@ -1,44 +1,125 @@
 <template>
-  <q-page class="row" v-if="item">
-    <div class="col-4 bg-grey-5">
-      <div>
-        <q-btn
-          :label="$t('itemName')"
-          flat
-          no-caps
-          @dblclick="showEditForm($t('editName'), $t('newName'), 'name')"
-        />
-        : {{ item.name }}
+  <q-page class="column bg-grey-3" v-if="item">
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <q-carousel
+          ref="imageSlides"
+          animated
+          v-model="slide"
+          arrows
+          navigation
+          infinite
+          height="450px"
+        >
+          <q-carousel-slide
+            v-for="image in item.images"
+            v-model="slide"
+            :key="image.id"
+            :name="image.id"
+            :img-src="`${$store.state.imageHost}/item_images/${image.name}`"
+          />
+          <template v-slot:control>
+            <q-carousel-control position="top-right" :offset="[18, 18]">
+              <q-btn
+                icon="close"
+                round
+                color="red"
+                @click="deleteItemPic"
+                :disable="item.images.length < 2"
+              />
+            </q-carousel-control>
+
+            <q-carousel-control
+              position="bottom-right"
+              :offset="[18, 18]"
+              class="q-gutter-xs"
+            >
+              <q-btn icon="add" round color="primary" @click="addItemPic" />
+            </q-carousel-control>
+          </template>
+        </q-carousel>
       </div>
-      <div>
-        <q-btn
-          :label="$t('chineseItemName')"
-          flat
-          no-caps
-          @dblclick="showEditForm($t('editName'), $t('newName'), 'ch_name')"
-        />
-        : {{ item.ch_name }}
+      <div class="col-md-6 col-xs-12 q-pa-sm column justify-between">
+        <div>
+          <q-btn
+            :label="$t('itemName')"
+            flat
+            no-caps
+            @dblclick="showEditForm($t('editName'), $t('newName'), 'name')"
+          />
+          : {{ item.name }}
+        </div>
+        <div>
+          <q-btn
+            :label="$t('chineseItemName')"
+            flat
+            no-caps
+            @dblclick="showEditForm($t('editName'), $t('newName'), 'ch_name')"
+          />
+          : {{ item.ch_name }}
+        </div>
+        <div>
+          <q-btn
+            :label="$t('myanmarItemName')"
+            flat
+            no-caps
+            @dblclick="showEditForm($t('editName'), $t('newName'), 'mm_name')"
+          />
+          : {{ item.mm_name }}
+        </div>
+        <div>
+          <q-btn
+            :label="$t('price')"
+            flat
+            no-caps
+            @dblclick="
+              showEditForm($t('editPrice'), $t('newPrice'), 'price', 'number')
+            "
+          />
+          : {{ item.price }} MMK
+        </div>
+        <div>
+          <q-btn
+            :label="$t('weight')"
+            flat
+            no-caps
+            @dblclick="
+              showEditForm($t('editWeight'), $t('newWeight'), 'weight')
+            "
+          />
+          : {{ item.weight }}
+        </div>
+        <div>
+          <q-btn
+            :label="$t('merchant')"
+            flat
+            no-caps
+            @dblclick="showEditMerchantForm()"
+          />
+          : {{ item.merchant.name }}
+        </div>
+        <div>
+          <q-btn
+            :label="$t('location')"
+            flat
+            no-caps
+            @dblclick="showEditLocationForm()"
+          />
+          : {{ item.location.name }}
+        </div>
+        <div>
+          <q-btn
+            :label="$tc('category', 1)"
+            flat
+            no-caps
+            @dblclick="showEditCategoriesForm()"
+          />
+          : {{ categories.join(", ") }}
+        </div>
       </div>
-      <div>
-        <q-btn
-          :label="$t('myanmarItemName')"
-          flat
-          no-caps
-          @dblclick="showEditForm($t('editName'), $t('newName'), 'mm_name')"
-        />
-        : {{ item.mm_name }}
-      </div>
-      <div>
-        <q-btn
-          :label="$t('price')"
-          flat
-          no-caps
-          @dblclick="
-            showEditForm($t('editPrice'), $t('newPrice'), 'price', 'number')
-          "
-        />
-        : {{ item.price }} MMK
-      </div>
+    </div>
+
+    <div class="col column bg-blue-grey-2 long-content q-pa-sm">
       <div>
         <q-btn
           :label="$t('description')"
@@ -53,7 +134,7 @@
             )
           "
         />
-        : {{ item.description }}
+        <p>{{ item.description }}</p>
       </div>
       <div>
         <q-btn
@@ -69,7 +150,7 @@
             )
           "
         />
-        : {{ item.ch_description }}
+        <p>{{ item.ch_description }}</p>
       </div>
       <div>
         <q-btn
@@ -85,7 +166,7 @@
             )
           "
         />
-        : {{ item.mm_description }}
+        <p>{{ item.mm_description }}</p>
       </div>
       <div>
         <q-btn
@@ -101,7 +182,7 @@
             )
           "
         />
-        : {{ item.notice }}
+        <p>{{ item.notice }}</p>
       </div>
       <div>
         <q-btn
@@ -117,7 +198,7 @@
             )
           "
         />
-        : {{ item.ch_notice }}
+        <p>{{ item.ch_notice }}</p>
       </div>
       <div>
         <q-btn
@@ -133,84 +214,12 @@
             )
           "
         />
-        : {{ item.mm_notice }}
-      </div>
-      <div>
-        <q-btn
-          :label="$t('weight')"
-          flat
-          no-caps
-          @dblclick="showEditForm($t('editWeight'), $t('newWeight'), 'weight')"
-        />
-        : {{ item.weight }}
-      </div>
-      <div>
-        <q-btn
-          :label="$t('merchant')"
-          flat
-          no-caps
-          @dblclick="showEditMerchantForm()"
-        />
-        : {{ item.merchant.name }}
-      </div>
-      <div>
-        <q-btn
-          :label="$t('location')"
-          flat
-          no-caps
-          @dblclick="showEditLocationForm()"
-        />
-        : {{ item.location.name }}
-      </div>
-      <div>
-        <q-btn
-          :label="$tc('category', 1)"
-          flat
-          no-caps
-          @dblclick="showEditCategoriesForm()"
-        />
-        : {{ categories.join(", ") }}
+        <p>{{ item.mm_notice }}</p>
       </div>
     </div>
-
-    <div class="col-6">
-      <q-carousel
-        ref="imageSlides"
-        animated
-        v-model="slide"
-        arrows
-        navigation
-        infinite
-        height="400px"
-      >
-        <q-carousel-slide
-          v-for="image in item.images"
-          v-model="slide"
-          :key="image.id"
-          :name="image.id"
-          :img-src="`${$store.state.imageHost}/item_images/${image.name}`"
-        />
-        <template v-slot:control>
-          <q-carousel-control position="top-right" :offset="[18, 18]">
-            <q-btn
-              icon="close"
-              round
-              color="red"
-              @click="deleteItemPic"
-              :disable="item.images.length < 2"
-            />
-          </q-carousel-control>
-
-          <q-carousel-control
-            position="bottom-right"
-            :offset="[18, 18]"
-            class="q-gutter-xs"
-          >
-            <q-btn icon="add" round color="primary" @click="addItemPic" />
-          </q-carousel-control>
-        </template>
-      </q-carousel>
-    </div>
+    <q-page-sticky position="top-left" :offset="[18, 18]">
+      <q-btn round color="info" icon="arrow_back" @click="$router.go(-1)" />
+    </q-page-sticky>
   </q-page>
 </template>
 <script>
@@ -344,3 +353,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+p {
+  text-indent: 60px;
+}
+.long-content > div:not(:last-child) {
+  margin-bottom: 1em;
+}
+</style>

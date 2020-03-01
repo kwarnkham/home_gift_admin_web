@@ -44,7 +44,13 @@
       :rules="[val => (val && val != null) || $t('pleaseChooseSomething')]"
     >
       <template #after>
-        <q-btn icon="add" color="green" round @click="showAddProvinceForm" />
+        <q-btn
+          icon="add"
+          color="green"
+          round
+          @click="showAddProvinceForm"
+          class="invisible"
+        />
       </template>
     </q-select>
     <div class="row justify-end">

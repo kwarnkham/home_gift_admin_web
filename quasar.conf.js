@@ -51,52 +51,11 @@ module.exports = function(ctx) {
       //            (fastest compile time; minimum bundle size; most tedious)
       // * true   - Import everything from Quasar
       //            (not treeshaking Quasar; biggest bundle size; convenient)
-      all: false,
+      all: "auto",
 
-      components: [
-        "QLayout",
-        "QHeader",
-        "QDrawer",
-        "QPageContainer",
-        "QPage",
-        "QToolbar",
-        "QToolbarTitle",
-        "QBtn",
-        "QIcon",
-        "QList",
-        "QItem",
-        "QItemSection",
-        "QItemLabel",
-        "QTable",
-        "QTh",
-        "QTr",
-        "QTd",
-        "QBadge",
-        "QBtnDropdown",
-        "QBtn",
-        "QTabs",
-        "QTab",
-        "QRouteTab",
-        "QTabPanels",
-        "QTabPanel",
-        "QCard",
-        "QSeparator",
-        "QInput",
-        "QSpace",
-        "QForm",
-        "QSelect",
-        "QUploader",
-        "QImg",
-        "QCard",
-        "QCardActions",
-        "QCardSection",
-        "QCarousel",
-        "QCarouselControl",
-        "QCarouselSlide",
-        "QDialog",
-        "QBtnToggle",
-        "QPagination"
-      ],
+      // components: [
+
+      // ],
 
       directives: ["Ripple", "ClosePopup"],
 

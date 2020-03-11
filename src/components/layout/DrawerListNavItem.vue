@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable :active="$route.name == routeName">
+  <q-item clickable :active="$route.name == routeName" active-class="is-active">
     <q-item-section avatar>
       <q-icon :name="icon" />
     </q-item-section>
@@ -29,4 +29,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.is-active{
+  color: #00BCD4;
+}
+</style>

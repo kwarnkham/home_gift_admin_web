@@ -57,7 +57,12 @@ export default {
           label: this.$tc("category", 1),
           icon: "category"
         },
-        { routeName: "items", label: this.$tc("item", 2), icon: "fastfood" }
+        { routeName: "items", label: this.$tc("item", 2), icon: "fastfood" },
+        {
+          routeName: "deliveryFees",
+          label: this.$t("deliveryFees"),
+          icon: "attach_money"
+        }
       ]
     };
   },

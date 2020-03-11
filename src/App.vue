@@ -24,6 +24,14 @@ export default {
       if (lang) {
         this.$store.dispatch("setLanguage", lang);
       }
+    },
+    setQuasarPluginDefaults() {
+      this.$q.loading.setDefaults({
+        message: this.$t("loading"),
+        spinner: QSpinnerIos,
+        spinnerColor: "white",
+        delay: 200
+      });
     }
   },
   created() {
@@ -31,6 +39,7 @@ export default {
     this.getMerchants();
     this.getCategories();
     this.setLanguage();
+    this.setQuasarPluginDefaults();
   }
 };
 </script>

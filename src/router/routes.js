@@ -11,6 +11,7 @@ const routes = [
       { path: '/category', component: () => import('pages/Category.vue'), name: 'category' },
       { path: '/items', component: () => import('pages/Items.vue'), name: 'items' },
       { path: '/item-details/:itemId', component: () => import('pages/ItemDetails.vue'), name: 'itemDetails' },
+      { path: '/delivery-fees', component: () => import('pages/DeliveryFees.vue'), name: 'deliveryFees' },
     ]
   }
 ]

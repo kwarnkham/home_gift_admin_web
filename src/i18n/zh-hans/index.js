@@ -68,5 +68,6 @@ export default {
   myanmarMerchant: "缅甸语商人",
   chineseMerchant: "中国商人",
   chineseCategory: "中文类别",
-  myanmarCategory: "缅甸语类别"
+  myanmarCategory: "缅甸语类别",
+  deliveryFees: "Delivery Fees"
 };

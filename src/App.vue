@@ -27,9 +27,6 @@ export default {
     },
     setQuasarPluginDefaults() {
       this.$q.loading.setDefaults({
-        message: this.$t("loading"),
-        spinner: QSpinnerIos,
-        spinnerColor: "white",
         delay: 200
       });
     }

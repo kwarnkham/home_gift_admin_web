@@ -156,6 +156,38 @@ export const itemRelatedApi = {
       return result;
     },
 
+    async findItemByMerchant(
+      merchantId,
+      withTrash = false,
+      page = 1,
+      perPage = this.$store.state.itemPerPage
+    ) {
+      let result = null;
+
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/items/find/merchant/${merchantId}`,
+        params: {
+          withTrash: withTrash,
+          page: page,
+          per_page: perPage
+        }
+      })
+        .then(response => {
+          if (response.data.code == "0") {
+            result = response;
+          } else {
+            this.$q.notify({
+              message: response.data.msg,
+              closeBtn: "Close"
+            });
+          }
+        })
+        .catch(error => console.log(error));
+
+      return result;
+    },
+
     async getItems(page = 1, perPage = this.$store.state.itemPerPage) {
       let result;
       this.$q.loading.show();

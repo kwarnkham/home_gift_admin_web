@@ -68,5 +68,6 @@ export default {
   myanmarMerchant: "Myanmar Merchant",
   chineseMerchant: "Chinese Merchant",
   chineseCategory: "Chinese Category",
-  myanmarCategory: "Myanamr Category"
+  myanmarCategory: "Myanamr Category",
+  deliveryFees: "Delivery Fees"
 };

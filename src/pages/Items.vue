@@ -20,6 +20,19 @@
       </q-input>
     </div>
 
+    <div class="col-12 row q-pa-md">
+      <q-select
+        class="col-4"
+        label="Merchant"
+        v-model="merchantFilter"
+        :options="sortedMerchants"
+        option-label="name"
+        option-value="id"
+        outlined
+        clearable
+      />
+    </div>
+
     <div class="col-12 row min-items-container-height">
       <div
         class="col-xs-12 col-sm-6 col-md-4 q-px-xs q-mt-xs"
@@ -105,10 +118,23 @@ export default {
       currentPage: null,
       paginatedItems: null,
       paginatedTrashed: null,
-      paginatedSearched: null
+      paginatedSearched: null,
+      merchantFilter: null
     };
   },
   methods: {
+    getAndSetMerchantFilter(page = 1) {
+      if (this.merchantFilter) {
+        this.findItemByMerchant(
+          this.merchantFilter.id,
+          this.showTrash,
+          page
+        ).then(response => {
+          // console.log(response);
+          this.paginatedItems = response.data.result.items;
+        });
+      }
+    },
     getAndSetItems(page) {
       this.getItems(page).then(response => {
         this.paginatedItems = response.data.result.items;
@@ -163,6 +189,15 @@ export default {
     }
   },
   computed: {
+    merchants() {
+      return this.$store.state.merchants;
+    },
+    sortedMerchants() {
+      let temp = JSON.stringify(this.merchants);
+      let tmp = JSON.parse(temp);
+      tmp.sort((el1, el2) => el1.name.localeCompare(el2.name));
+      return tmp;
+    },
     showTrash() {
       return this.$store.state.showTrash;
     },
@@ -205,6 +240,9 @@ export default {
     }
   },
   watch: {
+    merchantFilter() {
+      this.getAndSetMerchantFilter();
+    },
     searchWord() {
       if (this.timeout) clearTimeout(this.timeout);
       this.timeout = setTimeout(
@@ -230,21 +268,34 @@ export default {
     currentPage(value) {
       if (value) {
         sessionStorage.setItem("itemCurrentPage", value);
-        if (
-          this.paginatedSearched &&
-          value != this.paginatedSearched.current_page
-        ) {
-          this.getAndSetSearched(this.searchWord, this.showTrash, value);
-        }
-        if (
-          this.showTrash &&
-          this.paginatedTrashed &&
-          value != this.paginatedTrashed.current_page
-        ) {
-          this.getAndSetTrashed(value);
-        } else {
-          if (this.paginatedItems && value != this.paginatedItems.current_page)
-            this.getAndSetItems(value);
+        if (!this.merchantFilter) {
+          if (
+            this.paginatedSearched &&
+            value != this.paginatedSearched.current_page
+          ) {
+            this.getAndSetSearched(this.searchWord, this.showTrash, value);
+          }
+          if (
+            this.showTrash &&
+            this.paginatedTrashed &&
+            value != this.paginatedTrashed.current_page
+          ) {
+            this.getAndSetTrashed(value);
+          } else {
+            if (
+              this.paginatedItems &&
+              value != this.paginatedItems.current_page
+            )
+              this.getAndSetItems(value);
+          }
+        } else if (this.merchantFilter) {
+          if (
+            this.paginatedItems &&
+            value != this.paginatedItems.current_page
+          ) {
+            console.log(value);
+            this.getAndSetMerchantFilter(value);
+          }
         }
       }
     },
@@ -259,7 +310,6 @@ export default {
     }
   },
   created() {
-    console.log("created");
     if (!this.showTrash)
       this.getAndSetItems(sessionStorage.getItem("itemCurrentPage") || 1);
     else this.getAndSetTrashed(sessionStorage.getItem("itemCurrentPage") || 1);

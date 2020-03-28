@@ -2,7 +2,7 @@
   "name": "home_gift_admin_web",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "Home Gift Admin",
   "cordovaId": "org.cordova.quasar.app",
   "author": "kwarnkham <kwarnkham.moon@gmail.com>",
   "private": true,

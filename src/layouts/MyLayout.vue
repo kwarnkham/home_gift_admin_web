@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpr fFf">
     <LayoutHeader />
-    <LeftDrawer :key="$q.lang.isoName" />
+    <LeftDrawer />
     <q-page-container>
       <router-view />
     </q-page-container>

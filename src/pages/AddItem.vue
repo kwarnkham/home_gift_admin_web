@@ -223,10 +223,11 @@ import AddLocationFormDialog from "../components/location/AddLocationFormDialog"
 import AddMerchantFormDialog from "../components/merchant/AddMerchantFormDialog";
 import AddCategoryFormDialog from "../components/category/AddCategoryFormDialog";
 import FieldGroup from "../components/FieldGroup";
+import { categoryRelatedApi } from "../mixins/categoryRelatedApi";
 
 export default {
   name: "AddItem",
-  mixins: [itemRelatedApi],
+  mixins: [itemRelatedApi, categoryRelatedApi],
   components: {
     FieldGroup
   },
@@ -250,7 +251,8 @@ export default {
       selectedCategories: null,
       images: null,
       thumbnails: [],
-      showNoticeField: false
+      showNoticeField: false,
+      categories: []
     };
   },
   computed: {
@@ -259,9 +261,6 @@ export default {
     },
     merchants() {
       return this.$store.state.merchants;
-    },
-    categories() {
-      return this.$store.state.categories;
     }
     // test(){
     //   return this.$refs.fileInput
@@ -373,6 +372,9 @@ export default {
         }
       }
     }
+  },
+  created() {
+    this.getCategories().then(response => (this.categories = response));
   }
 };
 </script>

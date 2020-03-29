@@ -19,14 +19,17 @@ export default new Vuex.Store({
     newOrderCount: 0,
     locations: [],
     merchants: [],
-    categories: [],
     searchedItems: null,
     trashedItems: null,
     provinces: [],
     lang: "zh-hans",
-    showTrash: false
+    showTrash: false,
+    aCategories: []
   },
   mutations: {
+    setACategories(state, payload) {
+      state.aCategories = payload;
+    },
     setShowTrash(state, payload) {
       state.showTrash = payload;
     },
@@ -49,9 +52,6 @@ export default new Vuex.Store({
     setMerchants(state, payload) {
       state.merchants = payload;
     },
-    setCategories(state, payload) {
-      state.categories = payload;
-    },
     setTrashedItems(state, payload) {
       state.trashedItems = payload;
     },
@@ -63,6 +63,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setACategories(context, payload) {
+      context.commit("setACategories", payload);
+    },
     setShowTrash(context, payload) {
       context.commit("setShowTrash", payload);
     },
@@ -83,9 +86,6 @@ export default new Vuex.Store({
     },
     setMerchants(context, payload) {
       context.commit("setMerchants", payload);
-    },
-    setCategories(context, payload) {
-      context.commit("setCategories", payload);
     },
     setTrashedItems(context, payload) {
       context.commit("setTrashedItems", payload);

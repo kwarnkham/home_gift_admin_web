@@ -9,7 +9,9 @@
           :label="$tc('category', 2)"
           option-label="name"
           option-value="id"
-          :rules="[ val => val && val.length>0 || $t('pleaseChooseSomething')]"
+          :rules="[
+            val => (val && val.length > 0) || $t('pleaseChooseSomething')
+          ]"
         />
       </q-card-section>
 
@@ -20,13 +22,18 @@
           @click="onOKClick"
           :disable="selectedCategories.length < 1"
         />
-        <q-btn color="primary" :label="$tc('cancel',1)" @click="onCancelClick" />
+        <q-btn
+          color="primary"
+          :label="$tc('cancel', 1)"
+          @click="onCancelClick"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
+import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
   name: "CategoriesSelectInputDialog",
   props: {
@@ -34,16 +41,14 @@ export default {
       required: true
     }
   },
+  mixins: [categoryRelatedApi],
   data() {
     return {
-      selectedCategories: []
+      selectedCategories: [],
+      categories: []
     };
   },
-  computed: {
-    categories() {
-      return this.$store.state.categories;
-    }
-  },
+  computed: {},
   methods: {
     // following method is REQUIRED
     // (don't change its name --> "show")
@@ -81,6 +86,7 @@ export default {
   created() {
     // console.log(this.propCategories);
     this.selectedCategories = [...this.propCategories];
+    this.getCategories().then(response => (this.categories = response));
     // console.log(this.$parent);
   }
 };

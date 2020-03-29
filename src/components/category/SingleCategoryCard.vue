@@ -8,12 +8,16 @@
 
         <div class="col-auto">
           <q-btn color="grey-7" round flat icon="more_vert">
-            <q-menu cover auto-close persistent>
+            <q-menu cover>
               <q-list>
                 <q-item clickable @click="showEditForm(category)">
                   <q-item-section>Edit Name</q-item-section>
                 </q-item>
-                <q-item clickable disable @click="showEditForm(category)">
+                <q-item
+                  clickable
+                  :disable="disableMakeA"
+                  @click="makeA(category.id)"
+                >
                   <q-item-section>Make Level A</q-item-section>
                 </q-item>
                 <q-item clickable disable @click="showEditForm(category)">
@@ -47,9 +51,29 @@ export default {
     category: {
       type: Object,
       required: true
+    },
+    categories: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    disableMakeA() {
+      if (this.aCategories.length == 6) return true;
+      return !!this.aCategories.find(el => el.id == this.category.id);
+    },
+    aCategories() {
+      return this.$store.state.aCategories;
     }
   },
   methods: {
+    makeA(id) {
+      this.makeCategoryA(id).then(() =>
+        this.getACategories().then(response => {
+          this.$store.dispatch("setACategories", response);
+        })
+      );
+    },
     showEditForm(category) {
       this.$q
         .dialog({

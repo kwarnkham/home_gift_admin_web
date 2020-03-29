@@ -8,9 +8,10 @@
 <script>
 import AddCategoryForm from "../components/category/AddCategoryForm";
 import CategoryList from "../components/category/CategoryList";
-
+import { categoryRelatedApi } from "../mixins/categoryRelatedApi";
 export default {
   name: "Category",
+  mixins: [categoryRelatedApi],
   components: {
     AddCategoryForm,
     CategoryList
@@ -19,6 +20,11 @@ export default {
     return {};
   },
 
-  methods: {}
+  methods: {},
+  created() {
+    this.getACategories().then(response =>
+      this.$store.dispatch("setACategories", response)
+    );
+  }
 };
 </script>

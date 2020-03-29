@@ -23,10 +23,10 @@
         />
       </div>
       <div class="bg-grey-3 col-12 q-pa-sm h-500">
-        <q-card>
+        <q-card v-for="category in categories" :key="category.id">
           <q-card-section class="row items-center">
-            <div class="col">Category</div>
-            <q-btn icon="delete" />
+            <div class="col">{{ category.name }}</div>
+            <q-btn icon="delete" @click="deleteA(category.id)" />
           </q-card-section>
         </q-card>
       </div>
@@ -35,18 +35,33 @@
 </template>
 
 <script>
+import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
   name: "ACategoryDialog",
+  mixins: [categoryRelatedApi],
   data() {
     return {
       isOpen: false
     };
   },
+  computed: {
+    categories() {
+      return this.$store.state.aCategories;
+    }
+  },
   methods: {
     show() {
       this.isOpen = true;
+    },
+    deleteA(id) {
+      this.unMakeCategoryA(id).then(() => {
+        this.getACategories().then(response =>
+          this.$store.dispatch("setACategories", response)
+        );
+      });
     }
-  }
+  },
+  created() {}
 };
 </script>
 

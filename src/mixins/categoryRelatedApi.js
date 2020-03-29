@@ -31,9 +31,10 @@ export const categoryRelatedApi = {
         })
         .catch(error => console.log(error));
     },
-    getCategories() {
+    async getCategories() {
+      let result;
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "get",
         url: `${store.state.apiUrl}/categories`
       })
@@ -41,7 +42,7 @@ export const categoryRelatedApi = {
           this.$q.loading.hide();
           // console.log(response.data)
           if (response.data.code == "0") {
-            store.dispatch("setCategories", response.data.result.categories);
+            result = response.data.result.categories;
           }
           if (response.data.code == "1") {
             this.$q.notify({
@@ -53,7 +54,64 @@ export const categoryRelatedApi = {
         .catch(error => {
           console.log(error.data);
         });
+      return result;
     },
+
+    async getACategories() {
+      let result;
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/categories/get-a`
+      })
+        .then(response => {
+          this.$q.loading.hide();
+          if (response.data.code == "0") {
+            result = response.data.result.categories;
+          }
+          if (response.data.code == "1") {
+            this.$q.notify({
+              message: response.data.msg,
+              closeBtn: "Close"
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+      return result;
+    },
+
+    async makeCategoryA(id) {
+      this.$q.loading.show();
+      axios({
+        method: "put",
+        url: `${store.state.apiUrl}/category/make-a/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Success");
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
+    async unMakeCategoryA(id) {
+      this.$q.loading.show();
+      axios({
+        method: "put",
+        url: `${store.state.apiUrl}/category/unmake-a/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Success");
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
     updateCategory(id, category) {
       this.$q.loading.show();
       axios({

@@ -16,7 +16,7 @@
       :key="category.id"
       class="col-xs-12 col-lg-6 flex flex-center row q-pa-sm"
     >
-      <SingleCategoryCard :category="category" />
+      <SingleCategoryCard :category="category" :categories="categories" />
     </div>
     <ACategoryDialog ref="dialog" />
   </div>
@@ -25,25 +25,27 @@
 <script>
 import ACategoryDialog from "./ACategoryDialog";
 import SingleCategoryCard from "./SingleCategoryCard";
+import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
   name: "CategoryList",
   components: {
     ACategoryDialog,
     SingleCategoryCard
   },
+  mixins: [categoryRelatedApi],
   data() {
-    return {};
+    return {
+      categories: []
+    };
   },
-  computed: {
-    categories() {
-      return this.$store.state.categories;
-    }
-  },
+  computed: {},
   methods: {
     openACategory() {
       this.$refs.dialog.show();
     }
   },
-  created() {}
+  created() {
+    this.getCategories().then(response => (this.categories = response));
+  }
 };
 </script>

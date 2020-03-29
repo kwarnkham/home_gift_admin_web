@@ -25,12 +25,15 @@ export default {
       required: true,
       type: String
     }
+  },
+  created() {
+    // console.log("nav item created");
   }
 };
 </script>
 
 <style scoped>
-.is-active{
-  color: #00BCD4;
+.is-active {
+  color: #00bcd4;
 }
 </style>

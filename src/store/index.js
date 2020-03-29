@@ -13,8 +13,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     itemPerPage: 6,
-    placeholderImage:
-      "https://cdn.pixabay.com/photo/2018/10/05/10/56/landscape-3725657__480.jpg",
     apiUrl: process.env.API_URL,
     imageHost: process.env.IMAGE_HOST,
     orders: [],

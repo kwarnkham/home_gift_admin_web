@@ -43,9 +43,7 @@
           <div class="text-center item-img-height">
             <img
               :src="
-                item.images.length > 0
-                  ? `${$store.state.imageHost}/item_images/${item.images[0].name}`
-                  : $store.state.placeholderImage
+                `${$store.state.imageHost}/item_images/${item.images[0].name}`
               "
               class="img-full-h"
             />

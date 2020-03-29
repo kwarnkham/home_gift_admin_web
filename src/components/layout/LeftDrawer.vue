@@ -34,8 +34,12 @@ export default {
   },
   data() {
     return {
-      leftDrawerOpen: false,
-      navItems: [
+      leftDrawerOpen: false
+    };
+  },
+  computed: {
+    navItems() {
+      return [
         {
           routeName: "orders",
           label: this.$tc("order", 2),
@@ -63,8 +67,8 @@ export default {
           label: this.$t("deliveryFees"),
           icon: "attach_money"
         }
-      ]
-    };
+      ];
+    }
   },
   methods: {
     toggleDrawer() {

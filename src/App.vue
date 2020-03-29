@@ -22,6 +22,10 @@ export default {
     setLanguage() {
       let lang = localStorage.getItem("lang");
       if (lang) {
+        this.$i18n.locale = lang;
+        import(`quasar/lang/${lang}`).then(language => {
+          this.$q.lang.set(language.default);
+        });
         this.$store.dispatch("setLanguage", lang);
       }
     },

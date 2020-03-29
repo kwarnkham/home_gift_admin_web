@@ -10,7 +10,12 @@
         aria-label="Menu"
       />
 
-      <q-toolbar-title>Home Gift {{ $t("admin") }}</q-toolbar-title>
+      <q-toolbar-title
+        @click="$router.push({ name: 'home' })"
+        class="cursor-pointer"
+      >
+        Home Gift {{ $t("admin") }}
+      </q-toolbar-title>
       <q-btn
         v-if="$route.name == 'items'"
         icon="delete"

@@ -3,7 +3,7 @@
     <LayoutHeader />
     <LeftDrawer />
     <q-page-container>
-      <router-view />
+      <router-view :key="$store.state.lang" />
     </q-page-container>
   </q-layout>
 </template>

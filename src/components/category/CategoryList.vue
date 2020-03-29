@@ -1,27 +1,35 @@
 <template>
   <div class="col-12 row">
+    <div class="col-12 q-pa-sm row justify-around">
+      <q-btn
+        no-caps
+        flat
+        color="primary"
+        class="bg-secondary"
+        @click="openACategory"
+        >Level A</q-btn
+      >
+      <q-btn no-caps flat color="primary" class="bg-secondary">Level B</q-btn>
+    </div>
     <div
       v-for="category in categories"
       :key="category.id"
-      class="col-3 flex flex-center"
+      class="col-xs-12 col-lg-6 flex flex-center row q-pa-sm"
     >
-      <q-btn
-        :label="category.name"
-        @dblclick="showEditForm(category)"
-        no-caps
-      />
+      <SingleCategoryCard :category="category" />
     </div>
+    <ACategoryDialog ref="dialog" />
   </div>
 </template>
 
 <script>
-import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
-import EditCategoryFormDialog from "./EditCategoryFormDialog";
+import ACategoryDialog from "./ACategoryDialog";
+import SingleCategoryCard from "./SingleCategoryCard";
 export default {
   name: "CategoryList",
-  mixins: [categoryRelatedApi],
   components: {
-    EditCategoryFormDialog
+    ACategoryDialog,
+    SingleCategoryCard
   },
   data() {
     return {};
@@ -32,16 +40,8 @@ export default {
     }
   },
   methods: {
-    showEditForm(category) {
-      this.$q
-        .dialog({
-          component: EditCategoryFormDialog,
-          parent: this,
-          category: category
-        })
-        .onOk(data => {
-          this.updateCategory(category.id, data);
-        });
+    openACategory() {
+      this.$refs.dialog.show();
     }
   },
   created() {}

@@ -22,11 +22,13 @@ export default {
   },
   watch: {
     lang(lang) {
+      // console.log(lang);
       this.$i18n.locale = lang;
       import(`quasar/lang/${lang}`).then(language => {
         this.$q.lang.set(language.default);
       });
       localStorage.setItem("lang", lang);
+      this.$store.dispatch("setLanguage", lang);
     }
   }
 };

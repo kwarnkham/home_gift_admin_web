@@ -50,14 +50,19 @@ export default {
         },
         {
           title: this.$tc("item", 2),
-          desc: "manage items here",
+          desc: "Manage items here",
           routeName: "items"
+        },
+        {
+          title: this.$t("deliveryFees"),
+          desc: "Manage delivery fees here",
+          routeName: "deliveryFees"
         }
       ]
     };
   },
   created() {
-    console.log("home just created");
+    // console.log("home just created");
   }
 };
 </script>

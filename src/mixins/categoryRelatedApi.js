@@ -183,6 +183,22 @@ export const categoryRelatedApi = {
       return result;
     },
 
+    async getJoinedB(id) {
+      let result;
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/category/joinedB/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+
+        if (response.data.code == "0") {
+          result = response.data.result.category;
+        }
+      });
+      return result;
+    },
+
     async getAB() {
       this.$q.loading.show();
       await axios({
@@ -199,6 +215,24 @@ export const categoryRelatedApi = {
         }
       });
     },
+
+    async getBC() {
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/category/BC`
+      }).then(response => {
+        this.$q.loading.hide();
+
+        if (response.data.code == "0") {
+          this.$store.dispatch(
+            "setAssociationsBC",
+            response.data.result.associations
+          );
+        }
+      });
+    },
+
     async unJoinAB(bId) {
       this.$q.loading.show();
       await axios({
@@ -214,6 +248,23 @@ export const categoryRelatedApi = {
         }
       });
     },
+
+    async unJoinBC(id) {
+      this.$q.loading.show();
+      await axios({
+        method: "delete",
+        url: `${store.state.apiUrl}/category/unjoin-bc/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Deleted");
+          this.getAB();
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
     async joinAB(aId, bId) {
       this.$q.loading.show();
       axios({
@@ -224,6 +275,22 @@ export const categoryRelatedApi = {
         if (response.data.code == "0") {
           this.$q.notify("Success");
           this.getAB();
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
+    async joinBC(bId, id) {
+      this.$q.loading.show();
+      axios({
+        method: "post",
+        url: `${store.state.apiUrl}/category/join-bc/${bId}/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Success");
+          this.getBC();
         } else {
           this.$q.notify("Fail");
         }

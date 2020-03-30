@@ -5,7 +5,11 @@
         <div class="col">
           <div
             class="text-h6"
-            :class="{ 'text-amber-8': isA, 'text-green': isB }"
+            :class="{
+              'text-amber-8': isA,
+              'text-green': isB,
+              'text-info': hasB
+            }"
           >
             {{ category.name }}
           </div>
@@ -27,7 +31,7 @@
                 </q-item>
                 <q-item
                   clickable
-                  :disable="isA || isB"
+                  :disable="isA || isB || hasB"
                   @click="makeB(category.id)"
                 >
                   <q-item-section>Make Level B</q-item-section>
@@ -40,7 +44,18 @@
     </q-card-section>
     <q-separator />
 
-    <q-card-actions align="right">
+    <q-card-actions align="right" class="q-gutter-x-md">
+      <div class="w-150">
+        <q-select
+          :disable="isA || isB"
+          :options="bCategories"
+          option-label="name"
+          option-value="id"
+          v-model="selectedB"
+          label="Level B"
+          clearable
+        />
+      </div>
       <div class="w-150">
         <q-select
           :disable="isA || !isB"
@@ -78,7 +93,9 @@ export default {
   data() {
     return {
       selectedA: null,
-      canWatchSelectedA: false
+      selectedB: null,
+      canWatchSelectedA: false,
+      canWatchSelectedB: false
     };
   },
   watch: {
@@ -91,6 +108,14 @@ export default {
         this.unJoinAB(this.bCategory.b_category_id).then(() => {});
       }
     },
+    selectedB(value) {
+      if (value) {
+        if (this.canWatchSelectedB)
+          this.joinBC(value.b_category_id, this.category.id);
+      } else if (value == null) {
+        this.unJoinBC(this.category.id).then(() => {});
+      }
+    },
     isB(value) {
       if (value) {
         this.canWatchSelectedA = true;
@@ -100,13 +125,16 @@ export default {
   computed: {
     disableMakeA() {
       if (this.aCategories.length == 6) return true;
-      return this.isA || this.isB;
+      return this.isA || this.isB || this.hasB;
     },
     isA() {
       return !!this.aCategories.find(el => el.id == this.category.id);
     },
     isB() {
       return !!this.bCategories.find(el => el.id == this.category.id);
+    },
+    hasB() {
+      return !!this.selectedB;
     },
     bCategory() {
       return this.bCategories.find(el => el.id == this.category.id);
@@ -146,7 +174,7 @@ export default {
     }
   },
   created() {
-    if (this.isB)
+    if (this.isB) {
       this.getJoinedA(this.bCategory.b_category_id)
         .then(response => {
           this.selectedA = response;
@@ -154,6 +182,14 @@ export default {
         .finally(() => {
           this.canWatchSelectedA = true;
         });
+    }
+    this.getJoinedB(this.category.id)
+      .then(response => {
+        this.selectedB = response;
+      })
+      .finally(() => {
+        this.canWatchSelectedB = true;
+      });
   }
 };
 </script>

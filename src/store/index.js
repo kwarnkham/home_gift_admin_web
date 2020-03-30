@@ -26,11 +26,15 @@ export default new Vuex.Store({
     showTrash: false,
     aCategories: [],
     bCategories: [],
-    associationsAB: []
+    associationsAB: [],
+    associationsBC: []
   },
   mutations: {
     setAssociationsAB(state, payload) {
       state.associationsAB = payload;
+    },
+    setAssociationsBC(state, payload) {
+      state.associationsBC = payload;
     },
     setACategories(state, payload) {
       state.aCategories = payload;
@@ -73,6 +77,9 @@ export default new Vuex.Store({
   actions: {
     setAssociationsAB(context, payload) {
       context.commit("setAssociationsAB", payload);
+    },
+    setAssociationsBC(context, payload) {
+      context.commit("setAssociationsBC", payload);
     },
     setACategories(context, payload) {
       context.commit("setACategories", payload);

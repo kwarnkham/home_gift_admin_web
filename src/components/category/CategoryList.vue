@@ -2,50 +2,56 @@
   <div class="col-12 row">
     <div class="col-12 q-pa-sm row">
       <div class="col-6 text-center row justify-around">
-        <q-btn
-          no-caps
-          flat
-          color="primary"
-          class="bg-secondary"
-          icon="edit"
-          @click="openACategory('A')"
-          label="Level A"
-        />
-        <q-btn
-          no-caps
-          flat
-          color="primary"
-          class="bg-secondary"
-          icon="edit"
-          @click="openACategory('B')"
-          label="Level B"
-        />
+        <div>
+          <q-btn
+            no-caps
+            flat
+            color="primary"
+            class="bg-secondary"
+            icon="edit"
+            @click="openACategory('A')"
+            label="Level A"
+          />
+        </div>
+        <div>
+          <q-btn
+            no-caps
+            flat
+            color="primary"
+            class="bg-secondary"
+            icon="edit"
+            @click="openACategory('B')"
+            label="Level B"
+          />
+        </div>
       </div>
       <div class="col-6 text-center row justify-around">
-        <q-btn
-          color="primary"
-          flat
-          icon="filter_list"
-          :label="filter"
-          class="bg-secondary"
-        >
-          <q-menu cover auto-close>
-            <q-list>
-              <q-item clickable @click="filter = 'ALL'">
-                <q-item-section>ALL</q-item-section>
-              </q-item>
-              <q-item clickable @click="filter = 'A'">
-                <q-item-section>A</q-item-section>
-              </q-item>
-              <q-item clickable @click="filter = 'B'">
-                <q-item-section>B</q-item-section>
-              </q-item>
-              <q-item clickable @click="filter = 'C'">
-                <q-item-section>C</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
+        <div>
+          <q-btn
+            color="primary"
+            flat
+            icon="filter_list"
+            :label="filter"
+            class="bg-secondary"
+          >
+            <q-menu cover auto-close>
+              <q-list>
+                <q-item clickable @click="filter = 'ALL'">
+                  <q-item-section>ALL</q-item-section>
+                </q-item>
+                <q-item clickable @click="filter = 'A'">
+                  <q-item-section>A</q-item-section>
+                </q-item>
+                <q-item clickable @click="filter = 'B'">
+                  <q-item-section>B</q-item-section>
+                </q-item>
+                <q-item clickable @click="filter = 'C'">
+                  <q-item-section>C</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
       </div>
     </div>
     <div
@@ -91,6 +97,20 @@ export default {
         return this.aCategories;
       } else if (this.filter == "B") {
         return this.bCategories;
+      } else if (this.filter == "C") {
+        let categories = [];
+        this.categories.forEach(c => {
+          this.aCategories.forEach(a => {
+            if (a.id != c.id) {
+              this.bCategories.forEach(b => {
+                if (b.id != c.id) {
+                  categories.push(c);
+                }
+              });
+            }
+          });
+        });
+        return categories;
       } else {
         return [];
       }

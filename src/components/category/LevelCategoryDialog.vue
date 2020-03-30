@@ -62,6 +62,9 @@ export default {
     },
     associationsAB() {
       return this.$store.state.associationsAB;
+    },
+    associationsBC() {
+      return this.$store.state.associationsBC;
     }
   },
   methods: {
@@ -75,9 +78,13 @@ export default {
           el => el.a_category_id == category.a_category_id
         );
       } else if (this.levelType == "B") {
-        return !!this.associationsAB.find(
+        let conditionA = !!this.associationsAB.find(
           el => el.b_category_id == category.b_category_id
         );
+        let conditionB = !!this.associationsBC.find(
+          el => el.b_category_id == category.b_category_id
+        );
+        return conditionA || conditionB;
       }
     },
     deleteA(id) {

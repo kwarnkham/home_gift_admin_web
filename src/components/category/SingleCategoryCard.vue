@@ -41,14 +41,15 @@
     <q-separator />
 
     <q-card-actions align="right">
-      <div class="w-100">
+      <div class="w-150">
         <q-select
-          :disable="isA"
+          :disable="isA || !isB"
           :options="aCategories"
           option-label="name"
           option-value="id"
-          v-model="selectedB"
-          label="Under A"
+          v-model="selectedA"
+          label="Level A"
+          clearable
         />
       </div>
     </q-card-actions>
@@ -76,8 +77,25 @@ export default {
   },
   data() {
     return {
-      selectedB: null
+      selectedA: null,
+      canWatchSelectedA: false
     };
+  },
+  watch: {
+    selectedA(value) {
+      if (value) {
+        if (this.canWatchSelectedA) {
+          this.joinAB(value.id, this.category.id).then(() => {});
+        }
+      } else if (value == null) {
+        this.unJoinAB(this.bCategory.b_category_id).then(() => {});
+      }
+    },
+    isB(value) {
+      if (value) {
+        this.canWatchSelectedA = true;
+      }
+    }
   },
   computed: {
     disableMakeA() {
@@ -89,6 +107,9 @@ export default {
     },
     isB() {
       return !!this.bCategories.find(el => el.id == this.category.id);
+    },
+    bCategory() {
+      return this.bCategories.find(el => el.id == this.category.id);
     },
     aCategories() {
       return this.$store.state.aCategories;
@@ -123,6 +144,16 @@ export default {
           this.updateCategory(category.id, data);
         });
     }
+  },
+  created() {
+    if (this.isB)
+      this.getJoinedA(this.bCategory.b_category_id)
+        .then(response => {
+          this.selectedA = response;
+        })
+        .finally(() => {
+          this.canWatchSelectedA = true;
+        });
   }
 };
 </script>

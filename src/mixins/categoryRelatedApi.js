@@ -167,6 +167,69 @@ export const categoryRelatedApi = {
       });
     },
 
+    async getJoinedA(bId) {
+      let result;
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/category/joinedA/${bId}`
+      }).then(response => {
+        this.$q.loading.hide();
+
+        if (response.data.code == "0") {
+          result = response.data.result.category;
+        }
+      });
+      return result;
+    },
+
+    async getAB() {
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/category/AB`
+      }).then(response => {
+        this.$q.loading.hide();
+
+        if (response.data.code == "0") {
+          this.$store.dispatch(
+            "setAssociationsAB",
+            response.data.result.associations
+          );
+        }
+      });
+    },
+    async unJoinAB(bId) {
+      this.$q.loading.show();
+      await axios({
+        method: "delete",
+        url: `${store.state.apiUrl}/category/unjoin-ab/${bId}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Deleted");
+          this.getAB();
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+    async joinAB(aId, bId) {
+      this.$q.loading.show();
+      axios({
+        method: "post",
+        url: `${store.state.apiUrl}/category/join-ab/${aId}/${bId}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Success");
+          this.getAB();
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
     updateCategory(id, category) {
       this.$q.loading.show();
       axios({

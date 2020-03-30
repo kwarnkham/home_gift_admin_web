@@ -21,7 +21,7 @@
           label="Level B"
         />
       </div>
-      <div class="col-6 text-center">
+      <div class="col-6 text-center row justify-around">
         <q-btn
           color="primary"
           flat

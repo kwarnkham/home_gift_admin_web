@@ -30,7 +30,11 @@
         >
           <q-card-section class="row items-center">
             <div class="col">{{ category.name }}</div>
-            <q-btn icon="delete" @click="deleteLevel(category.id)" />
+            <q-btn
+              icon="delete"
+              @click="deleteLevel(category.id)"
+              :disable="disableDelete(category)"
+            />
           </q-card-section>
         </q-card>
       </div>
@@ -55,12 +59,26 @@ export default {
       else if (this.levelType == "B") {
         return this.$store.state.bCategories;
       }
+    },
+    associationsAB() {
+      return this.$store.state.associationsAB;
     }
   },
   methods: {
     show(level) {
       this.isOpen = true;
       this.levelType = level;
+    },
+    disableDelete(category) {
+      if (this.levelType == "A") {
+        return !!this.associationsAB.find(
+          el => el.a_category_id == category.a_category_id
+        );
+      } else if (this.levelType == "B") {
+        return !!this.associationsAB.find(
+          el => el.b_category_id == category.b_category_id
+        );
+      }
     },
     deleteA(id) {
       this.unMakeCategoryA(id).then(() => {
@@ -85,7 +103,9 @@ export default {
       }
     }
   },
-  created() {}
+  created() {
+    this.getAB();
+  }
 };
 </script>
 

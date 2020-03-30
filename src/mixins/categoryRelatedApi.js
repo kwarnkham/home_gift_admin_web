@@ -97,11 +97,66 @@ export const categoryRelatedApi = {
       });
     },
 
+    async getBCategories() {
+      let result;
+      this.$q.loading.show();
+      await axios({
+        method: "get",
+        url: `${store.state.apiUrl}/categories/get-b`
+      })
+        .then(response => {
+          this.$q.loading.hide();
+          if (response.data.code == "0") {
+            result = response.data.result.categories;
+          }
+          if (response.data.code == "1") {
+            this.$q.notify({
+              message: response.data.msg,
+              closeBtn: "Close"
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+      return result;
+    },
+
+    async makeCategoryB(id) {
+      this.$q.loading.show();
+      axios({
+        method: "post",
+        url: `${store.state.apiUrl}/category/make-b/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Success");
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
     async unMakeCategoryA(id) {
       this.$q.loading.show();
       axios({
         method: "put",
         url: `${store.state.apiUrl}/category/unmake-a/${id}`
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Success");
+        } else {
+          this.$q.notify("Fail");
+        }
+      });
+    },
+
+    async unMakeCategoryB(id) {
+      this.$q.loading.show();
+      axios({
+        method: "delete",
+        url: `${store.state.apiUrl}/b-category/${id}`
       }).then(response => {
         this.$q.loading.hide();
         if (response.data.code == "0") {

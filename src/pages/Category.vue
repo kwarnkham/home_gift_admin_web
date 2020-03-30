@@ -25,6 +25,10 @@ export default {
     this.getACategories().then(response =>
       this.$store.dispatch("setACategories", response)
     );
+
+    this.getBCategories().then(response =>
+      this.$store.dispatch("setBCategories", response)
+    );
   }
 };
 </script>

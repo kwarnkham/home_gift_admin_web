@@ -24,11 +24,15 @@ export default new Vuex.Store({
     provinces: [],
     lang: "zh-hans",
     showTrash: false,
-    aCategories: []
+    aCategories: [],
+    bCategories: []
   },
   mutations: {
     setACategories(state, payload) {
       state.aCategories = payload;
+    },
+    setBCategories(state, payload) {
+      state.bCategories = payload;
     },
     setShowTrash(state, payload) {
       state.showTrash = payload;
@@ -65,6 +69,9 @@ export default new Vuex.Store({
   actions: {
     setACategories(context, payload) {
       context.commit("setACategories", payload);
+    },
+    setBCategories(context, payload) {
+      context.commit("setBCategories", payload);
     },
     setShowTrash(context, payload) {
       context.commit("setShowTrash", payload);

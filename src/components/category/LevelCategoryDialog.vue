@@ -11,7 +11,7 @@
           color="white"
           class="bg-black"
         />
-        <div class="text-h4">Level A categories</div>
+        <div class="text-h4">Level {{ levelType }} categories</div>
         <q-btn
           v-close-popup
           icon="keyboard_arrow_left"
@@ -23,10 +23,14 @@
         />
       </div>
       <div class="bg-grey-3 col-12 q-pa-sm h-500">
-        <q-card v-for="category in categories" :key="category.id">
+        <q-card
+          v-for="category in categories"
+          :key="category.id"
+          class="q-ma-xs"
+        >
           <q-card-section class="row items-center">
             <div class="col">{{ category.name }}</div>
-            <q-btn icon="delete" @click="deleteA(category.id)" />
+            <q-btn icon="delete" @click="deleteLevel(category.id)" />
           </q-card-section>
         </q-card>
       </div>
@@ -37,21 +41,26 @@
 <script>
 import { categoryRelatedApi } from "../../mixins/categoryRelatedApi";
 export default {
-  name: "ACategoryDialog",
+  name: "LevelCategoryDialog",
   mixins: [categoryRelatedApi],
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      levelType: null
     };
   },
   computed: {
     categories() {
-      return this.$store.state.aCategories;
+      if (this.levelType == "A") return this.$store.state.aCategories;
+      else if (this.levelType == "B") {
+        return this.$store.state.bCategories;
+      }
     }
   },
   methods: {
-    show() {
+    show(level) {
       this.isOpen = true;
+      this.levelType = level;
     },
     deleteA(id) {
       this.unMakeCategoryA(id).then(() => {
@@ -59,6 +68,21 @@ export default {
           this.$store.dispatch("setACategories", response)
         );
       });
+    },
+    deleteB(id) {
+      this.unMakeCategoryB(id).then(() => {
+        this.getBCategories().then(response =>
+          this.$store.dispatch("setBCategories", response)
+        );
+      });
+    },
+
+    deleteLevel(id) {
+      if (this.levelType == "A") {
+        this.deleteA(id);
+      } else if (this.levelType == "B") {
+        this.deleteB(id);
+      }
     }
   },
   created() {}

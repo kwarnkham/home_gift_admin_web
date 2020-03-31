@@ -84,7 +84,7 @@ export const categoryRelatedApi = {
 
     async makeCategoryA(id) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "put",
         url: `${store.state.apiUrl}/category/make-a/${id}`
       }).then(response => {
@@ -124,7 +124,7 @@ export const categoryRelatedApi = {
 
     async makeCategoryB(id) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "post",
         url: `${store.state.apiUrl}/category/make-b/${id}`
       }).then(response => {
@@ -139,7 +139,7 @@ export const categoryRelatedApi = {
 
     async unMakeCategoryA(id) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "put",
         url: `${store.state.apiUrl}/category/unmake-a/${id}`
       }).then(response => {
@@ -154,7 +154,7 @@ export const categoryRelatedApi = {
 
     async unMakeCategoryB(id) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "delete",
         url: `${store.state.apiUrl}/b-category/${id}`
       }).then(response => {
@@ -258,7 +258,7 @@ export const categoryRelatedApi = {
         this.$q.loading.hide();
         if (response.data.code == "0") {
           this.$q.notify("Deleted");
-          this.getAB();
+          this.getBC();
         } else {
           this.$q.notify("Fail");
         }
@@ -267,7 +267,7 @@ export const categoryRelatedApi = {
 
     async joinAB(aId, bId) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "post",
         url: `${store.state.apiUrl}/category/join-ab/${aId}/${bId}`
       }).then(response => {
@@ -283,7 +283,7 @@ export const categoryRelatedApi = {
 
     async joinBC(bId, id) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "post",
         url: `${store.state.apiUrl}/category/join-bc/${bId}/${id}`
       }).then(response => {
@@ -297,9 +297,9 @@ export const categoryRelatedApi = {
       });
     },
 
-    updateCategory(id, category) {
+    async updateCategory(id, category) {
       this.$q.loading.show();
-      axios({
+      await axios({
         method: "put",
         url: `${store.state.apiUrl}/category`,
         data: {

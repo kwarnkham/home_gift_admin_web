@@ -98,18 +98,22 @@ export default {
       } else if (this.filter == "B") {
         return this.bCategories;
       } else if (this.filter == "C") {
-        let categories = [];
-        this.categories.forEach(c => {
+        let categories = JSON.parse(JSON.stringify(this.categories));
+        categories.forEach((el, index) => {
           this.aCategories.forEach(a => {
-            if (a.id != c.id) {
-              this.bCategories.forEach(b => {
-                if (b.id != c.id) {
-                  categories.push(c);
-                }
-              });
+            if (a.id == el.id) {
+              delete categories[index];
             }
           });
         });
+        categories.forEach((el, index) => {
+          this.bCategories.forEach(a => {
+            if (a.id == el.id) {
+              delete categories[index];
+            }
+          });
+        });
+        categories = categories.filter(el => el != undefined);
         return categories;
       } else {
         return [];

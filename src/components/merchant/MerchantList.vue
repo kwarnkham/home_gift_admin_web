@@ -1,10 +1,6 @@
 <template>
   <div class="col-12 row">
-    <div
-      v-for="merchant in merchants"
-      :key="merchant.id"
-      class="col-3 flex flex-center"
-    >
+    <div v-for="merchant in merchants" :key="merchant.id" class="col-3 q-pa-sm">
       <q-btn
         :label="merchant.name"
         @dblclick="showEditForm(merchant)"

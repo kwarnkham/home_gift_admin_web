@@ -63,6 +63,11 @@ export default {
         },
         { routeName: "items", label: this.$tc("item", 2), icon: "fastfood" },
         {
+          routeName: "trash",
+          label: this.$t("trash"),
+          icon: "delete_forever"
+        },
+        {
           routeName: "deliveryFees",
           label: this.$t("deliveryFees"),
           icon: "attach_money"

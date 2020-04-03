@@ -43,6 +43,17 @@ const routes = [
         path: "/delivery-fees",
         component: () => import("pages/DeliveryFees.vue"),
         name: "deliveryFees"
+      },
+      {
+        path: "/trash",
+        component: () => import("pages/ItemList.vue"),
+        props: { trashed: true },
+        name: "trash"
+      },
+      {
+        path: "test",
+        component: () => import("pages/ItemList.vue"),
+        name: "test"
       }
     ]
   }

@@ -32,66 +32,17 @@
         clearable
       />
     </div>
-
     <div class="col-12 row min-items-container-height">
       <div
         class="col-xs-12 col-sm-6 col-md-4 q-px-xs q-mt-xs"
         v-for="item in items"
         :key="item.id"
       >
-        <q-card class="q-pa-xs">
-          <div class="text-center item-img-height">
-            <img
-              :src="
-                `${$store.state.imageHost}/item_images/${item.images[0].name}`
-              "
-              class="img-full-h"
-            />
-          </div>
-
-          <q-card-section>
-            <div class="text-h6 text-ellipsis-constraints">{{ item.name }}</div>
-            <div class="text-subtitle2 text-ellipsis-constraints">
-              {{ item.price }}
-            </div>
-          </q-card-section>
-
-          <q-card-section class="desc-control"
-            >{{ item.description }}{{ item.description }}</q-card-section
-          >
-          <q-card-actions align="around">
-            <q-btn
-              flat
-              round
-              color="teal"
-              icon="launch"
-              @click="
-                $router.push({
-                  name: 'itemDetails',
-                  params: { itemId: item.id }
-                })
-              "
-            />
-            <q-btn
-              v-if="!showTrash"
-              flat
-              round
-              color="danger"
-              icon="delete"
-              @click="removeItem(item.id)"
-            />
-            <q-btn
-              v-if="showTrash"
-              flat
-              round
-              color="positive"
-              icon="restore_from_trash"
-              @click="restoreItem(item.id)"
-            />
-          </q-card-actions>
-        </q-card>
+        <SingleItemCard :item="item" />
       </div>
     </div>
+
+    <div class="col-12 row min-items-container-height"></div>
     <div class="q-pa-lg flex flex-center col-12">
       <q-pagination
         v-model="currentPage"
@@ -106,6 +57,7 @@
 
 <script>
 import { itemRelatedApi } from "../mixins/itemRelatedApi";
+import SingleItemCard from "../components/item/SingleItemCard";
 export default {
   name: "items",
   mixins: [itemRelatedApi],
@@ -119,6 +71,9 @@ export default {
       paginatedSearched: null,
       merchantFilter: null
     };
+  },
+  components: {
+    SingleItemCard
   },
   methods: {
     getAndSetMerchantFilter(page = 1) {
@@ -316,18 +271,10 @@ export default {
 </script>
 
 <style scoped>
-.item-img-height {
-  height: 150px;
-}
-
 .min-items-container-height {
   min-height: calc(100vh - 238px);
 }
-.desc-control {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
+
 .search-bg-color {
   background: #00e5ff !important;
 }

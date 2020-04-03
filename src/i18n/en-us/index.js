@@ -69,5 +69,6 @@ export default {
   chineseMerchant: "Chinese Merchant",
   chineseCategory: "Chinese Category",
   myanmarCategory: "Myanamr Category",
-  deliveryFees: "Delivery Fees"
+  deliveryFees: "Delivery Fees",
+  trash: "Trash"
 };

@@ -69,5 +69,6 @@ export default {
   chineseMerchant: "中国商人",
   chineseCategory: "中文类别",
   myanmarCategory: "缅甸语类别",
-  deliveryFees: "Delivery Fees"
+  deliveryFees: "送货费",
+  trash: "垃圾"
 };

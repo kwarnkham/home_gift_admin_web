@@ -16,13 +16,13 @@
       >
         Home Gift {{ $t("admin") }}
       </q-toolbar-title>
-      <q-btn
+      <!-- <q-btn
         v-if="$route.name == 'items'"
         icon="delete"
         :color="showTrash ? 'lime' : 'white'"
         :class="[showTrash ? 'text-black' : 'text-brown']"
         @click="$store.dispatch('setShowTrash', !showTrash)"
-      />
+      /> -->
     </q-toolbar>
   </q-header>
 </template>

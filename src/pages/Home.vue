@@ -54,6 +54,11 @@ export default {
           routeName: "items"
         },
         {
+          title: this.$t("trash"),
+          desc: "Manage trashed items here",
+          routeName: "trash"
+        },
+        {
           title: this.$t("deliveryFees"),
           desc: "Manage delivery fees here",
           routeName: "deliveryFees"

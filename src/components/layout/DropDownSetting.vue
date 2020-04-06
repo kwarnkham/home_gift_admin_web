@@ -24,13 +24,14 @@
 
 <script>
 import UpdateUserInfoDialog from "../user/UpdateUserInfoDialog";
+import UpdatePasswordDialog from "../user/UpdatePasswordDialog";
 export default {
   name: "DropDownSetting",
   data() {
     return {
       dropDownItems: [
         { label: "User Info", onClick: this.showUpdateUserInfoDialog },
-        { label: "Password", onClick: this.showUpdateUserInfoDialog },
+        { label: "Password", onClick: this.showUpdatePasswordDialog },
         { label: "Logout", onClick: this.logout },
       ],
     };
@@ -39,6 +40,12 @@ export default {
     showUpdateUserInfoDialog() {
       this.$q.dialog({
         component: UpdateUserInfoDialog,
+        parent: this,
+      });
+    },
+    showUpdatePasswordDialog() {
+      this.$q.dialog({
+        component: UpdatePasswordDialog,
         parent: this,
       });
     },
@@ -56,6 +63,7 @@ export default {
         });
     },
   },
+  created() {},
 };
 </script>
 

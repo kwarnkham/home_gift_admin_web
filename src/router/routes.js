@@ -7,64 +7,70 @@ const routes = [
       {
         path: "/order",
         component: () => import("pages/Index.vue"),
-        name: "orders"
+        name: "orders",
       },
       {
         path: "/add_item",
         component: () => import("pages/AddItem.vue"),
-        name: "addItem"
+        name: "addItem",
       },
       {
         path: "/location",
         component: () => import("pages/Location.vue"),
-        name: "location"
+        name: "location",
       },
       {
         path: "/merchant",
         component: () => import("pages/Merchant.vue"),
-        name: "merchant"
+        name: "merchant",
       },
       {
         path: "/category",
         component: () => import("pages/Category.vue"),
-        name: "category"
+        name: "category",
       },
       {
         path: "/items",
         component: () => import("pages/ItemList.vue"),
-        name: "items"
+        name: "items",
       },
       {
         path: "/item-details/:itemId",
         component: () => import("pages/ItemDetails.vue"),
-        name: "itemDetails"
+        name: "itemDetails",
       },
       {
         path: "/delivery-fees",
         component: () => import("pages/DeliveryFees.vue"),
-        name: "deliveryFees"
+        name: "deliveryFees",
       },
       {
         path: "/trash",
         component: () => import("pages/ItemList.vue"),
         props: { trashed: true },
-        name: "trash"
+        name: "trash",
+      },
+      {
+        path: "/search",
+        component: () => import("pages/Search.vue"),
+        props: { trashed: true },
+        name: "search",
       },
       {
         path: "/merchant-items/:merchant",
         component: () => import("pages/MerchantItems.vue"),
-        props: route => ({ merchant: JSON.parse(route.params.merchant) }),
-        name: "merchantItems"
-      }
-    ]
-  }
+        props: (route) => ({ merchant: JSON.parse(route.params.merchant) }),
+        name: "merchantItems",
+      },
+    ],
+  },
 ];
 
 // Always leave this as last one
 if (process.env.MODE !== "ssr") {
   routes.push({
     path: "*",
-    component: () => import("pages/Error404.vue")
+    component: () => import("pages/Error404.vue"),
   });
 }
 

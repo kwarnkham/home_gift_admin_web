@@ -28,7 +28,12 @@
         />
       </div>
       <div class="q-pa-lg flex flex-center col-12">
-        <q-pagination v-model="currentPage" :max="totalPages" input>
+        <q-pagination
+          v-model="currentPage"
+          :max="totalPages"
+          :max-pages="20"
+          boundary-links
+        >
         </q-pagination>
       </div>
     </div>

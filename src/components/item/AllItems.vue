@@ -7,7 +7,12 @@
       :item="item"
     />
     <div class="q-pa-lg flex flex-center col-12">
-      <q-pagination v-model="currentPage" :max="totalPages" input>
+      <q-pagination
+        v-model="currentPage"
+        :max="totalPages"
+        :max-pages="20"
+        boundary-links
+      >
       </q-pagination>
     </div>
   </div>
@@ -20,12 +25,12 @@ export default {
   name: "AllItems",
   mixins: [itemRelatedApi],
   components: {
-    SingleItemCard
+    SingleItemCard,
   },
   data() {
     return {
       paginatedItems: [],
-      currentPage: null
+      currentPage: null,
     };
   },
   watch: {
@@ -34,28 +39,28 @@ export default {
         this.$router.push({
           name: "items",
           query: {
-            page: value
-          }
+            page: value,
+          },
         });
       }
     },
     $route(to, from) {
       this.getAndSetItems();
-    }
+    },
   },
   computed: {
     totalPages() {
       return Math.ceil(
         this.paginatedItems.total / this.paginatedItems.per_page
       );
-    }
+    },
   },
   methods: {
     getAndSetItems() {
-      this.getItems(this.currentPage).then(response => {
+      this.getItems(this.currentPage).then((response) => {
         this.paginatedItems = response.data.result.items;
       });
-    }
+    },
   },
   created() {
     let currentPage = Number(this.$route.query.page);
@@ -67,7 +72,7 @@ export default {
   },
   beforeDestroy() {
     this.$root.$on("refreshAllItems", this.getAndSetItems);
-  }
+  },
 };
 </script>
 

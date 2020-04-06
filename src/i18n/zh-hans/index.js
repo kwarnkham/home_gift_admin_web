@@ -70,5 +70,5 @@ export default {
   chineseCategory: "中文类别",
   myanmarCategory: "缅甸语类别",
   deliveryFees: "送货费",
-  trash: "垃圾"
+  trash: "垃圾",
 };

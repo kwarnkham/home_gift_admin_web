@@ -143,10 +143,10 @@ export const itemRelatedApi = {
         })
           .then((response) => {
             if (response.data.code == "0") {
-              result = response;
+              result = response.data.result.items;
             } else {
               this.$q.notify({
-                message: response.data.msg,
+                message: response.data.msg + (trashed ? " in trash" : ""),
                 closeBtn: "Close",
               });
             }

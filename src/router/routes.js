@@ -3,7 +3,11 @@ const routes = [
     path: "/",
     component: () => import("layouts/MyLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/Home.vue"), name: "home" },
+      {
+        path: "",
+        component: () => import("pages/Home.vue"),
+        name: "home",
+      },
       {
         path: "/order",
         component: () => import("pages/Index.vue"),
@@ -63,6 +67,12 @@ const routes = [
         name: "merchantItems",
       },
     ],
+  },
+  {
+    path: "/login",
+    component: () => import("pages/Login.vue"),
+    name: "login",
+    meta: { withoutAuth: true },
   },
 ];
 

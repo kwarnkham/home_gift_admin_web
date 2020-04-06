@@ -1,4 +1,6 @@
-import Vue from 'vue'
-import axios from 'axios'
+import Vue from "vue";
+import axios from "axios";
 
-Vue.prototype.$axios = axios
+axios.defaults.baseURL = process.env.API_URL;
+
+Vue.prototype.$axios = axios;

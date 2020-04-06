@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { LocalStorage } from "quasar";
 
 // import example from './module-example'
 
@@ -27,9 +28,13 @@ export default new Vuex.Store({
     aCategories: [],
     bCategories: [],
     associationsAB: [],
-    associationsBC: []
+    associationsBC: [],
+    user: null,
   },
   mutations: {
+    setUser(state, payload) {
+      state.user = payload;
+    },
     setAssociationsAB(state, payload) {
       state.associationsAB = payload;
     },
@@ -72,9 +77,18 @@ export default new Vuex.Store({
     },
     setLanguage(state, payload) {
       state.lang = payload;
-    }
+    },
   },
   actions: {
+    setUser(context, payload) {
+      context.commit("setUser", payload);
+      try {
+        if (payload) LocalStorage.set("user", payload);
+        else LocalStorage.remove("user");
+      } catch (e) {
+        console.log(e);
+      }
+    },
     setAssociationsAB(context, payload) {
       context.commit("setAssociationsAB", payload);
     },
@@ -116,7 +130,7 @@ export default new Vuex.Store({
     },
     setLanguage(context, payload) {
       context.commit("setLanguage", payload);
-    }
+    },
   },
   modules: {
     // example
@@ -124,5 +138,5 @@ export default new Vuex.Store({
 
   // enable strict mode (adds overhead!)
   // for dev mode only
-  strict: process.env.DEV
+  strict: process.env.DEV,
 });

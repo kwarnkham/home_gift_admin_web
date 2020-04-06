@@ -18,7 +18,7 @@ import HomeCard from "../components/home/HomeCard";
 export default {
   name: "Home",
   components: {
-    HomeCard
+    HomeCard,
   },
   data() {
     return {
@@ -26,49 +26,54 @@ export default {
         {
           title: this.$tc("order", 2),
           desc: "Manage orders here",
-          routeName: "orders"
+          routeName: "orders",
         },
         {
           title: this.$t("location"),
           desc: "Manage locations here",
-          routeName: "location"
+          routeName: "location",
         },
         {
           title: this.$t("merchant"),
           desc: "Manage merchants here",
-          routeName: "merchant"
+          routeName: "merchant",
         },
         {
           title: this.$tc("category", 1),
           desc: "Manage categories here",
-          routeName: "category"
+          routeName: "category",
         },
         {
           title: this.$t("addItem"),
           desc: "Add new item here",
-          routeName: "addItem"
+          routeName: "addItem",
         },
         {
           title: this.$tc("item", 2),
           desc: "Manage items here",
-          routeName: "items"
+          routeName: "items",
         },
         {
           title: this.$t("trash"),
           desc: "Manage trashed items here",
-          routeName: "trash"
+          routeName: "trash",
         },
         {
           title: this.$t("deliveryFees"),
           desc: "Manage delivery fees here",
-          routeName: "deliveryFees"
-        }
-      ]
+          routeName: "deliveryFees",
+        },
+        {
+          title: this.$t("search"),
+          desc: "Search items by name",
+          routeName: "search",
+        },
+      ],
     };
   },
   created() {
     // console.log("home just created");
-  }
+  },
 };
 </script>
 

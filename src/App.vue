@@ -16,14 +16,14 @@ export default {
     itemRelatedApi,
     merchantRelatedApi,
     locationRelatedApi,
-    categoryRelatedApi
+    categoryRelatedApi,
   ],
   methods: {
     setLanguage() {
       let lang = localStorage.getItem("lang");
       if (lang) {
         this.$i18n.locale = lang;
-        import(`quasar/lang/${lang}`).then(language => {
+        import(`quasar/lang/${lang}`).then((language) => {
           this.$q.lang.set(language.default);
         });
         this.$store.dispatch("setLanguage", lang);
@@ -31,16 +31,21 @@ export default {
     },
     setQuasarPluginDefaults() {
       this.$q.loading.setDefaults({
-        delay: 200
+        delay: 200,
       });
-    }
+    },
+    initLocalStorageData() {
+      let user = this.$q.localStorage.getItem("user");
+      if (user) this.$store.dispatch("setUser", user);
+    },
   },
   created() {
+    this.initLocalStorageData();
     this.getLocations();
     this.getMerchants();
     this.getCategories();
     this.setLanguage();
     this.setQuasarPluginDefaults();
-  }
+  },
 };
 </script>

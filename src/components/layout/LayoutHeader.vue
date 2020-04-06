@@ -17,20 +17,18 @@
       >
         Home Gift {{ $t("admin") }}
       </q-toolbar-title>
-      <!-- <q-btn
-        v-if="$route.name == 'items'"
-        icon="delete"
-        :color="showTrash ? 'lime' : 'white'"
-        :class="[showTrash ? 'text-black' : 'text-brown']"
-        @click="$store.dispatch('setShowTrash', !showTrash)"
-      /> -->
+      <DropDownSetting />
     </q-toolbar>
   </q-header>
 </template>
 
 <script>
+import { userRelatedApi } from "../../mixins/userRelatedApi";
+import DropDownSetting from "./DropDownSetting";
 export default {
   name: "LayoutHeader",
+  mixins: [userRelatedApi],
+  components: { DropDownSetting },
   computed: {
     showTrash() {
       return this.$store.state.showTrash;
@@ -40,6 +38,7 @@ export default {
     toggleDrawer() {
       this.$root.$emit("toggleDrawer");
     },
+    editUser() {},
   },
   mounted() {
     this.$root.$emit("showTrash", this.showTrash);

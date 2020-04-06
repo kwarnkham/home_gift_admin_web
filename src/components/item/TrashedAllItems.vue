@@ -21,12 +21,12 @@ export default {
   name: "TrashedAllItems",
   mixins: [itemRelatedApi],
   components: {
-    SingleItemCard
+    SingleItemCard,
   },
   data() {
     return {
       paginatedItems: [],
-      currentPage: null
+      currentPage: null,
     };
   },
   watch: {
@@ -35,28 +35,29 @@ export default {
         this.$router.push({
           name: "trash",
           query: {
-            page: value
-          }
+            page: value,
+          },
         });
       }
     },
     $route(to, from) {
       this.getAndSetTrashed();
-    }
+    },
   },
   computed: {
     totalPages() {
       return Math.ceil(
         this.paginatedItems.total / this.paginatedItems.per_page
       );
-    }
+    },
   },
   methods: {
     getAndSetTrashed() {
-      this.getTrashedItems(this.currentPage).then(response => {
-        this.paginatedItems = response.data.result.items;
+      this.getTrashedItems(this.currentPage).then((response) => {
+        console.log(response);
+        this.paginatedItems = response;
       });
-    }
+    },
   },
   created() {
     let currentPage = Number(this.$route.query.page);
@@ -68,7 +69,7 @@ export default {
   },
   beforeDestroy() {
     this.$root.$on("refreshTrashedAllItems", this.getAndSetTrashed);
-  }
+  },
 };
 </script>
 

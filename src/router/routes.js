@@ -51,9 +51,10 @@ const routes = [
         name: "trash"
       },
       {
-        path: "test",
-        component: () => import("pages/ItemList.vue"),
-        name: "test"
+        path: "/merchant-items/:merchant",
+        component: () => import("pages/MerchantItems.vue"),
+        props: route => ({ merchant: JSON.parse(route.params.merchant) }),
+        name: "merchantItems"
       }
     ]
   }

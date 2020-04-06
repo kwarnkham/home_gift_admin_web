@@ -11,9 +11,9 @@ export const itemRelatedApi = {
       await axios({
         method: "post",
         url: `${store.state.apiUrl}/item`,
-        data: itemInfo
+        data: itemInfo,
       })
-        .then(async response => {
+        .then(async (response) => {
           this.$q.loading.hide();
           // console.log(response.data)
           if (response.data.code == "0") {
@@ -30,31 +30,31 @@ export const itemRelatedApi = {
           if (response.data.code == "1") {
             this.$q.notify({
               message: response.data.msg,
-              closeBtn: "Close"
+              closeBtn: "Close",
             });
           }
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
 
     async addCategoriesToItem(itemId, categories) {
       this.$q.loading.show();
-      await categories.forEach(category => {
+      await categories.forEach((category) => {
         axios({
           method: "post",
-          url: `${store.state.apiUrl}/item/${itemId}/${category.id}`
+          url: `${store.state.apiUrl}/item/${itemId}/${category.id}`,
         })
-          .then(response => {
+          .then((response) => {
             this.$q.loading.hide();
             // console.log(response.data.result)
             if (response.data.code == "1") {
               this.$q.notify({
                 message: response.data.msg,
-                closeBtn: "Close"
+                closeBtn: "Close",
               });
             }
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       });
     },
 
@@ -63,9 +63,9 @@ export const itemRelatedApi = {
       this.$q.loading.show();
       await axios({
         method: "get",
-        url: `${store.state.apiUrl}/item/${itemId}`
+        url: `${store.state.apiUrl}/item/${itemId}`,
       })
-        .then(response => {
+        .then((response) => {
           this.$q.loading.hide();
           // console.log(response.data.result)
           if (response.data.code == "0") {
@@ -74,11 +74,11 @@ export const itemRelatedApi = {
           if (response.data.code == "1") {
             this.$q.notify({
               message: response.data.msg,
-              closeBtn: "Close"
+              closeBtn: "Close",
             });
           }
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
 
       return result;
     },
@@ -96,13 +96,13 @@ export const itemRelatedApi = {
         method: "post",
         url: `${store.state.apiUrl}/image`,
         headers: { "Content-Type": "multipart/form-data" },
-        data: formData
+        data: formData,
       })
-        .then(response => {
+        .then((response) => {
           this.$q.loading.hide();
           // console.log(response.data)
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
     async getTrashedItems(page = 1, perPage = this.$store.state.itemPerPage) {
       let result;
@@ -112,21 +112,21 @@ export const itemRelatedApi = {
         url: `${store.state.apiUrl}/items/trashed`,
         params: {
           page: page,
-          per_page: perPage
-        }
+          per_page: perPage,
+        },
       })
-        .then(response => {
+        .then((response) => {
           this.$q.loading.hide();
-          result = response;
+          result = response.data.result.items;
           // console.log(response.data)
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
       return result;
     },
 
     async findItemByName(
       name,
-      withTrash = false,
+      trashed = false,
       page = 1,
       perPage = this.$store.state.itemPerPage
     ) {
@@ -136,29 +136,29 @@ export const itemRelatedApi = {
           method: "get",
           url: `${store.state.apiUrl}/items/find/name/${name}`,
           params: {
-            withTrash: withTrash,
+            trashed: trashed,
             page: page,
-            per_page: perPage
-          }
+            per_page: perPage,
+          },
         })
-          .then(response => {
+          .then((response) => {
             if (response.data.code == "0") {
               result = response;
             } else {
               this.$q.notify({
                 message: response.data.msg,
-                closeBtn: "Close"
+                closeBtn: "Close",
               });
             }
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       }
       return result;
     },
 
     async findItemByMerchant(
       merchantId,
-      withTrash = false,
+      trashed = false,
       page = 1,
       perPage = this.$store.state.itemPerPage
     ) {
@@ -168,22 +168,22 @@ export const itemRelatedApi = {
         method: "get",
         url: `${store.state.apiUrl}/items/find/merchant/${merchantId}`,
         params: {
-          withTrash: withTrash,
+          trashed: trashed,
           page: page,
-          per_page: perPage
-        }
+          per_page: perPage,
+        },
       })
-        .then(response => {
+        .then((response) => {
           if (response.data.code == "0") {
-            result = response;
+            result = response.data.result.items;
           } else {
             this.$q.notify({
               message: response.data.msg,
-              closeBtn: "Close"
+              closeBtn: "Close",
             });
           }
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
 
       return result;
     },
@@ -196,16 +196,16 @@ export const itemRelatedApi = {
         url: `${store.state.apiUrl}/items`,
         params: {
           page: page,
-          per_page: perPage
-        }
+          per_page: perPage,
+        },
       })
-        .then(response => {
+        .then((response) => {
           this.$q.loading.hide();
 
           // console.log(response.data);
           result = response;
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
       return result;
     },
 
@@ -228,10 +228,10 @@ export const itemRelatedApi = {
           mm_notice: item.mm_notice,
           weight: item.weight,
           merchant_id: item.merchant.id,
-          location_id: item.location.id
-        }
+          location_id: item.location.id,
+        },
       })
-        .then(response => {
+        .then((response) => {
           this.$q.loading.hide();
           if (response.data.code == "0") {
             result = response;
@@ -239,19 +239,19 @@ export const itemRelatedApi = {
           if (response.data.code == "1") {
             this.$q.notify({
               message: response.data.msg,
-              closeBtn: "Close"
+              closeBtn: "Close",
             });
           }
           // console.log(response.data)
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
       return result;
     },
 
     async updateCategory(item) {
       var result = {};
       let categories = [];
-      item.categories.forEach(category => {
+      item.categories.forEach((category) => {
         categories.push(category.id);
       });
       this.$q.loading.show();
@@ -259,14 +259,14 @@ export const itemRelatedApi = {
         method: "put",
         url: `${store.state.apiUrl}/item/${item.id}/categories`,
         data: {
-          categories: categories
-        }
+          categories: categories,
+        },
       })
-        .then(response => {
+        .then((response) => {
           this.$q.loading.hide();
           result = response;
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
       return result;
     },
 
@@ -275,8 +275,8 @@ export const itemRelatedApi = {
       this.$q.loading.show();
       await axios({
         method: "delete",
-        url: `${store.state.apiUrl}/image/${imageId}`
-      }).then(response => {
+        url: `${store.state.apiUrl}/image/${imageId}`,
+      }).then((response) => {
         this.$q.loading.hide();
         if (response.data.code == "0") {
           result = response;
@@ -290,10 +290,10 @@ export const itemRelatedApi = {
       if (id) {
         await axios({
           method: "delete",
-          url: `${store.state.apiUrl}/item/${id}`
+          url: `${store.state.apiUrl}/item/${id}`,
         })
-          .then(response => (result = response))
-          .catch(error => console.log(error));
+          .then((response) => (result = response))
+          .catch((error) => console.log(error));
       }
 
       return result;
@@ -304,12 +304,12 @@ export const itemRelatedApi = {
       if (id) {
         await axios({
           method: "patch",
-          url: `${store.state.apiUrl}/item/${id}`
+          url: `${store.state.apiUrl}/item/${id}`,
         })
-          .then(response => (result = response))
-          .catch(error => console.log(error));
+          .then((response) => (result = response))
+          .catch((error) => console.log(error));
         return result;
       }
-    }
-  }
+    },
+  },
 };

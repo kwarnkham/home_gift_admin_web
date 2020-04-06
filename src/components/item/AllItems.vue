@@ -32,7 +32,7 @@ export default {
     currentPage(value, old) {
       if (old) {
         this.$router.push({
-          name: "test",
+          name: "items",
           query: {
             page: value
           }

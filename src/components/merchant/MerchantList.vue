@@ -1,10 +1,19 @@
 <template>
   <div class="col-12 row">
-    <div v-for="merchant in merchants" :key="merchant.id" class="col-3 q-pa-sm">
+    <div
+      v-for="merchant in merchants"
+      :key="merchant.id"
+      class="col-xs-12 col-sm-6 col-md-4 q-pa-sm"
+    >
       <q-btn
         :label="merchant.name"
-        @dblclick="showEditForm(merchant)"
         no-caps
+        @click="routeToMerchantItem(merchant)"
+      />
+      <q-icon
+        name="edit"
+        class="cursor-pointer q-ml-xs"
+        @click="showEditForm(merchant)"
       />
     </div>
   </div>
@@ -17,7 +26,7 @@ export default {
   name: "MerchantList",
   mixins: [merchantRelatedApi],
   components: {
-    EditMerchantFormDialog
+    EditMerchantFormDialog,
   },
   data() {
     return {};
@@ -25,17 +34,24 @@ export default {
   computed: {
     merchants() {
       return this.$store.state.merchants;
-    }
+    },
   },
   methods: {
+    routeToMerchantItem(merchant) {
+      let prop = JSON.stringify(merchant);
+      this.$router.push({
+        name: "merchantItems",
+        params: { merchant: prop },
+      });
+    },
     showEditForm(merchant) {
       this.$q
         .dialog({
           component: EditMerchantFormDialog,
           parent: this,
-          merchant: merchant
+          merchant: merchant,
         })
-        .onOk(data => {
+        .onOk((data) => {
           this.updateMerchant(merchant.id, data);
         });
 
@@ -53,8 +69,8 @@ export default {
       //   .onOk(data => {
       //     this.updateMerchant(merchant.id, data);
       //   });
-    }
+    },
   },
-  created() {}
+  created() {},
 };
 </script>

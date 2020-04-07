@@ -10,13 +10,21 @@ export const userRelatedApi = {
         url: "/login",
         data: {
           mobile: data.mobile,
-          password: data.password,
-        },
-      }).then((response) => {
-        this.$q.loading.hide();
-        this.$store.dispatch("setUser", response.data.result.user);
-        this.$router.push({ name: "home" });
-      });
+          password: data.password
+        }
+      })
+        .then(response => {
+          this.$q.loading.hide();
+          if (response.data.code == "0") {
+            this.$store.dispatch("setUser", response.data.result.user);
+            this.$router.push({ name: "home" });
+          } else {
+            this.$q.notify(response.data.msg);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     async updateUser(data) {
       this.$q.loading.show();
@@ -26,8 +34,8 @@ export const userRelatedApi = {
         data: {
           mobile: data.mobile,
           name: data.name,
-          address: data.address,
-        },
+          address: data.address
+        }
       });
     },
     async changePassword(data) {
@@ -38,14 +46,14 @@ export const userRelatedApi = {
         url: "/user/password",
         headers: {
           Authorization: "Bearer " + this.$store.state.user.api_token,
-          Accept: "application/json",
+          Accept: "application/json"
         },
         data: {
           password: data.old,
           new: data.new,
-          new_confirmation: data.confirm,
-        },
-      }).then((response) => {
+          new_confirmation: data.confirm
+        }
+      }).then(response => {
         this.$q.loading.hide();
         if (response.data.code == "0") {
           this.$q.notify("Success");
@@ -64,9 +72,9 @@ export const userRelatedApi = {
         url: "/user",
         headers: {
           Authorization: "Bearer " + this.$store.state.user.api_token,
-          Accept: "application/json",
-        },
-      }).then((response) => {
+          Accept: "application/json"
+        }
+      }).then(response => {
         this.$q.loading.hide();
         console.log(response);
         if (response.data.code == "0") {
@@ -75,6 +83,6 @@ export const userRelatedApi = {
           this.$q.notify("Fail");
         }
       });
-    },
-  },
+    }
+  }
 };

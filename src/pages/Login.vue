@@ -6,7 +6,7 @@
         type="number"
         v-model="mobile"
         label="Mobile"
-        :rules="[(val) => (val && val.length > 0) || 'Cannot be empty']"
+        :rules="[val => (val && val.length > 0) || 'Cannot be empty']"
         dense
         prefix="09"
         clearable
@@ -18,7 +18,7 @@
         v-model="password"
         label="Password"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Cannot be empty']"
+        :rules="[val => (val && val.length > 0) || 'Cannot be empty']"
         dense=""
       />
 
@@ -38,13 +38,13 @@ export default {
   data() {
     return {
       mobile: null,
-      password: null,
+      password: null
     };
   },
   methods: {
     onSubmit() {
       this.login({ mobile: this.mobile, password: this.password });
-    },
+    }
   },
   beforeRouteEnter(to, from, next) {
     if (store.state.user) {
@@ -52,7 +52,7 @@ export default {
     } else {
       next();
     }
-  },
+  }
 };
 </script>
 

@@ -1,6 +1,9 @@
 export const userRelatedApi = {
   created() {
     // console.log(store.state.apiUrl);
+    this.$axios.defaults.headers.common["Authorization"] =
+      "Bearer " + this.$store.state.user.api_token;
+    this.$axios.defaults.headers.common["Accept"] = "application/json";
   },
   methods: {
     async login(data) {
@@ -83,6 +86,29 @@ export const userRelatedApi = {
           this.$q.notify("Fail");
         }
       });
+    },
+
+    async changeUser(user) {
+      this.$q.loading.show();
+      let result;
+      await this.$axios({
+        method: "put",
+        url: "/user",
+        data: {
+          name: user.name,
+          mobile: user.mobile,
+          address: user.address
+        }
+      }).then(response => {
+        this.$q.loading.hide();
+        if (response.data.code == "0") {
+          this.$q.notify("Updated");
+          result = response.data.result.user;
+        } else {
+          this.$q.notify(response.data.msg);
+        }
+      });
+      return result;
     }
   }
 };

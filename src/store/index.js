@@ -29,7 +29,7 @@ export default new Vuex.Store({
     bCategories: [],
     associationsAB: [],
     associationsBC: [],
-    user: null,
+    user: null
   },
   mutations: {
     setUser(state, payload) {
@@ -77,7 +77,7 @@ export default new Vuex.Store({
     },
     setLanguage(state, payload) {
       state.lang = payload;
-    },
+    }
   },
   actions: {
     setUser(context, payload) {
@@ -130,7 +130,7 @@ export default new Vuex.Store({
     },
     setLanguage(context, payload) {
       context.commit("setLanguage", payload);
-    },
+    }
   },
   modules: {
     // example
@@ -138,5 +138,5 @@ export default new Vuex.Store({
 
   // enable strict mode (adds overhead!)
   // for dev mode only
-  strict: process.env.DEV,
+  strict: process.env.DEV
 });

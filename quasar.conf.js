@@ -1,13 +1,13 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function (ctx) {
+module.exports = function(ctx) {
   return {
     preFetch: true,
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: ["i18n", "axios", "laravel-echo"],
+    boot: ["i18n", "axios"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.css"],
@@ -22,7 +22,7 @@ module.exports = function (ctx) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       "roboto-font", // optional, you are not bound to it
-      "material-icons", // optional, you are not bound to it
+      "material-icons" // optional, you are not bound to it
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -38,8 +38,8 @@ module.exports = function (ctx) {
           positive: "#21BA45",
           negative: "#C10015",
           info: "#62a7b5",
-          warning: "#f7bb16",
-        },
+          warning: "#f7bb16"
+        }
       },
 
       // iconSet: 'ionicons-v4', // Quasar icon set
@@ -61,7 +61,7 @@ module.exports = function (ctx) {
       directives: ["Ripple", "ClosePopup"],
 
       // Quasar plugins
-      plugins: ["Loading", "Notify", "Dialog", "LocalStorage"],
+      plugins: ["Loading", "Notify", "Dialog", "LocalStorage"]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -75,12 +75,12 @@ module.exports = function (ctx) {
             // API_URL: JSON.stringify("https://api.homegift.tk/api"),
             // IMAGE_HOST: JSON.stringify("https://api.homegift.tk/storage")
             API_URL: JSON.stringify("http://127.0.0.1:8000/api"),
-            IMAGE_HOST: JSON.stringify("http://127.0.0.1:8000/storage"),
+            IMAGE_HOST: JSON.stringify("http://127.0.0.1:8000/storage")
           }
         : {
             // and on build (production):
             API_URL: JSON.stringify("https://api.homegift.tk/api"),
-            IMAGE_HOST: JSON.stringify("https://api.homegift.tk/storage"),
+            IMAGE_HOST: JSON.stringify("https://api.homegift.tk/storage")
           },
       scopeHoisting: true,
       // vueRouterMode: 'history',
@@ -91,14 +91,14 @@ module.exports = function (ctx) {
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
-      extendWebpack(cfg) {},
+      extendWebpack(cfg) {}
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       // https: true,
       // port: 8080,
-      open: false, // opens browser window automatically
+      open: false // opens browser window automatically
     },
 
     // animations: 'all', // --- includes all animations
@@ -107,7 +107,7 @@ module.exports = function (ctx) {
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
-      pwa: false,
+      pwa: false
     },
 
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
@@ -122,8 +122,8 @@ module.exports = function (ctx) {
         orientation: "portrait",
         background_color: "#ffffff",
         theme_color: "#027be3",
-        icons: [],
-      },
+        icons: []
+      }
     },
 
     // https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
@@ -155,7 +155,7 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
         // appId: 'home_gift_admin_web'
-      },
-    },
+      }
+    }
   };
 };

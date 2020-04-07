@@ -9,8 +9,15 @@
     >
       <template v-slot:top>
         <q-space />
-        <q-btn outline color="primary" :label="$t('update')" @click="getOrders()">
-          <q-badge color="orange" floating v-if="newOrderCount> 0">{{newOrderCount}}</q-badge>
+        <q-btn
+          outline
+          color="primary"
+          :label="$t('update')"
+          @click="getOrders()"
+        >
+          <q-badge color="orange" floating v-if="newOrderCount > 0">{{
+            newOrderCount
+          }}</q-badge>
         </q-btn>
       </template>
       <template v-slot:body="props">
@@ -35,44 +42,52 @@
             <q-badge color="accent">{{ props.row.status }}</q-badge>
           </q-td>
           <q-td key="action" :props="props">
-            <q-btn-dropdown color="primary" :label="$t('action')" :disable="disableActionBtn">
+            <q-btn-dropdown
+              color="primary"
+              :label="$t('action')"
+              :disable="disableActionBtn"
+            >
               <q-list>
                 <q-item
                   clickable
                   v-close-popup
-                  @click="actOnOrder(props.row.id,'confirmed')"
+                  @click="actOnOrder(props.row.id, 'confirmed')"
                   v-if="filter == 'pending'"
                 >
                   <q-item-section>
-                    <q-item-label>{{$t('confirm')}}</q-item-label>
+                    <q-item-label>{{ $t("confirm") }}</q-item-label>
                   </q-item-section>
                 </q-item>
 
                 <q-item
                   clickable
                   v-close-popup
-                  @click="actOnOrder(props.row.id,'on the way')"
+                  @click="actOnOrder(props.row.id, 'on the way')"
                   v-if="filter == 'confirmed'"
                 >
                   <q-item-section>
-                    <q-item-label>{{$t('dispatch')}}</q-item-label>
+                    <q-item-label>{{ $t("dispatch") }}</q-item-label>
                   </q-item-section>
                 </q-item>
 
                 <q-item
                   clickable
                   v-close-popup
-                  @click="actOnOrder(props.row.id,'delivered')"
+                  @click="actOnOrder(props.row.id, 'delivered')"
                   v-if="filter == 'on the way'"
                 >
                   <q-item-section>
-                    <q-item-label>{{$t('finish')}}</q-item-label>
+                    <q-item-label>{{ $t("finish") }}</q-item-label>
                   </q-item-section>
                 </q-item>
 
-                <q-item clickable v-close-popup @click="actOnOrder(props.row.id, 'canceled')">
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="actOnOrder(props.row.id, 'canceled')"
+                >
                   <q-item-section>
-                    <q-item-label>{{$tc('cancel', 1)}}</q-item-label>
+                    <q-item-label>{{ $tc("cancel", 1) }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -149,8 +164,7 @@ export default {
           name: "action",
           label: this.$t("action")
         }
-      ],
-      channel: null
+      ]
     };
   },
   computed: {
@@ -191,11 +205,6 @@ export default {
     }
   },
   methods: {},
-  created() {
-    this.channel = Echo.channel("orders");
-    this.channel.listen("OrderCreated", e =>
-      this.$store.dispatch("newOrderCountIncrement")
-    );
-  }
+  created() {}
 };
 </script>

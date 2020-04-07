@@ -1,9 +1,6 @@
 export const userRelatedApi = {
   created() {
     // console.log(store.state.apiUrl);
-    this.$axios.defaults.headers.common["Authorization"] =
-      "Bearer " + this.$store.state.user.api_token;
-    this.$axios.defaults.headers.common["Accept"] = "application/json";
   },
   methods: {
     async login(data) {

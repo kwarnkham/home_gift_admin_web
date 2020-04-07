@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { LocalStorage } from "quasar";
+import axios from "axios";
 
 // import example from './module-example'
 
@@ -88,6 +89,9 @@ export default new Vuex.Store({
       } catch (e) {
         console.log(e);
       }
+      if (payload)
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + payload.api_token;
     },
     setAssociationsAB(context, payload) {
       context.commit("setAssociationsAB", payload);

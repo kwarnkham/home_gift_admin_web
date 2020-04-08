@@ -23,7 +23,7 @@ export default {
 
   methods: {},
   created() {
-    console.log("category");
+    console.log("category created");
   },
   preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {
     console.log("prefetching categories");

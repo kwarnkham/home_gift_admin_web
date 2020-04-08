@@ -15,13 +15,18 @@ export default {
   name: "MyLayout",
   components: {
     LayoutHeader,
-    LeftDrawer,
+    LeftDrawer
   },
   data() {
     return {};
   },
   methods: {},
-  created() {},
+  created() {
+    console.log("layout created");
+  },
   mounted() {},
+  preFetch() {
+    console.log("layout prefetch");
+  }
 };
 </script>

@@ -15,11 +15,11 @@ export const userRelatedApi = {
       })
         .then(response => {
           this.$q.loading.hide();
-          if (response.data.code == "0") {
+          if (response.data.code == "0" && response.data.result.user.is_admin) {
             this.$store.dispatch("setUser", response.data.result.user);
             this.$router.push({ name: "home" });
           } else {
-            this.$q.notify(response.data.msg);
+            this.$q.notify("Not authorized");
           }
         })
         .catch(error => {

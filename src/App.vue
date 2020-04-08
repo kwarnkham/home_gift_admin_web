@@ -9,6 +9,7 @@ import { itemRelatedApi } from "./mixins/itemRelatedApi";
 import { locationRelatedApi } from "./mixins/locationRelatedApi";
 import { merchantRelatedApi } from "./mixins/merchantRelatedApi";
 import { categoryRelatedApi } from "./mixins/categoryRelatedApi";
+import { userRelatedApi } from "./mixins/userRelatedApi";
 
 export default {
   name: "App",
@@ -16,7 +17,8 @@ export default {
     itemRelatedApi,
     merchantRelatedApi,
     locationRelatedApi,
-    categoryRelatedApi
+    categoryRelatedApi,
+    userRelatedApi
   ],
   methods: {
     setLanguage() {
@@ -35,8 +37,17 @@ export default {
       });
     },
     initLocalStorageData() {
+      this.initUser();
+    },
+    initUser() {
       let user = this.$q.localStorage.getItem("user");
       if (user) this.$store.dispatch("setUser", user);
+      this.checkToken(user).then(response => {
+        if (!response) {
+          this.$store.dispatch("setUser", null);
+          this.$router.push({ name: "login" });
+        }
+      });
     }
   },
   created() {

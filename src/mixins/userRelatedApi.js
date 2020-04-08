@@ -67,19 +67,26 @@ export const userRelatedApi = {
 
     async checkToken(user) {
       let result;
-      this.$q.loading.show();
-      await this.$axios({
-        method: "get",
-        url: "/user",
-        headers: {
-          Authorization: "Bearer " + user.api_token
-        }
-      }).then(response => {
-        this.$q.loading.hide();
-        if (response.data.code == "0") {
-          result = response.data.result.user;
-        }
-      });
+      if (user) {
+        this.$q.loading.show();
+        await this.$axios({
+          method: "get",
+          url: "/user",
+          headers: {
+            Authorization: "Bearer " + user.api_token
+          }
+        })
+          .then(response => {
+            this.$q.loading.hide();
+            if (response.data.code == "0") {
+              result = response.data.result.user;
+            }
+          })
+          .catch(error => {
+            console.warn(error);
+            this.$q.notify("Login Again");
+          });
+      }
       return result;
     },
 

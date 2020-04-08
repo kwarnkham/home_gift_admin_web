@@ -21,12 +21,7 @@ export default {
     return {};
   },
   methods: {},
-  created() {
-    console.log("layout created");
-  },
-  mounted() {},
-  preFetch() {
-    console.log("layout prefetch");
-  }
+  created() {},
+  mounted() {}
 };
 </script>

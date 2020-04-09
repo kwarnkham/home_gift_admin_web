@@ -26,6 +26,19 @@ export const userRelatedApi = {
           console.log(error);
         });
     },
+    async deleteToken() {
+      this.$q.loading.show();
+      await this.$axios({
+        method: "post",
+        url: "/logout"
+      })
+        .then(response => {
+          // console.log(response);
+        })
+        .finally(() => {
+          this.$q.loading.hide();
+        });
+    },
     async updateUser(data) {
       this.$q.loading.show();
       await this.$axios({

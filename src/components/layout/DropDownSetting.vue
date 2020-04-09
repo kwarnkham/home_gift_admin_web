@@ -25,28 +25,30 @@
 <script>
 import UpdateUserInfoDialog from "../user/UpdateUserInfoDialog";
 import UpdatePasswordDialog from "../user/UpdatePasswordDialog";
+import { userRelatedApi } from "../../mixins/userRelatedApi";
 export default {
   name: "DropDownSetting",
+  mixins: [userRelatedApi],
   data() {
     return {
       dropDownItems: [
         { label: "User Info", onClick: this.showUpdateUserInfoDialog },
         { label: "Password", onClick: this.showUpdatePasswordDialog },
-        { label: "Logout", onClick: this.logout },
-      ],
+        { label: "Logout", onClick: this.logout }
+      ]
     };
   },
   methods: {
     showUpdateUserInfoDialog() {
       this.$q.dialog({
         component: UpdateUserInfoDialog,
-        parent: this,
+        parent: this
       });
     },
     showUpdatePasswordDialog() {
       this.$q.dialog({
         component: UpdatePasswordDialog,
-        parent: this,
+        parent: this
       });
     },
     logout() {
@@ -55,15 +57,17 @@ export default {
           title: "Confirm",
           message: "Do you want to logout?",
           cancel: true,
-          persistent: true,
+          persistent: true
         })
         .onOk(() => {
-          this.$store.dispatch("setUser", null);
-          this.$router.push({ name: "login" });
+          this.deleteToken().finally(() => {
+            this.$store.dispatch("setUser", null);
+            this.$router.push({ name: "login" });
+          });
         });
-    },
+    }
   },
-  created() {},
+  created() {}
 };
 </script>
 

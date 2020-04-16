@@ -27,7 +27,8 @@ export default function(/* { store, ssrContext } */) {
     if (to.matched.some(el => el.meta.withoutAuth)) {
       next();
     } else {
-      if (!store.state.user) {
+      let user = store.state.user || localStorage.getItem("user");
+      if (!user) {
         next({
           name: "login"
         });

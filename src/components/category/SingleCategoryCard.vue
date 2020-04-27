@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     disableMakeA() {
-      if (this.aCategories.length == 6) return true;
+      if (this.aCategories.length == 8) return true;
       return this.isA || this.isB || this.hasB;
     },
     isA() {

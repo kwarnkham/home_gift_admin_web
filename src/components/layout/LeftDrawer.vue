@@ -30,11 +30,11 @@ export default {
   name: "LeftDrawer",
   components: {
     LanguageButton,
-    DrawerListNavItem,
+    DrawerListNavItem
   },
   data() {
     return {
-      leftDrawerOpen: false,
+      leftDrawerOpen: false
     };
   },
   computed: {
@@ -43,42 +43,42 @@ export default {
         {
           routeName: "orders",
           label: this.$tc("order", 2),
-          icon: "assignment",
+          icon: "assignment"
         },
         { routeName: "addItem", label: this.$t("addItem"), icon: "add_box" },
         {
           routeName: "location",
           label: this.$t("location"),
-          icon: "location_city",
+          icon: "location_city"
         },
         {
           routeName: "merchant",
           label: this.$t("merchant"),
-          icon: "business_center",
+          icon: "business_center"
         },
         {
           routeName: "category",
           label: this.$tc("category", 1),
-          icon: "category",
+          icon: "category"
         },
         { routeName: "items", label: this.$tc("item", 2), icon: "fastfood" },
         {
           routeName: "trash",
           label: this.$t("trash"),
-          icon: "delete_forever",
+          icon: "delete_forever"
         },
         {
           routeName: "search",
           label: this.$t("search"),
-          icon: "search",
+          icon: "search"
         },
         {
           routeName: "deliveryFees",
           label: this.$t("deliveryFees"),
-          icon: "attach_money",
-        },
+          icon: "attach_money"
+        }
       ];
-    },
+    }
   },
   methods: {
     toggleDrawer() {
@@ -88,7 +88,7 @@ export default {
       if (this.$route.name != name) {
         this.$router.push({ name: name });
       }
-    },
+    }
   },
   created() {
     this.lang = this.$store.state.lang;
@@ -98,7 +98,7 @@ export default {
   },
   beforeDestroy() {
     this.$root.$off("toggleDrawer", this.toggleDrawer);
-  },
+  }
 };
 </script>
 

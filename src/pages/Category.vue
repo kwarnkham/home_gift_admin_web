@@ -2,7 +2,6 @@
   <q-page class="row">
     <AddCategoryForm class="col-12 q-pa-md" />
     <CategoryList />
-    <div class="col-12" v-for="(i, key) in 10" :key="key"></div>
   </q-page>
 </template>
 <script>

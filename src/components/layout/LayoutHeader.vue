@@ -32,17 +32,17 @@ export default {
   computed: {
     showTrash() {
       return this.$store.state.showTrash;
-    },
+    }
   },
   methods: {
     toggleDrawer() {
       this.$root.$emit("toggleDrawer");
     },
-    editUser() {},
+    editUser() {}
   },
   mounted() {
     this.$root.$emit("showTrash", this.showTrash);
-  },
+  }
 };
 </script>
 

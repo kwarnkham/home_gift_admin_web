@@ -72,10 +72,10 @@ module.exports = function(ctx) {
       env: ctx.dev
         ? {
             // so on dev we'll have
-            API_URL: JSON.stringify("https://api.homegift.tk/api"),
-            IMAGE_HOST: JSON.stringify("https://assets.homegiftmm.com")
-            // API_URL: JSON.stringify("http://127.0.0.1:8000/api"),
+            // API_URL: JSON.stringify("https://api.homegift.tk/api"),
             // IMAGE_HOST: JSON.stringify("https://assets.homegiftmm.com")
+            API_URL: JSON.stringify("http://127.0.0.1:8000/api"),
+            IMAGE_HOST: JSON.stringify("https://assets.homegiftmm.com")
           }
         : {
             // and on build (production):

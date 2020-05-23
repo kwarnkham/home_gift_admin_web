@@ -26,7 +26,7 @@ export default {
   name: "MerchantList",
   mixins: [merchantRelatedApi],
   components: {
-    EditMerchantFormDialog,
+    EditMerchantFormDialog
   },
   data() {
     return {};
@@ -34,14 +34,14 @@ export default {
   computed: {
     merchants() {
       return this.$store.state.merchants;
-    },
+    }
   },
   methods: {
     routeToMerchantItem(merchant) {
       let prop = JSON.stringify(merchant);
       this.$router.push({
         name: "merchantItems",
-        params: { merchant: prop },
+        params: { merchant: prop }
       });
     },
     showEditForm(merchant) {
@@ -49,9 +49,9 @@ export default {
         .dialog({
           component: EditMerchantFormDialog,
           parent: this,
-          merchant: merchant,
+          merchant: merchant
         })
-        .onOk((data) => {
+        .onOk(data => {
           this.updateMerchant(merchant.id, data);
         });
 
@@ -69,8 +69,8 @@ export default {
       //   .onOk(data => {
       //     this.updateMerchant(merchant.id, data);
       //   });
-    },
+    }
   },
-  created() {},
+  created() {}
 };
 </script>

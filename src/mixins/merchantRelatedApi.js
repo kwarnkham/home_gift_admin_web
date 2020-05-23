@@ -35,7 +35,7 @@ export const merchantRelatedApi = {
       this.$q.loading.show();
       axios({
         method: "get",
-        url: `${store.state.apiUrl}/merchants`
+        url: `${store.state.apiUrl}/merchants?all=1`
       })
         .then(response => {
           this.$q.loading.hide();
